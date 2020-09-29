@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% endblock %} | Kaherecode</title>
+
+        <link rel="icon" href="{{ asset('images/favicon.ico') }}">
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+
+    <body class="bg-gray-100">
+        {% include 'includes/_header.html.twig' %}
+
         {% block body %}{% endblock %}
+
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}

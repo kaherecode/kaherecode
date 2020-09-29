@@ -2,10 +2,15 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-$primary-color: #bada55;
+@import url('https://fonts.googleapis.com/css2?family=Muli:wght@200;300;400;500;577;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
-body {
-    h1 {
-        color: $primary-color;
-    }
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito', 'sans-serif';
 }
