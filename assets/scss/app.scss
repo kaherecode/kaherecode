@@ -14,3 +14,21 @@
     padding: 0;
     font-family: 'Nunito', 'sans-serif';
 }
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d4b672;
+}
+
+.hero {
+    background-color: #d4c672;
+    background: linear-gradient(333deg, #d4b672 25%, #e4d2a6 86%);
+}
