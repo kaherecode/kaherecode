@@ -28,6 +28,12 @@
     background: #d4b672;
 }
 
+.container {
+    max-width: 1280px;
+    width: 90%;
+    margin: auto;
+}
+
 .hero {
     background-color: #d4c672;
     background: linear-gradient(333deg, #d4b672 25%, #e4d2a6 86%);
