@@ -1,0 +1,78 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Faites des API REST avec Symfony{% endblock %}
+
+{% block body %}
+<div class="hero text-center pt-4 pb-6">
+    <div class="container">
+        <h1 class="font-bold text-2xl tracking-wide text-gray-900 lg:text-4xl">
+            Faites des API REST avec Symfony et API Platform
+        </h1>
+
+        <ul class="tags flex flex-wrap justify-center text-gray-700 space-x-5">
+            <li>
+                <a href="">#php</a>
+            </li>
+            <li>
+                <a href="">#symfony</a>
+            </li>
+            <li>
+                <a href="">#rest</a>
+            </li>
+            <li>
+                <a href="">#api</a>
+            </li>
+        </ul>
+
+        <div class="text-left mt-5 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="">
+                    <img src="{{ asset('images/avatar.png') }}" alt="alioukahere" class="rounded-full w-12" />
+                </a>
+                <div class="ml-2">
+                    <span class="block">
+                        <a href="#" class="font-bold text-gray-800 text-lg">
+                            @alioukahere
+                        </a>
+                    </span>
+                    <span class="text-gray-700 text-sm">7 Avril 2020</span>
+                </div>
+            </div>
+            <div class="sm:flex sm:justify-end sm:items-center">
+                <span class="flex items-center justify-end">
+                    <svg class="text-gray-700 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    <span class="text-sm ml-2 text-gray-700">200</span>
+                </span>
+                <span class="flex items-center mt-1 hidden sm:mt-0 sm:ml-5 sm:flex">
+                    <svg class="text-gray-700 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                    <span class="text-sm ml-2 text-gray-700">45</span>
+                </span>
+                <span class="flex items-center mt-1 sm:mt-0 sm:ml-5">
+                    <svg class="text-gray-700 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                    </svg>
+                    <span class="text-sm ml-2 text-gray-700">10</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <img src="https://www.kaherecode.com/uploads/tutorials/5e8bc69aee343.png" alt="" class="h-full w-full object-cover shadow-2xl" />
+        </div>
+    </div>
+</div>
+
+<article class="container bg-white p-4 text-lg text-justify text-black leading-relaxed xl:px-20">
+    <p>
+        Salut, bienvenue dans ce tutoriel sur <a href="">Symfony</a> et Api
+        platform, nous allons ensemble développer une API REST pour gérer un
+        blog. Dans ce tutoriel, nous aurons à gérer 4 entités: Article, User,
+        Comment et Tag. On commence tout de suite.
+    </p>
+</article>
+{% endblock %}

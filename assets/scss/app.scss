@@ -38,3 +38,110 @@
     background-color: #d4c672;
     background: linear-gradient(333deg, #d4b672 25%, #e4d2a6 86%);
 }
+
+article {
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol,
+    pre {
+        margin: 1.5rem 0 1.5rem 0;
+    }
+
+    p,
+    ul,
+    ol {
+        @apply leading-8;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: bold;
+        letter-spacing: 0.025em;
+    }
+
+    h1::before,
+    h2::before,
+    h3::before,
+    h4::before,
+    h5::before,
+    h6::before {
+        content: '#';
+        margin-right: 10px;
+        color: #d4b672;
+        font-size: 2.3rem;
+        font-weight: bold;
+    }
+
+    h1,
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.7rem;
+    }
+
+    h4 {
+        font-size: 1.5rem;
+    }
+
+    h5 {
+        font-size: 1.3rem;
+    }
+
+    h6 {
+        font-size: 1.1rem;
+    }
+
+    blockquote {
+        padding: 0.1rem 0 0.1rem 2rem;
+        border-left: 4px solid #d4b672;
+        color: #4a5568;
+        font-size: 1.3rem;
+
+        p {
+            line-height: 2rem;
+        }
+    }
+
+    ul>li {
+        list-style-type: disc;
+    }
+
+    ol>li {
+        list-style-type: decimal;
+    }
+
+    a {
+        color: #3182ce;
+        text-decoration: underline;
+        overflow-wrap: break-word !important;
+
+        &:hover {
+            color: #d4b672;
+        }
+    }
+
+    :not(pre)>code {
+        background-color: #fff6ea;
+        padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+        font-size: 1rem;
+        font-family: 'Fira Code', monospace;
+        overflow-wrap: break-word !important;
+    }
+
+    pre>code .token {
+        font-family: 'Fira Code' !important;
+    }
+}

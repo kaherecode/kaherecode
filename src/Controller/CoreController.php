@@ -8,12 +8,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class CoreController extends AbstractController
 {
     /**
-     * @Route("/", name="core")
+     * @Route("/", name="homepage")
      */
     public function index()
     {
-        return $this->render('core/index.html.twig', [
-            'controller_name' => 'CoreController',
-        ]);
+        return $this->render('core/index.html.twig');
+    }
+
+    /**
+     * @Route("/tutorial/{slug}", name="tutorial_view")
+     */
+    public function tutorialView($slug)
+    {
+        return $this->render('core/tutorial_view.html.twig');
     }
 }
