@@ -22,4 +22,12 @@ class CoreController extends AbstractController
     {
         return $this->render('core/tutorial_view.html.twig');
     }
+
+    /**
+     * @Route("/tag/{slug}", name="tag_tutorials")
+     */
+    public function tutorialsByTag($slug)
+    {
+        return $this->render('core/tag_tutorials.html.twig');
+    }
 }
