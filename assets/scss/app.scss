@@ -39,8 +39,8 @@
     background: linear-gradient(333deg, #d4b672 25%, #e4d2a6 86%);
 }
 
+/** article view */
 article {
-
     p,
     h1,
     h2,
@@ -144,4 +144,19 @@ article {
     pre>code .token {
         font-family: 'Fira Code' !important;
     }
-}
+} /** ./article view */
+
+/** tabs */
+.tabs {
+    .tab-list {
+        @apply flex -ml-1 justify-center items-center bg-white h-16;
+
+        .tab-item {
+            @apply mx-3 cursor-pointer h-full flex items-center text-gray-900;
+
+            &.active {
+                box-shadow: inset 0 -3px 0 #1a202c;
+            }
+        }
+    }
+} /** ./tabs */
