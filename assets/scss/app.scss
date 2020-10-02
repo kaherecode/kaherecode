@@ -50,6 +50,15 @@
     background: linear-gradient(333deg, #d4b672 25%, #e4d2a6 86%);
 }
 
+/** buttons */
+.btn {
+    @apply bg-gray-900 text-gray-200 py-3 px-5 shadow-lg;
+
+    &.btn-danger {
+        @apply bg-red-700;
+    }
+}
+
 /** article view */
 article {
 
