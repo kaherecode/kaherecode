@@ -13,7 +13,7 @@
 
 <body class="bg-gray-200">
     <div class="px-8 py-4 flex flex-wrap items-center justify-between shadow-lg fixed top-0 left-0 right-0 bg-gray-100">
-        <a href="{{ path('profile') }}">&#8592; Mon Profil</a>
+        <a href="{{ path("profile") }}">&#8592; Mon Profil</a>
         <ul class="flex flex-wrap items-center">
             <li>
                 <a href="" class="flex items-center">
@@ -85,6 +85,21 @@
             </li>
         </ul>
     </div>
+        <div class="mt-32 mx-4 lg:w-10/12 lg:mx-auto xl:w-7/12">
+            <div class="bg-gray-300 rounded-md">
+                <div class="text-center text-gray-700 relative flex justify-center items-center image-picker">
+                    <span>Sélectionne une image à la une</span>
+                    <input type="file" class="w-full absolute outline-none" onchange="" accept='image/*' />
+                    {# <img src="https://www.kaherecode.com/uploads/tutorials/5e8bc69aee343.png" alt='' class='object-cover' /> #}
+                </div>
+                <div class="p-3">
+                    <input type="text" placeholder="Lien Youtube de la vidéo" class="px-4 py-2 w-full rounded-md border-2 border-gray-400 focus:border-0 outline-none" />
+                </div>
+            </div>
+            <div class="mt-8">
+                <input type="text" placeholder="Comment faire une app géniale" class="w-full bg-gray-200 text-3xl font-semibold border-b-2 border-gray-300 py-6 outline-none" />
+            </div>
+        </div>
     {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
     {% endblock %}
