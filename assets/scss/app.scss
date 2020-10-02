@@ -6,6 +6,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 *,
 *::after,
 *::before {
@@ -41,6 +52,7 @@
 
 /** article view */
 article {
+
     p,
     h1,
     h2,
@@ -144,7 +156,9 @@ article {
     pre>code .token {
         font-family: 'Fira Code' !important;
     }
-} /** ./article view */
+}
+
+/** ./article view */
 
 /** tabs */
 .tabs {
@@ -159,4 +173,23 @@ article {
             }
         }
     }
-} /** ./tabs */
+
+    .tab-content {
+        animation: fadeEffect 1s;
+    }
+
+    &.min-tabs {
+        .tab-list {
+            @apply bg-transparent justify-start text-sm h-12;
+            border-bottom: 1px solid #dadada;
+
+            .tab-item {
+                &.active {
+                    box-shadow: inset 0 -1px 0 #1a202c;
+                }
+            }
+        }
+    }
+}
+
+/** ./tabs */

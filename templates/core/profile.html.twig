@@ -93,7 +93,7 @@
         </div>
     </div>
 </div>
-<div class="mt-5 tabs">
+<div class="mt-5 tabs" id="profileTabs">
     <ul class="tab-list">
         <li class="tab-item active" onclick="toggleTab(event)" data-target="bookmarks">
             Bookmarks
@@ -102,16 +102,28 @@
             Mes tutoriels
         </li>
     </ul>
-
-    <div class="mt-2">
-        <div id="bookmarks" class="tab-content">
-            <div class="container">
-                {% include 'includes/_tutorials_list.html.twig' %}
-            </div>
+    <div id="bookmarks" class="tab-content">
+        <div class="container">
+            {% include 'includes/_tutorials_list.html.twig' %}
         </div>
-        <div id="tutorials" class="tab-content">
-            <div class="container">
-                <h1>Tutoriels</h1>
+    </div>
+    <div id="tutorials" class="tab-content">
+        <div class="container">
+            <div class="mt-5 tabs min-tabs" id="tutorialsTabs">
+                <ul class="tab-list">
+                    <li class="tab-item active" onclick="toggleTab(event)" data-target="drafts">
+                        Brouillons (20)
+                    </li>
+                    <li class="tab-item" onclick="toggleTab(event)" data-target="published">
+                        Publiés (40)
+                    </li>
+                </ul>
+                <div id="drafts" class="tab-content">
+                    {% include 'includes/_profile_tutorials_list.html.twig' %}
+                </div>
+                <div id="published" class="tab-content">
+                    {% include 'includes/_profile_tutorials_list.html.twig' %}
+                </div>
             </div>
         </div>
     </div>
