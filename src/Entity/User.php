@@ -39,7 +39,7 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/",
-     *     message="Password is not valid."
+     *     message="Password is not valid. Sould be 8 or more characters. Should contains at least 1 special chars, 1 digit and 1 uppercace letter."
      * )
      */
     private $password;

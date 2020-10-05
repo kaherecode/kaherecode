@@ -203,6 +203,36 @@ article {
 
 /** ./tabs */
 
+/** forms */
+form {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        @apply border border-gray-400 rounded w-full p-3 outline-none bg-white;
+
+        &:disabled {
+            @apply opacity-50;
+        }
+    }
+
+    input[type="submit"] {
+        @apply cursor-pointer;
+    }
+
+    textarea {
+        @apply border border-gray-400 rounded w-full p-3 outline-none bg-white resize-none;
+
+        &:disabled {
+            @apply opacity-50;
+        }
+    }
+
+    .form-group {
+        @apply mt-4;
+    }
+}
+/** ./forms */
+
 /** image picker */
 .image-picker {
     height: 400px;
