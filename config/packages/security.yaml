@@ -26,6 +26,9 @@ security:
                 # where to redirect after logout
                 target: homepage
 
+            remember_me:
+                secret: '%kernel.secret%'
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
