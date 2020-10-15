@@ -14,39 +14,55 @@
             <a href="" class="btn btn-danger">Désactiver mon compte</a>
         </div>
         <hr class="mt-8 sm:hidden" />
-        <form action="" class="mt-4 sm:mt-0 sm:px-2 sm:w-1/2 md:w-2/3">
+        {{ form_start(form, {'attr': {'class': 'mt-4 sm:mt-0 sm:px-2 sm:w-1/2 md:w-2/3'}}) }}
             <div class="form-group">
-                <input type="email" name="email" id="email" placeholder="Adresse email" value="alioukahere@gmail.com" disabled />
+                {{ form_widget(form.avatar, {'attr': {'placeholder': 'Avatar'}}) }}
             </div>
             <div class="form-group">
-                <input type="text" name="username" id="username" placeholder="Pseudo" value="alioukahere" disabled />
+                {{ form_widget(form.email, {'attr': {'placeholder': 'Adresse email', 'disabled': 1}}) }}
+                <small class="block text-sm text-red-600">{{ form_errors(form.email) }}</small>
             </div>
             <div class="form-group">
-                <input type="text" name="name" id="name" placeholder="Prénom et Nom" value="Mamadou Aliou Diallo" />
+                {{ form_widget(form.username, {'attr': {'placeholder': 'Pseudo', 'disabled': 1}}) }}
+                <small class="block text-sm text-red-600">{{ form_errors(form.username) }}</small>
+            </div>
+            <div class="form-group">
+                {{ form_widget(form.fullName, {'attr': {'placeholder': 'Prénom et Nom'}}) }}
+                <small class="block text-sm text-red-600">{{ form_errors(form.fullName) }}</small>
             </div>
             <div class="md:flex md:space-x-3">
                 <div class="form-group md:w-1/2">
-                    <input type="text" name="github" id="github" placeholder="Github (kaherecode)" value="" />
+                    {{ form_widget(form.github, {'attr': {'placeholder': 'Github username (kaherecode)'}}) }}
+                    <small class="block text-sm text-red-600">{{ form_errors(form.github) }}</small>
                 </div>
                 <div class="form-group md:w-1/2">
-                    <input type="text" name="twitter" id="twitter" placeholder="Twitter (kaherecode)" value="" />
+                    {{ form_widget(form.twitter, {'attr': {'placeholder': 'Twitter username (kaherecode)'}}) }}
+                    <small class="block text-sm text-red-600">{{ form_errors(form.twitter) }}</small>
                 </div>
             </div>
             <div class="md:flex md:space-x-3">
                 <div class="form-group md:w-1/2">
-                    <input type="text" name="linkedin" id="linkedin" placeholder="Linkedin (kaherecode)" value="" />
+                    {{ form_widget(form.linkedin, {'attr': {'placeholder': 'Linkedin username (kaherecode)'}}) }}
+                    <small class="block text-sm text-red-600">{{ form_errors(form.linkedin) }}</small>
                 </div>
                 <div class="form-group md:w-1/2">
-                    <input type="text" name="website" id="website" placeholder="Site web" value="" />
+                    {{ form_widget(form.website, {'attr': {'placeholder': 'URL site web (https://kaherecode.com)'}}) }}
+                    <small class="block text-sm text-red-600">{{ form_errors(form.website) }}</small>
                 </div>
             </div>
             <div class="form-group">
-                <textarea name="bio" id="bio" placeholder="Bio" rows="7"></textarea>
+                {{ form_widget(form.bio, {'attr': {'placeholder': 'Bio', 'rows': 5}}) }}
+                <small class="block text-sm text-red-600">{{ form_errors(form.bio) }}</small>
+            </div>
+            <div class="form-group">
+                {{ form_widget(form.password, {'attr': {'placeholder': 'Mot de passe actuel'}}) }}
+                <small class="block text-sm text-red-600">{{ form_errors(form.password) }}</small>
+                <a href="#" class="block text-sm text-blue-500 underline mt-2">Modifier mon mot de passe</a>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn" value="Valider" />
             </div>
-        </form>
+        {{ form_end(form) }}
     </div>
 </div>
 {% endblock %}

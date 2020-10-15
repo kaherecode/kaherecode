@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ProfileType;
 use App\Form\UserRegistrationType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,14 +50,27 @@ class UserController extends AbstractController
      */
     public function profile()
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         return $this->render('core/profile.html.twig');
     }
 
     /**
      * @Route("/profile/edit", name="edit_profile")
      */
-    public function editProfile()
+    public function editProfile(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        return $this->render('core/edit_profile.html.twig');
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $user = $this->getUser();
+        $form = $this->createForm(ProfileType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+        }
+
+        return $this->render('core/edit_profile.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
