@@ -16,14 +16,23 @@
         <hr class="mt-8 sm:hidden" />
         {{ form_start(form, {'attr': {'class': 'mt-4 sm:mt-0 sm:px-2 sm:w-1/2 md:w-2/3'}}) }}
             <div class="form-group">
+                {% for error in app.flashes('error') %}
+                    <span class="block mt-4 text-red-600 text-sm">{{ error }}</span>
+                {% endfor %}
+
+                {% for error in app.flashes('success') %}
+                    <span class="block mt-4 text-green-600 text-sm">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
                 {{ form_widget(form.avatar, {'attr': {'placeholder': 'Avatar'}}) }}
             </div>
             <div class="form-group">
-                {{ form_widget(form.email, {'attr': {'placeholder': 'Adresse email', 'disabled': 1}}) }}
+                {{ form_widget(form.email, {'attr': {'placeholder': 'Adresse email'}}) }}
                 <small class="block text-sm text-red-600">{{ form_errors(form.email) }}</small>
             </div>
             <div class="form-group">
-                {{ form_widget(form.username, {'attr': {'placeholder': 'Pseudo', 'disabled': 1}}) }}
+                {{ form_widget(form.username, {'attr': {'placeholder': 'Pseudo'}}) }}
                 <small class="block text-sm text-red-600">{{ form_errors(form.username) }}</small>
             </div>
             <div class="form-group">
@@ -55,8 +64,8 @@
                 <small class="block text-sm text-red-600">{{ form_errors(form.bio) }}</small>
             </div>
             <div class="form-group">
-                {{ form_widget(form.password, {'attr': {'placeholder': 'Mot de passe actuel'}}) }}
-                <small class="block text-sm text-red-600">{{ form_errors(form.password) }}</small>
+                {{ form_widget(form.currentPassword, {'attr': {'placeholder': 'Mot de passe actuel'}}) }}
+                <small class="block text-sm text-red-600">{{ form_errors(form.currentPassword) }}</small>
                 <a href="#" class="block text-sm text-blue-500 underline mt-2">Modifier mon mot de passe</a>
             </div>
             <div class="form-group">

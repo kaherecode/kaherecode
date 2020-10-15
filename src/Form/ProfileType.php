@@ -16,16 +16,17 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('password', PasswordType::class)
+            ->add('email', EmailType::class, ['disabled' => true])
+            ->add('username', TextType::class, ['disabled' => true])
             ->add('fullName', TextType::class)
-            ->add('username', TextType::class)
             ->add('avatar', TextType::class, ['required' => false])
             ->add('bio', TextareaType::class, ['required' => false])
             ->add('github', TextType::class, ['required' => false])
             ->add('twitter', TextType::class, ['required' => false])
             ->add('linkedin', TextType::class, ['required' => false])
             ->add('website', TextType::class, ['required' => false])
+            // the user current password for confirmation
+            ->add('currentPassword', PasswordType::class, ['mapped' => false])
         ;
     }
 

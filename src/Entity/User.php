@@ -60,8 +60,8 @@ class User implements UserInterface
      *
      * @Assert\NotBlank()
      * @Assert\Regex(
-     *     pattern="/^\S*$/",
-     *     message="Username is not valid, should not contain spaces."
+     *     pattern="/^[a-z\d_]{2,15}$/",
+     *     message="Username is not valid, should only contains alphanumeric (a-z0-9) or underscore (_) and less than 15 chars."
      * )
      */
     private $username;
@@ -78,21 +78,41 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\Regex(
+     *     pattern="/^[a-z\d_]{2,15}$/",
+     *     message="Your Github username is not valid."
+     * )
      */
     private $github;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\Regex(
+     *     pattern="/^[a-z\d_]{2,15}$/",
+     *     message="Your Twitter username is not valid."
+     * )
      */
     private $twitter;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\Regex(
+     *     pattern="/^[a-z\d_]{2,15}$/",
+     *     message="Your Linkedin username is not valid."
+     * )
      */
     private $linkedin;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\Regex(
+     *     pattern="/^((http|https):\/\/)?([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i",
+     *     message="Your website url is not valid."
+     * )
      */
     private $website;
 
@@ -292,7 +312,9 @@ class User implements UserInterface
 
     public function getWebsite(): ?string
     {
-        return $this->website;
+        return preg_match('/^(http)/', $this->website)
+            ? $this->website
+            : "http://$this->website" ;
     }
 
     public function setWebsite(?string $website): self

@@ -58,8 +58,10 @@ class UserController extends AbstractController
     /**
      * @Route("/profile/edit", name="edit_profile")
      */
-    public function editProfile(Request $request, UserPasswordEncoderInterface $passwordEncoder)
-    {
+    public function editProfile(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder
+    ) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $user = $this->getUser();
@@ -67,6 +69,28 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            // check if the password is valid
+            if (!$passwordEncoder->isPasswordValid(
+                $user,
+                $form->get('currentPassword')->getData()
+            )) {
+                $this->addFlash(
+                    'error',
+                    'Your password is not correct, try again!'
+                );
+
+                return $this->render('core/edit_profile.html.twig', [
+                    'form' => $form->createView()
+                ]);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Your profile have been successfully updated!'
+            );
         }
 
         return $this->render('core/edit_profile.html.twig', [
