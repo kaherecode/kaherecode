@@ -11,6 +11,7 @@ import '../scss/app.scss';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
 
+// import toggleVisibility from './file'
 function toggleVisibility(id) {
     let e = document.getElementById(id)
 

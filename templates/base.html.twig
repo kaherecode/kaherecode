@@ -52,6 +52,16 @@
                 document.getElementById(e.currentTarget.getAttribute('data-target')).style.display = "block";
                 e.currentTarget.className += " active";
             }
+
+            function toggleVisibility(id) {
+                let e = document.getElementById(id)
+
+                if (e.style.display === 'none' || e.style.display === '') {
+                    e.style.display = 'block'
+                } else {
+                    e.style.display = 'none'
+                }
+            }
         </script>
     </body>
 </html>

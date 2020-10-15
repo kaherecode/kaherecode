@@ -18,9 +18,13 @@
                     </svg>
                 </span>
             </li>
+            {% if is_granted('ROLE_USER') %}
             <li class="ml-6">
-                <img src="{{ asset('images/avatar.png') }}" alt="username" class="rounded-full w-12 cursor-pointer">
+                <span onclick="toggleVisibility('loggedInMenu')">
+                    <img src="{{ asset('images/avatar.png') }}" alt="username" class="rounded-full w-12 cursor-pointer">
+                </span>
             </li>
+            {% endif %}
         </ul>
         <ul class="hidden md:flex items-center">
             <li>
@@ -53,18 +57,18 @@
                 </a>
             </li>
             {% if is_granted('ROLE_USER') %}
-                <li class="ml-6">
-                    <a href="">
-                        <img src="{{ asset('images/avatar.png') }}" alt="username" class="rounded-full w-12 cursor-pointer">
-                    </a>
-                </li>
+            <li class="ml-6">
+                <span onclick="toggleVisibility('loggedInMenu')">
+                    <img src="{{ asset('images/avatar.png') }}" alt="username" class="rounded-full w-12 cursor-pointer">
+                </span>
+            </li>
             {% else %}
-                <li class="ml-6">
-                    <a href="{{ path('app_login') }}" class="btn">Connexion</a>
-                </li>
-                <li class="ml-6">
-                    <a href="{{ path('user_register') }}" class="btn">Inscription</a>
-                </li>
+            <li class="ml-6">
+                <a href="{{ path('app_login') }}" class="btn">Connexion</a>
+            </li>
+            <li class="ml-6">
+                <a href="{{ path('user_register') }}" class="btn">Inscription</a>
+            </li>
             {% endif %}
         </ul>
     </div>
@@ -133,7 +137,6 @@
             </li>
         </ul>
     </div>
-
     {# mobile menu #}
     <div class="text-gray-300 py-5 absolute w-full hidden bg-darkerGray md:hidden" id="mobileMenu">
         <ul class="text-center">
@@ -150,16 +153,79 @@
                 <a href="#">Chat</a>
             </li>
         </ul>
+        {% if not is_granted('ROLE_USER') %}
         <hr class="my-5" />
         <ul class="flex px-5 justify-between items-center">
             <li>
-                <a href="">
-                </a>
+                <a href="{{ path('app_login') }}" class="btn">Connexion</a>
             </li>
             <li>
-                <a href="">
-                </a>
+                <a href="{{ path('user_register') }}" class="btn">Inscription</a>
             </li>
         </ul>
+        {% endif %}
     </div>
+    {# logged in menu #}
+    <ul id="loggedInMenu" class="fixed bg-gray-100 shadow-2xl w-56 hidden" style="right: 5px; top: 78px; z-index: 9999;">
+        <li class="">
+            <a href="{{ path('profile') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
+                <span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user h-5 w-5 text-gray-700">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </span>
+                Mon profil
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('edit_profile') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
+                <span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit h-5 w-5 text-gray-700">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                </span>
+                Modifier mon profil
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('new_tutorial') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
+                <span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text h-5 w-5 text-gray-700">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                </span>
+                Nouveau tutoriel
+            </a>
+        </li>
+        <li>
+            <a href="#" class="text-gray-800 flex items-center hover:bg-gray-200">
+                <span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home h-5 w-5 text-gray-700">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                </span>
+                Tableau de bord
+            </a>
+        </li>
+        <hr />
+        <li>
+            <a href="{{ path('app_logout') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
+                <span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out h-5 w-5 text-gray-700">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                </span>
+                Me déconnecter
+            </a>
+        </li>
+    </ul>
 </header>
