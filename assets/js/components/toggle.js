@@ -7,3 +7,10 @@ function toggleVisibility(id) {
         e.style.display = 'none'
     }
 }
+
+// add click event listener on toggle-item elements
+document.querySelectorAll('.toggle-item').forEach(item => {
+    item.addEventListener('click', event => {
+        toggleVisibility(item.getAttribute('data-target'))
+    })
+})

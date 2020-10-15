@@ -52,7 +52,7 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        return $this->render('core/profile.html.twig');
+        return $this->render('user/profile.html.twig');
     }
 
     /**
@@ -79,7 +79,7 @@ class UserController extends AbstractController
                     'Your password is not correct, try again!'
                 );
 
-                return $this->render('core/edit_profile.html.twig', [
+                return $this->render('user/edit_profile.html.twig', [
                     'form' => $form->createView()
                 ]);
             }
@@ -93,7 +93,7 @@ class UserController extends AbstractController
             );
         }
 
-        return $this->render('core/edit_profile.html.twig', [
+        return $this->render('user/edit_profile.html.twig', [
             'form' => $form->createView()
         ]);
     }

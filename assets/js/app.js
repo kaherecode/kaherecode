@@ -11,13 +11,5 @@ import '../scss/app.scss';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
 
-// import toggleVisibility from './file'
-function toggleVisibility(id) {
-    let e = document.getElementById(id)
-
-    if (e.style.display === 'none' || e.style.display === '') {
-        e.style.display = 'block'
-    } else {
-        e.style.display = 'none'
-    }
-}
+import './components/toggle'
+import './components/tabs'

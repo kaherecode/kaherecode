@@ -12,7 +12,7 @@
                 </a>
             </li>
             <li class="ml-6">
-                <span onclick="toggleVisibility('mobileMenu');">
+                <span  class="toggle-item" data-target="mobileMenu">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-300 h-8 w-8">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
@@ -20,7 +20,7 @@
             </li>
             {% if is_granted('ROLE_USER') %}
             <li class="ml-6">
-                <span onclick="toggleVisibility('loggedInMenu')">
+                <span class="toggle-item" data-target="loggedInMenu">
                     <img src="{{ asset('images/avatar.png') }}" alt="username" class="rounded-full w-12 cursor-pointer">
                 </span>
             </li>
@@ -58,7 +58,7 @@
             </li>
             {% if is_granted('ROLE_USER') %}
             <li class="ml-6">
-                <span onclick="toggleVisibility('loggedInMenu')">
+                <span  class="toggle-item" data-target="loggedInMenu">
                     <img src="{{ asset('images/avatar.png') }}" alt="username" class="rounded-full w-12 cursor-pointer">
                 </span>
             </li>
