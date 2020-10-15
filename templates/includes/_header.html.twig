@@ -52,17 +52,20 @@
                     </svg>
                 </a>
             </li>
-            {# <li class="ml-6">
-                <a href="">
-                    <img src="{{ asset('images/avatar.png') }}" alt="username" class="rounded-full w-12 cursor-pointer">
-                </a>
-            </li> #}
-            <li class="ml-6">
-                <a href="" class="btn">Connexion</a>
-            </li>
-            <li class="ml-6">
-                <a href="" class="btn">Inscription</a>
-            </li>
+            {% if is_granted('ROLE_USER') %}
+                <li class="ml-6">
+                    <a href="">
+                        <img src="{{ asset('images/avatar.png') }}" alt="username" class="rounded-full w-12 cursor-pointer">
+                    </a>
+                </li>
+            {% else %}
+                <li class="ml-6">
+                    <a href="{{ path('app_login') }}" class="btn">Connexion</a>
+                </li>
+                <li class="ml-6">
+                    <a href="{{ path('user_register') }}" class="btn">Inscription</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
     <div class="hidden md:block text-gray-700 text-sm py-1 bg-darkerGray">

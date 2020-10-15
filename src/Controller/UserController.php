@@ -43,4 +43,20 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/profile", name="profile")
+     */
+    public function profile()
+    {
+        return $this->render('core/profile.html.twig');
+    }
+
+    /**
+     * @Route("/profile/edit", name="edit_profile")
+     */
+    public function editProfile()
+    {
+        return $this->render('core/edit_profile.html.twig');
+    }
 }

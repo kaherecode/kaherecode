@@ -32,22 +32,6 @@ class CoreController extends AbstractController
     }
 
     /**
-     * @Route("/profile", name="profile")
-     */
-    public function profile()
-    {
-        return $this->render('core/profile.html.twig');
-    }
-
-    /**
-     * @Route("/profile/edit", name="edit_profile")
-     */
-    public function editProfile()
-    {
-        return $this->render('core/edit_profile.html.twig');
-    }
-
-    /**
      * @Route("/new-tutorial", name="new_tutorial")
      */
     public function newTutorial()
