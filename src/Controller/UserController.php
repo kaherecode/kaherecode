@@ -28,6 +28,32 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            // check if email doesn't exists
+            if ($em->getRepository(User::class)->findOneByEmail($user->getEmail())) {
+                $this->addFlash(
+                    'error',
+                    'This email address is already taken. Use another one or login.'
+                );
+
+                return $this->render('user/register.html.twig', [
+                    'form' => $form->createView(),
+                ]);
+            }
+
+            // check if username doesn't exists
+            if ($em->getRepository(User::class)->findOneByUsername($user->getUsername())) {
+                $this->addFlash(
+                    'error',
+                    'This username is already taken. Use another one or login.'
+                );
+
+                return $this->render('user/register.html.twig', [
+                    'form' => $form->createView(),
+                ]);
+            }
+
             // encode user password
             $user->setPassword(
                 $passwordEncoder
@@ -36,11 +62,11 @@ class UserController extends AbstractController
 
             $user->setConfirmationToken(sha1(uniqid()));
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
             $email = (new TemplatedEmail())
+                // TODO: create a event subscriber to set the same from address for the whole app
                 ->from(new Address(
                     'contact@kaherecode.com',
                     'Aliou de Kaherecode'

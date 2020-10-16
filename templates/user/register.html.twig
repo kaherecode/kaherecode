@@ -7,7 +7,11 @@
 
         <div class="mt-4">
             {% for message in app.flashes('success') %}
-                <small class="block text-small text-green-600">{{ message }}</small>
+                <small class="block text-sm text-green-600">{{ message }}</small>
+            {% endfor %}
+
+            {% for message in app.flashes('error') %}
+                <small class="block text-sm text-red-600">{{ message }}</small>
             {% endfor %}
         </div>
 
