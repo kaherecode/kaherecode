@@ -98,6 +98,18 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             );
         }
 
+        if (!$user->getEnabled()) {
+            throw new CustomUserMessageAuthenticationException(
+                'Please activate your account before you log in. Check your emails for confirmation.'
+            );
+        }
+
+        if ($user->getArchived()) {
+            throw new CustomUserMessageAuthenticationException(
+                'Your account has been deactivated.'
+            );
+        }
+
         return $user;
     }
 
