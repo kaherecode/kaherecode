@@ -4257,16 +4257,16 @@
         },
         {
             "name": "symfony/mailer",
-            "version": "v5.1.5",
+            "version": "v5.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mailer.git",
-                "reference": "f728de093c1f5360c52a6a929e70852a6c3fb2dc"
+                "reference": "0c4f93173b7e315f4035c401b8ddfa9b149b389c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailer/zipball/f728de093c1f5360c52a6a929e70852a6c3fb2dc",
-                "reference": "f728de093c1f5360c52a6a929e70852a6c3fb2dc",
+                "url": "https://api.github.com/repos/symfony/mailer/zipball/0c4f93173b7e315f4035c401b8ddfa9b149b389c",
+                "reference": "0c4f93173b7e315f4035c401b8ddfa9b149b389c",
                 "shasum": ""
             },
             "require": {
@@ -4335,7 +4335,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-08-31T19:52:58+00:00"
+            "time": "2020-09-07T05:10:28+00:00"
         },
         {
             "name": "symfony/mime",

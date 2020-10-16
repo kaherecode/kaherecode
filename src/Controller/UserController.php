@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ProfileType;
 use App\Form\UserRegistrationType;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -17,7 +20,8 @@ class UserController extends AbstractController
      */
     public function register(
         Request $request,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder,
+        MailerInterface $mailer
     ) {
         $user = new User();
         $form = $this->createForm(UserRegistrationType::class, $user);
@@ -30,9 +34,23 @@ class UserController extends AbstractController
                     ->encodePassword($user, $user->getPassword())
             );
 
+            $user->setConfirmationToken(sha1(uniqid()));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            $email = (new TemplatedEmail())
+                ->from(new Address(
+                    'contact@kaherecode.com',
+                    'Aliou de Kaherecode'
+                ))
+                ->to(new Address($user->getEmail(), $user->getFullName()))
+                ->subject("Bienvenue sur Kaherecode " .$user->getUsername(). "!")
+                ->htmlTemplate('emails/signup.html.twig')
+                ->context(['user' => $user]);
+
+            $mailer->send($email);
 
             $this->addFlash(
                 'success',
@@ -96,5 +114,12 @@ class UserController extends AbstractController
         return $this->render('user/edit_profile.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/register/confirmation/{token}", name="account_confirmation")
+     */
+    public function accountConfirmation(Request $request, $token)
+    {
     }
 }
