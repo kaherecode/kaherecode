@@ -312,9 +312,13 @@ class User implements UserInterface
 
     public function getWebsite(): ?string
     {
-        return preg_match('/^(http)/', $this->website)
-            ? $this->website
-            : "http://$this->website" ;
+        return $this->website === '' || $this->website === null
+            ? $this->website :
+            (
+                preg_match('/^(http)/', $this->website)
+                ? $this->website
+                : "http://$this->website"
+            );
     }
 
     public function setWebsite(?string $website): self
