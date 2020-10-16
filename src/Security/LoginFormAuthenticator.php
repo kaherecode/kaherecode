@@ -106,7 +106,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
         if ($user->getArchived()) {
             throw new CustomUserMessageAuthenticationException(
-                'Your account has been deactivated.'
+                'Your account have been deactivated.'
             );
         }
 

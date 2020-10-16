@@ -147,5 +147,18 @@ class UserController extends AbstractController
      */
     public function accountConfirmation(Request $request, $token)
     {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)
+            ->findOneByConfirmationToken($token);
+
+        if ($user) {
+            $user->setConfirmationToken(null);
+            $user->setEnabled(true);
+            $em->flush();
+
+            // TODO: send a welcome email with details on first step to take
+        }
+
+        return $this->render('user/account_confirmation.html.twig', ['user' => $user]);
     }
 }
