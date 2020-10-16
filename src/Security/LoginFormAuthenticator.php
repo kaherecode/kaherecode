@@ -121,6 +121,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         TokenInterface $token,
         string $providerKey
     ) {
+        // set the lastLogin value
+        $user = $token->getUser();
+        $user->setLastLogin(new \DateTime());
+        $this->entityManager->flush();
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
