@@ -5,6 +5,9 @@
     <div class="mt-20 mb-20 md:mt-32 md:mb-32 md:w-1/2 md:mx-auto lg:w-1/3">
         <h1 class="font-bold text-2xl">Connecte Toi</h1>
         <form method="post">
+            {% for message in app.flashes('success') %}
+                <span class="block mt-4 text-green-600 text-sm">{{ message }}</span>
+            {% endfor %}
             {% if error %}
             <div class="text-sm text-red-600">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
@@ -26,20 +29,11 @@
                     Se souvenir de moi
                 </label>
             </div>
-            {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Remember me
-                </label>
-            </div>
-            #}
             <div class="mt-2 flex justify-between">
-                <a href="{{ path('app_login') }}" class="text-sm text-blue-500 underline">
+                <a href="{{ path('user_register') }}" class="text-sm text-blue-500 underline">
                     Je n'ai pas de compte
                 </a>
-                <a href="{{ path('app_login') }}" class="text-sm text-blue-500 underline">
+                <a href="{{ path('password_reset_request') }}" class="text-sm text-blue-500 underline">
                     Mot de passe oublier
                 </a>
             </div>

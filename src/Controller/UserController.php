@@ -159,6 +159,106 @@ class UserController extends AbstractController
             // TODO: send a welcome email with details on first step to take
         }
 
-        return $this->render('user/account_confirmation.html.twig', ['user' => $user]);
+        return $this->render(
+            'user/account_confirmation.html.twig',
+            ['user' => $user]
+        );
+    }
+
+    /**
+     * @Route("/password-reset/request", name="password_reset_request")
+     */
+    public function passwordResetRequest(
+        Request $request,
+        MailerInterface $mailer
+    ) {
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository(User::class)
+                ->findOneByEmail($request->get('email'));
+
+            if (!$user) {
+                $this->addFlash('error', 'This email address is not registered.');
+
+                return $this->render('user/password_reset_request.html.twig');
+            }
+
+            $user->setConfirmationToken(sha1(uniqid()));
+            $user->setPasswordRequestedAt(new \DateTime());
+
+            $em->persist($user);
+            $em->flush();
+
+            $email = (new TemplatedEmail())
+                // TODO: create a event subscriber to set the same from address for the whole app
+                ->from(new Address(
+                    'contact@kaherecode.com',
+                    'Aliou de Kaherecode'
+                ))
+                ->to(new Address($user->getEmail(), $user->getFullName()))
+                ->subject("Modifie ton mot de passe sur Kaherecode")
+                ->htmlTemplate('emails/password_reset.html.twig')
+                ->context(['user' => $user]);
+
+            $mailer->send($email);
+
+            $this->addFlash('success', 'A mail have been sent to you, check it to update your password.');
+        }
+
+        return $this->render('user/password_reset_request.html.twig');
+    }
+
+    /**
+     * @Route("/reset-password/{token}", name="reset_password")
+     */
+    public function resetPassword(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        $token
+    ) {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)
+            ->findOneByConfirmationToken($token);
+
+        if ($user && $request->isMethod(Request::METHOD_POST)) {
+            $password = $request->get('password');
+
+            if ($password !== $request->get('confirmPassword')) {
+                $this->addFlash('error', 'Passwords are not the same.');
+
+                return $this->render('user/reset_password.html.twig', ['user' => $user]);
+            }
+
+            // password validation
+            if (!preg_match(
+                '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/',
+                $password
+            )) {
+                $this->addFlash(
+                    'error',
+                    'Password is not valid. Sould be 8 or more characters.
+                    Should contains at least 1 special chars, 1 digit and
+                    1 uppercace letter.'
+                );
+
+                return $this->render('user/reset_password.html.twig', ['user' => $user]);
+            }
+
+            // encode user password
+            $user->setPassword(
+                $passwordEncoder
+                    ->encodePassword($user, $password)
+            );
+            $user->setConfirmationToken(null);
+            $user->setPasswordRequestedAt(null);
+
+            $em->flush();
+
+            $this->addFlash('success', 'Your password have been updated successfully. You can now log in!');
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('user/reset_password.html.twig', ['user' => $user]);
     }
 }
