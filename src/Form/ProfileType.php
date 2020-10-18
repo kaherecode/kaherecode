@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -19,7 +20,7 @@ class ProfileType extends AbstractType
             ->add('email', EmailType::class, ['disabled' => true])
             ->add('username', TextType::class, ['disabled' => true])
             ->add('fullName', TextType::class)
-            ->add('avatar', TextType::class, ['required' => false])
+            ->add('avatar', FileType::class, ['required' => false])
             ->add('bio', TextareaType::class, ['required' => false])
             ->add('github', TextType::class, ['required' => false])
             ->add('twitter', TextType::class, ['required' => false])

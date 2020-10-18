@@ -235,15 +235,41 @@ form {
 
 /** image picker */
 .image-picker {
-    height: 400px;
+    &.article-image-picker {
+        height: 400px;
 
-    @media (max-width: 700px) {
-        height: 250px;
+        input[type='file'] {
+            height: 400px;
+        }
+
+        @media (max-width: 700px) {
+            height: 250px;
+
+            input[type='file'] {
+                height: 250px;
+            }
+        }
+    }
+
+    &.avatar-image-picker {
+        height: 200px;
+        width: 200px;
+
+        input[type='file'] {
+            height: 200px;
+        }
+
+        // @media (max-width: 700px) {
+        //     height: 250px;
+
+        //     input[type='file'] {
+        //         height: 250px;
+        //     }
+        // }
     }
 
     input[type='file'] {
         color: transparent;
-        height: 400px;
 
         &::-webkit-file-upload-button {
             visibility: hidden;
