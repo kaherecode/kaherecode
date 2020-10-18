@@ -34,24 +34,29 @@ class UserController extends AbstractController
             if ($em->getRepository(User::class)->findOneByEmail($user->getEmail())) {
                 $this->addFlash(
                     'error',
-                    'This email address is already taken. Use another one or login.'
+                    'This email address is already taken. Use another one or log in.'
                 );
 
-                return $this->render('user/register.html.twig', [
-                    'form' => $form->createView(),
-                ]);
+                return $this->render(
+                    'user/register.html.twig',
+                    ['form' => $form->createView()]
+                );
             }
 
             // check if username doesn't exists
-            if ($em->getRepository(User::class)->findOneByUsername($user->getUsername())) {
+            if ($em->getRepository(User::class)->findOneByUsername(
+                $user->getUsername()
+            )
+            ) {
                 $this->addFlash(
                     'error',
-                    'This username is already taken. Use another one or login.'
+                    'This username is already taken. Use another one or log in.'
                 );
 
-                return $this->render('user/register.html.twig', [
-                    'form' => $form->createView(),
-                ]);
+                return $this->render(
+                    'user/register.html.twig',
+                    ['form' => $form->createView()]
+                );
             }
 
             // encode user password
@@ -59,7 +64,6 @@ class UserController extends AbstractController
                 $passwordEncoder
                     ->encodePassword($user, $user->getPassword())
             );
-
             $user->setConfirmationToken(sha1(uniqid()));
 
             $em->persist($user);
@@ -67,10 +71,12 @@ class UserController extends AbstractController
 
             $email = (new TemplatedEmail())
                 // TODO: create a event subscriber to set the same from address for the whole app
-                ->from(new Address(
-                    'contact@kaherecode.com',
-                    'Aliou de Kaherecode'
-                ))
+                ->from(
+                    new Address(
+                        'contact@kaherecode.com',
+                        'Aliou de Kaherecode'
+                    )
+                )
                 ->to(new Address($user->getEmail(), $user->getFullName()))
                 ->subject("Bienvenue sur Kaherecode " .$user->getUsername(). "!")
                 ->htmlTemplate('emails/signup.html.twig')
@@ -84,9 +90,10 @@ class UserController extends AbstractController
             );
         }
 
-        return $this->render('user/register.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'user/register.html.twig',
+            ['form' => $form->createView()]
+        );
     }
 
     /**
@@ -117,15 +124,17 @@ class UserController extends AbstractController
             if (!$passwordEncoder->isPasswordValid(
                 $user,
                 $form->get('currentPassword')->getData()
-            )) {
+            )
+            ) {
                 $this->addFlash(
                     'error',
                     'Your password is not correct, try again!'
                 );
 
-                return $this->render('user/edit_profile.html.twig', [
-                    'form' => $form->createView()
-                ]);
+                return $this->render(
+                    'user/edit_profile.html.twig',
+                    ['form' => $form->createView()]
+                );
             }
 
             $em = $this->getDoctrine()->getManager();
@@ -137,9 +146,10 @@ class UserController extends AbstractController
             );
         }
 
-        return $this->render('user/edit_profile.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->render(
+            'user/edit_profile.html.twig',
+            ['form' => $form->createView()]
+        );
     }
 
     /**
@@ -191,10 +201,12 @@ class UserController extends AbstractController
 
             $email = (new TemplatedEmail())
                 // TODO: create a event subscriber to set the same from address for the whole app
-                ->from(new Address(
-                    'contact@kaherecode.com',
-                    'Aliou de Kaherecode'
-                ))
+                ->from(
+                    new Address(
+                        'contact@kaherecode.com',
+                        'Aliou de Kaherecode'
+                    )
+                )
                 ->to(new Address($user->getEmail(), $user->getFullName()))
                 ->subject("Modifie ton mot de passe sur Kaherecode")
                 ->htmlTemplate('emails/password_reset.html.twig')
@@ -202,7 +214,10 @@ class UserController extends AbstractController
 
             $mailer->send($email);
 
-            $this->addFlash('success', 'A mail have been sent to you, check it to update your password.');
+            $this->addFlash(
+                'success',
+                'A mail have been sent to you, check it to update your password.'
+            );
         }
 
         return $this->render('user/password_reset_request.html.twig');
@@ -226,14 +241,18 @@ class UserController extends AbstractController
             if ($password !== $request->get('confirmPassword')) {
                 $this->addFlash('error', 'Passwords are not the same.');
 
-                return $this->render('user/reset_password.html.twig', ['user' => $user]);
+                return $this->render(
+                    'user/reset_password.html.twig',
+                    ['user' => $user]
+                );
             }
 
             // password validation
             if (!preg_match(
                 '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/',
                 $password
-            )) {
+            )
+            ) {
                 $this->addFlash(
                     'error',
                     'Password is not valid. Sould be 8 or more characters.
@@ -241,7 +260,10 @@ class UserController extends AbstractController
                     1 uppercace letter.'
                 );
 
-                return $this->render('user/reset_password.html.twig', ['user' => $user]);
+                return $this->render(
+                    'user/reset_password.html.twig',
+                    ['user' => $user]
+                );
             }
 
             // encode user password
@@ -254,7 +276,10 @@ class UserController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', 'Your password have been updated successfully. You can now log in!');
+            $this->addFlash(
+                'success',
+                'Your password have been updated successfully. You can now log in!'
+            );
 
             return $this->redirectToRoute('app_login');
         }
