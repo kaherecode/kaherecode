@@ -56,7 +56,7 @@ class User implements UserInterface
     private $fullName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      *
      * @Assert\NotBlank()
      * @Assert\Regex(

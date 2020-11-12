@@ -17,7 +17,7 @@
 
         {{ form_start(form) }}
             <div class="form-group">
-                {{ form_widget(form.fullName, {'attr': {'placeholder': 'Prénom et Nom'}}) }}
+                {{ form_widget(form.fullName, {'attr': {'placeholder': 'Prénom et Nom', 'autofocus': 1}}) }}
                 <small class="block text-sm text-red-600">{{ form_errors(form.fullName) }}</small>
             </div>
             <div class="form-group">
@@ -38,7 +38,7 @@
                 </a>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn" value="M'inscrire">
+                <input type="submit" id="signup" class="btn" value="M'inscrire">
             </div>
         {{ form_end(form) }}
     </div>
