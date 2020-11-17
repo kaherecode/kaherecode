@@ -255,9 +255,7 @@ class UserController extends AbstractController
             ) {
                 $this->addFlash(
                     'error',
-                    'Password is not valid. Sould be 8 or more characters.
-                    Should contains at least 1 special chars, 1 digit and
-                    1 uppercace letter.'
+                    'Password is not valid. Sould be 8 or more characters. Should contains at least 1 special chars, 1 digit and 1 uppercace letter.'
                 );
 
                 return $this->render(

@@ -206,4 +206,113 @@ class UserControllerTest extends WebTestCase
             $client->getResponse()->getContent()
         );
     }
+
+    public function testPasswordResetRequestWithNonExistingEmail()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/password-reset/request');
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm(
+            'requestPasswordReset',
+            ['email' => 'whatever@mail.com']
+        );
+        $this->assertResponseIsSuccessful();
+        $this->assertStringContainsString(
+            'This email address is not registered.',
+            $client->getResponse()->getContent()
+        );
+    }
+
+    public function testPasswordResetWithDifferentPasswordConfirmation()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/password-reset/request');
+
+        $client->submitForm(
+            'requestPasswordReset',
+            ['email' => 'kaherecode@mail.com']
+        );
+
+        $userRepository = static::$container->get(UserRepository::class);
+        $user = $userRepository->findOneByEmail('kaherecode@mail.com');
+        $client->request(
+            'GET',
+            '/reset-password/' .$user->getConfirmationToken()
+        );
+
+        $client->submitForm(
+            'resetPassword',
+            ['password' => '1234$ecreT', 'confirmPassword' => '1234$eceT']
+        );
+        $this->assertStringContainsString(
+            'Passwords are not the same.',
+            $client->getResponse()->getContent()
+        );
+    }
+
+    public function testPasswordResetWithNoSecurePassword()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/password-reset/request');
+
+        $client->submitForm(
+            'requestPasswordReset',
+            ['email' => 'kaherecode@mail.com']
+        );
+
+        $userRepository = static::$container->get(UserRepository::class);
+        $user = $userRepository->findOneByEmail('kaherecode@mail.com');
+        $client->request(
+            'GET',
+            '/reset-password/' .$user->getConfirmationToken()
+        );
+
+        $client->submitForm(
+            'resetPassword',
+            ['password' => '123', 'confirmPassword' => '123']
+        );
+        $this->assertStringContainsString(
+            'Password is not valid. Sould be 8 or more characters. Should contains at least 1 special chars, 1 digit and 1 uppercace letter.',
+            $client->getResponse()->getContent()
+        );
+    }
+
+    public function testPasswordReset()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/password-reset/request');
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm(
+            'requestPasswordReset',
+            ['email' => 'kaherecode@mail.com']
+        );
+        $this->assertResponseIsSuccessful();
+        $this->assertStringContainsString(
+            'A mail have been sent to you, check it to update your password.',
+            $client->getResponse()->getContent()
+        );
+
+        $userRepository = static::$container->get(UserRepository::class);
+        $user = $userRepository->findOneByEmail('kaherecode@mail.com');
+        $client->request(
+            'GET',
+            '/reset-password/' .$user->getConfirmationToken()
+        );
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'Modifie ton mot de passe');
+
+        $client->submitForm(
+            'resetPassword',
+            ['password' => '1234$ecreT', 'confirmPassword' => '1234$ecreT']
+        );
+        $this->assertResponseRedirects('/login');
+
+        $passwordEncoder = static::$container->get(
+            'security.user_password_encoder.generic'
+        );
+        $user = $userRepository->findOneByEmail('kaherecode@mail.com');
+        $this->assertTrue($passwordEncoder->isPasswordValid($user, '1234$ecreT'));
+    }
 }
