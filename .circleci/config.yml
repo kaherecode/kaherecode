@@ -5,14 +5,15 @@ jobs:
       - image: circleci/php:7.4-node-browsers
         environment:
           MYSQL_HOST: 127.0.0.1
-          MYSQL_DB: db_name
-          MYSQL_USER: db_user
-          MYSQL_PASSWORD: db_password
+          MYSQL_DB: kaherecode_test
+          MYSQL_USER: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_PASSWORD:
 
       - image: circleci/mysql:5.7
         environment:
-          MYSQL_USER: db_user
-          MYSQL_PASSWORD: db_password
+          MYSQL_USER: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
 
     steps:
       - checkout
@@ -35,6 +36,13 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
             - ./vendor
+
+      - run:
+          name: "Setup Database"
+          command: |
+            php bin/console doctrine:database:create --env=test
+            php bin/console doctrine:migrations:migrate --env=test
+            php bin/console doctrine:fixtures:load -n --env=test
 
       # restore yarn cache
       - restore_cache:
