@@ -31,6 +31,7 @@ class UserFixtures extends Fixture
                 '123$ecreT'
             )
         );
+        $user->setEnabled(true);
 
         $manager->persist($user);
         $manager->flush();
