@@ -4,18 +4,18 @@ jobs:
         docker:
             # php
             - image: circleci/php:7.4-node-browsers
-            - environment:
-                MYSQL_HOST: 127.0.0.1
-                MYSQL_DB: kaherecode
-                MYSQL_USER: root
-                MYSQL_ALLOW_EMPTY_PASSWORD: true
-                MYSQL_PASSWORD:
+                environment:
+                    MYSQL_HOST: 127.0.0.1
+                    MYSQL_DB: kaherecode
+                    MYSQL_USER: root
+                    MYSQL_ALLOW_EMPTY_PASSWORD: true
+                    MYSQL_PASSWORD:
 
             # mysql
             - image: circleci/mysql:5.7
-            - environment:
-                MYSQL_USER: root
-                MYSQL_ALLOW_EMPTY_PASSWORD: true
+                environment:
+                    MYSQL_USER: root
+                    MYSQL_ALLOW_EMPTY_PASSWORD: true
 
         steps:
             - checkout
