@@ -5,15 +5,14 @@ jobs:
       - image: circleci/php:7.4-node-browsers
         environment:
           MYSQL_HOST: 127.0.0.1
-          MYSQL_DB: kaherecode
-          MYSQL_USER: root
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
-          MYSQL_PASSWORD:
+          MYSQL_DB: db_name
+          MYSQL_USER: db_user
+          MYSQL_PASSWORD: db_password
 
       - image: circleci/mysql:5.7
         environment:
-          MYSQL_USER: root
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_USER: db_user
+          MYSQL_PASSWORD: db_password
 
     steps:
       - checkout
