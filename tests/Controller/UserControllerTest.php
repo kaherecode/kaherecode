@@ -25,6 +25,35 @@ class UserControllerTest extends WebTestCase
         $this->assertSelectorTextContains('small', 'Thanks for registering.');
     }
 
+    public function testUserAccountConfirmation()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/register');
+        $client->submitForm(
+            'signup',
+            [
+                'user_registration[fullName]' => 'Orion',
+                'user_registration[email]' => 'orion@mail.com',
+                'user_registration[username]' => 'orion',
+                'user_registration[password]' => 'Ori@n_20',
+            ]
+        );
+        $this->assertResponseIsSuccessful();
+
+        $userRepository = static::$container->get(UserRepository::class);
+        $user = $userRepository->findOneByEmail('orion@mail.com');
+        $client->request(
+            'GET',
+            '/register/confirmation/' .$user->getConfirmationToken()
+        );
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains(
+            'h1',
+            'Bienvenue orion! Ton compte à été valider!'
+        );
+    }
+
     public function testRegisterDuplicateEmail()
     {
         $client = static::createClient();
