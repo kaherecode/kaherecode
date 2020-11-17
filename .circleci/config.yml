@@ -1,34 +1,53 @@
 version: 2.1
 jobs:
-  build:
-    docker:
-      # php version
-      - image: circleci/php:7.4-node-browsers
+    build:
+        docker:
+            # php
+            - image: circleci/php:7.4-node-browsers
 
-    steps:
-      - checkout
+        steps:
+            - checkout
 
-      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-      - run: sudo docker-php-ext-install zip
+            - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+            - run: sudo docker-php-ext-install zip
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            # "composer.lock" can be used if it is committed to the repo
-            - v1-dependencies-{{ checksum "composer.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            # Download and cache dependencies
+            - restore_cache:
+                keys:
+                    # "composer.lock" can be used if it is committed to the repo
+                    - v1-dependencies-{{ checksum "composer.json" }}
+                    # fallback to using the latest cache if no exact match is found
+                    - v1-dependencies-
 
-      - run:
-          name: "Install Dependencies"
-          command: composer install -n --prefer-dist
+            - run:
+                name: "Install Dependencies"
+                command: composer install -n --prefer-dist
 
-      - save_cache:
-          key: v1-dependencies-{{ checksum "composer.json" }}
-          paths:
-            - ./vendor
+            - save_cache:
+                key: v1-dependencies-{{ checksum "composer.json" }}
+                paths:
+                    - ./vendor
 
-      # run tests with phpunit
-      - run:
-          name: "Run tests"
-          command: composer tests
+            - restore_cache: # special step to restore the dependency cache if `package.json` does not change
+                keys:
+                    - node-v1-{{ checksum "package.json" }}
+                    # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+                    - node-v1-
+
+            - run:
+                name: "Install JS Dependencies"
+                command: yarn
+
+            - save_cache: # special step to save the dependency cache with the `package.json` cache key template
+                key: node-v1-{{ checksum "package.json" }}
+                paths:
+                    - node_modules
+
+            - run:
+                name: "Build assets"
+                command: yarn run encore production
+
+            # run tests with phpunit
+            - run:
+                name: "Run tests"
+                command: composer tests
