@@ -4,12 +4,24 @@ jobs:
         docker:
             # php
             - image: circleci/php:7.4-node-browsers
+            - environment:
+                MYSQL_HOST: 127.0.0.1
+                MYSQL_DB: kaherecode
+                MYSQL_USER: root
+                MYSQL_ALLOW_EMPTY_PASSWORD: true
+                MYSQL_PASSWORD:
+
+            # mysql
+            - image: circleci/mysql:5.7
+            - environment:
+                MYSQL_USER: root
+                MYSQL_ALLOW_EMPTY_PASSWORD: true
 
         steps:
             - checkout
 
-            - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-            - run: sudo docker-php-ext-install zip
+            - run: sudo apt update
+            - run: sudo docker-php-ext-install zip pdo_mysql
 
             # Download and cache dependencies
             - restore_cache:
@@ -36,7 +48,7 @@ jobs:
 
             - run:
                 name: "Install JS Dependencies"
-                command: yarn
+                command: yarn install
 
             - save_cache: # special step to save the dependency cache with the `package.json` cache key template
                 key: node-v1-{{ checksum "package.json" }}
