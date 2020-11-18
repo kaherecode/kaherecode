@@ -19,5 +19,7 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     },
-    "dependencies": {}
+    "dependencies": {
+        "marked": "^1.2.4"
+    }
 }

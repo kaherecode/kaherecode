@@ -103,7 +103,7 @@
             <textarea id="editor" class=""></textarea>
         </div> #}
     </div>
-    <div class="mt-8 flex editor">
+    <div class="mt-8 flex editor" id="editor">
         <textarea class="py-4 px-8 resize-none outline-none text-lg w-full md:w-1/2"></textarea>
         <div class="separator w-8 py-4 flex flex-col items-center bg-gray-200">
             <span class="cursor-pointer">
@@ -118,7 +118,7 @@
                 <FullscreenIcon value={{ size: '1.3rem', color: '#4a5568' }} />
             </span> #}
         </div>
-        <article class="article-view bg-white overflow-auto py-4 px-8 text-lg hidden md:block md:w-1/2">
+        <article class="bg-white overflow-auto py-4 px-8 text-lg hidden md:block md:w-1/2" id="output">
             <h1>Content</h1>
         </article>
     </div>
