@@ -85,24 +85,43 @@
             </li>
         </ul>
     </div>
-        <div class="mt-32 mx-4 lg:w-10/12 lg:mx-auto xl:w-7/12">
-            <div class="bg-gray-300 rounded-md">
-                <div class="text-center text-gray-700 relative flex justify-center items-center image-picker article-image-picker">
-                    <span>Sélectionne une image à la une</span>
-                    <input type="file" id="inputFile" class="w-full absolute outline-none" accept="image/*" />
-                    <img src="" alt="" class="object-cover w-full h-full" />
-                </div>
-                <div class="p-3">
-                    <input type="text" placeholder="Lien Youtube de la vidéo" class="px-4 py-2 w-full rounded-md border-2 border-gray-400 focus:border-0 outline-none" />
-                </div>
+    <div class="mt-32 mx-4 lg:w-10/12 lg:mx-auto xl:w-7/12">
+        <div class="bg-gray-300 rounded-md">
+            <div class="text-center text-gray-700 relative flex justify-center items-center image-picker article-image-picker">
+                <span>Sélectionne une image à la une</span>
+                <input type="file" id="inputFile" class="w-full absolute outline-none" accept="image/*" />
+                <img src="" alt="" class="object-cover w-full h-full" />
             </div>
-            <div class="mt-8">
-                <input type="text" placeholder="Comment faire une app géniale" class="w-full bg-gray-200 text-3xl font-semibold border-b-2 border-gray-300 py-6 outline-none" />
-            </div>
-            <div class="mt-8 mb-4">
-                <article id="editor" class="bg-white pt-8"></article>
+            <div class="p-3">
+                <input type="text" placeholder="Lien Youtube de la vidéo" class="px-4 py-2 w-full rounded-md border-2 border-gray-400 focus:border-0 outline-none" />
             </div>
         </div>
+        <div class="mt-8">
+            <input type="text" placeholder="Comment faire une app géniale" class="w-full bg-gray-200 text-3xl font-semibold border-b-2 border-gray-300 py-6 outline-none" />
+        </div>
+        {# <div class="mt-8">
+            <textarea id="editor" class=""></textarea>
+        </div> #}
+    </div>
+    <div class="mt-8 flex editor">
+        <textarea class="py-4 px-8 resize-none outline-none text-lg w-full md:w-1/2"></textarea>
+        <div class="separator w-8 py-4 flex flex-col items-center bg-gray-200">
+            <span class="cursor-pointer">
+                {#
+                <ViewIcon value={{ size: '1.3rem', color: '#4a5568' }} /> #}
+            </span>
+            <span class="cursor-pointer mt-4">
+                {#
+                <TogglePreviewIcon value={{ size: '1.3rem', color: '#4a5568' }} /> #}
+            </span>
+            {# <span className='cursor-pointer mt-4'>
+                <FullscreenIcon value={{ size: '1.3rem', color: '#4a5568' }} />
+            </span> #}
+        </div>
+        <article class="article-view bg-white overflow-auto py-4 px-8 text-lg hidden md:block md:w-1/2">
+            <h1>Content</h1>
+        </article>
+    </div>
     {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
     {% endblock %}
