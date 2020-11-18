@@ -13,3 +13,4 @@ import '../scss/app.scss';
 
 import './components/toggle'
 import './components/tabs'
+import './components/image_picker.js'

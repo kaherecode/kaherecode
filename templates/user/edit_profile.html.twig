@@ -15,7 +15,7 @@
             <div class="text-center bg-gray-300 text-gray-700 relative flex justify-center items-center rounded-full mx-auto text-sm image-picker avatar-image-picker">
                 <span>Sélectionne une photo de profil</span>
                 {{ form_widget(form.avatar, {'attr': {'class': 'w-full absolute outline-none', 'accept': 'image/*'}}) }}
-                {# <img src="{{ asset('images/avatar.png') }}" alt='' class='object-cover' /> #}
+                <img src="{{ asset('images/avatar.png') }}" alt='' class='object-cover w-full h-full rounded-full' />
             </div>
             <div class="mt-6">
                 <a href="" class="btn btn-danger">Désactiver mon compte</a>

@@ -36,6 +36,7 @@ class CoreController extends AbstractController
      */
     public function newTutorial()
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('core/new_tutorial.html.twig');
     }
 }
