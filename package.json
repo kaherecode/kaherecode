@@ -18,5 +18,9 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "@editorjs/editorjs": "^2.19.0",
+        "@editorjs/header": "^2.6.1"
     }
 }
