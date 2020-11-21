@@ -229,6 +229,20 @@ form {
     .form-group {
         @apply mt-4;
     }
+
+    &.editor-form {
+        input, textarea {
+            @apply rounded-none;
+        }
+
+        input.video-link {
+            @apply px-4 py-2 rounded-md border-2 border-gray-400;
+        }
+
+        input.title {
+            @apply border-t-0 border-l-0 border-r-0 bg-gray-200 text-3xl font-semibold border-b-2 border-gray-300 py-2 #{!important};
+        }
+    }
 }
 /** ./forms */
 

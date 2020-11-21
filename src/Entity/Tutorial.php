@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TutorialRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TutorialRepository;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=TutorialRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Tutorial
 {
@@ -77,9 +79,38 @@ class Tutorial
      */
     private $demoLink;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $videoLink;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $markdownContent;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $uuid;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __construct()
+    {
+        $this->isPublished = false;
+        $this->isValidated = true;
+    }
+
+    public function generateSlug(SluggerInterface $slugger)
+    {
+        if (!$this->slug || $this->slug === '-') {
+            $this->slug = (string) $slugger
+                ->slug((string) $this->title)->lower(). "-" .uniqid();
+        }
     }
 
     public function getTitle(): ?string
@@ -159,9 +190,12 @@ class Tutorial
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
 
         return $this;
     }
@@ -222,6 +256,45 @@ class Tutorial
     public function setDemoLink(?string $demoLink): self
     {
         $this->demoLink = $demoLink;
+
+        return $this;
+    }
+
+    public function getVideoLink(): ?string
+    {
+        return $this->videoLink;
+    }
+
+    public function setVideoLink(?string $videoLink): self
+    {
+        $this->videoLink = $videoLink;
+
+        return $this;
+    }
+
+    public function getMarkdownContent(): ?string
+    {
+        return $this->markdownContent;
+    }
+
+    public function setMarkdownContent(?string $markdownContent): self
+    {
+        $this->markdownContent = $markdownContent;
+
+        return $this;
+    }
+
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setUuid(): self
+    {
+        $this->uuid = uniqid();
 
         return $this;
     }

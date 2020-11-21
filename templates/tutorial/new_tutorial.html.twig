@@ -26,7 +26,7 @@
                 </a>
             </li>
             <li class="ml-4 md:ml-6">
-                <a href="" class="flex items-center justify-center md:bg-gray-800 md:py-1 md:w-32">
+                <button type="submit" form="tutorialForm" href="" class="flex items-center justify-center md:bg-gray-800 md:py-1 md:w-32">
                     <span class="md:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save text-gray-900 w-4 h-4">
                             <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
@@ -44,7 +44,7 @@
                     <span class="hidden ml-1 text-gray-200 md:block">
                         Enregistrer
                     </span>
-                </a>
+                </button>
             </li>
             <li class="ml-4 md:ml-6">
                 <a href="" class="flex items-center justify-center md:bg-gray-800 md:py-1 md:w-24">
@@ -86,31 +86,40 @@
             </li>
         </ul>
     </div>
+    {{ form_start(form, {'attr': {'class': 'editor-form', 'id': 'tutorialForm'}}) }}
     <div class="mt-24 mx-4 lg:w-10/12 lg:mx-auto xl:w-7/12">
         <div class="bg-gray-300 rounded-md">
             <div class="text-center text-gray-700 relative flex justify-center items-center image-picker article-image-picker">
                 <span>Sélectionne une image à la une</span>
-                <input type="file" id="inputFile" class="w-full absolute outline-none" accept="image/*" />
+                {# <input type="file" id="inputFile" class="" accept="" /> #}
+                {{ form_widget(form.picture, {'attr': {'class': 'w-full absolute outline-none', 'accept': 'image/*'}}) }}
                 <img src="" alt="" class="object-cover w-full h-full" />
             </div>
             <div class="p-3">
-                <input type="text" placeholder="Lien Youtube de la vidéo" class="px-4 py-2 w-full rounded-md border-2 border-gray-400 focus:border-0 outline-none" />
+                {# <input type="text" placeholder="Lien Youtube de la vidéo" class="video-link" /> #}
+                {{ form_widget(form.videoLink, {'attr': {'class': 'video-link', 'placeholder': 'Lien Youtube de la vidéo'}}) }}
             </div>
         </div>
         <div class="mt-4">
-            <input type="text" placeholder="Comment faire une app géniale" class="w-full bg-gray-200 text-3xl font-semibold border-b-2 border-gray-300 py-2 outline-none" />
+            {# <input type="text" placeholder="Comment faire une app géniale" class="title" /> #}
+            {{ form_widget(form.title, {'attr': {'class': 'title', 'placeholder': 'Comment faire une app géniale'}}) }}
         </div>
         <div class="mt-4">
-            <textarea placeholder="Donne une courte description du tutoriel" class="px-4 py-2 resize-none outline-none w-full" rows="5"></textarea>
+            {# <textarea placeholder="Donne une courte description du tutoriel" class="px-4 py-2 resize-none outline-none w-full" rows="5"></textarea> #}
+            {{ form_widget(form.description, {'attr': {'rows': 5, 'placeholder': 'Donne une courte description du tutoriel'}}) }}
         </div>
         <div class="mt-4 flex">
-            <input type="text" name="" placeholder="Tags: php, symfony, rest" class="px-4 py-2 w-1/3 outline-none">
-            <input type="text" name="" placeholder="Code source" class="px-4 py-2 w-1/3 outline-none border-r border-l">
-            <input type="text" name="" placeholder="Demo" class="px-4 py-2 w-1/3 outline-none">
+            {# <input type="text" name="" placeholder="Tags: php, symfony, rest" class=""> #}
+            {{ form_widget(form.tags, {'attr': {'class': 'w-1/3', 'placeholder': 'Tags: php, symfony, rest'}}) }}
+            {# <input type="text" name="" placeholder="Code source" class=""> #}
+            {{ form_widget(form.sourceCodeLink, {'attr': {'class': 'w-1/3', 'placeholder': 'Code source'}}) }}
+            {# <input type="text" name="" placeholder="Demo" class=""> #}
+            {{ form_widget(form.demoLink, {'attr': {'class': 'w-1/3', 'placeholder': 'Demo'}}) }}
         </div>
     </div>
     <div class="mt-8 flex editor" id="editor">
-        <textarea class="py-4 px-8 resize-none outline-none text-lg w-full md:w-1/2"></textarea>
+        {{ form_widget(form.markdownContent, {'attr': {'class': 'py-4 px-8 resize-none outline-none text-lg w-full md:w-1/2'}}) }}
+        {# <textarea class="py-4 px-8 resize-none outline-none text-lg w-full md:w-1/2"></textarea> #}
         <div class="separator w-8 py-4 flex flex-col items-center bg-gray-200">
             <span class="cursor-pointer">
                 {#
@@ -125,9 +134,9 @@
             </span> #}
         </div>
         <article class="bg-white overflow-auto py-4 px-8 text-lg hidden md:block md:w-1/2" id="output">
-            <h1>Content</h1>
         </article>
     </div>
+    {{ form_end(form) }}
     {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
     {% endblock %}
