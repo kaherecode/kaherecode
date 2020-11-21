@@ -5,14 +5,14 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CoreController extends AbstractController
+class TutorialController extends AbstractController
 {
     /**
      * @Route("/", name="homepage")
      */
     public function index()
     {
-        return $this->render('core/index.html.twig');
+        return $this->render('tutorial/index.html.twig');
     }
 
     /**
@@ -20,7 +20,7 @@ class CoreController extends AbstractController
      */
     public function tutorialView($slug)
     {
-        return $this->render('core/tutorial_view.html.twig');
+        return $this->render('tutorial/tutorial_view.html.twig');
     }
 
     /**
@@ -28,7 +28,7 @@ class CoreController extends AbstractController
      */
     public function tutorialsByTag($slug)
     {
-        return $this->render('core/tag_tutorials.html.twig');
+        return $this->render('tutorial/tag_tutorials.html.twig');
     }
 
     /**
@@ -37,6 +37,6 @@ class CoreController extends AbstractController
     public function newTutorial()
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        return $this->render('core/new_tutorial.html.twig');
+        return $this->render('tutorial/new_tutorial.html.twig');
     }
 }
