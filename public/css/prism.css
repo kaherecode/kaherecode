@@ -5,7 +5,7 @@
  * Ported for PrismJS by Albert Vallverdu [@byverdu]
  */
 
-pre[class*=language-] {
+pre {
     background: #282a36;
     padding: 1em;
     margin: .5em 0;
@@ -26,7 +26,6 @@ pre[class*=language-] {
     -webkit-hyphens: none;
     -ms-hyphens: none;
     hyphens: none;
-    font-size: 0.81em;
 }
 
 /*code[class*='language-'],
@@ -64,6 +63,10 @@ pre[class*='hljs'] {
 pre[class*='hljs'] {
   background: #282a36;
 }*/
+
+pre > code {
+	font-size: 0.81em;
+}
 
 pre > code .token {
 	font-family: 'Fira Code';
