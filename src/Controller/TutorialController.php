@@ -8,7 +8,9 @@ use App\Form\TutorialType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class TutorialController extends AbstractController
 {
@@ -31,7 +33,7 @@ class TutorialController extends AbstractController
     /**
      * @Route("/tutorials/new", name="new_tutorial")
      */
-    public function create(Request $request)
+    public function create(Request $request, SluggerInterface $slugger)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -45,6 +47,7 @@ class TutorialController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            // set the tutorial categories
             $categories = array_filter(
                 explode(",", $form->get('categories')->getData()),
                 fn ($c) => ctype_alnum(trim($c))
@@ -65,6 +68,25 @@ class TutorialController extends AbstractController
                         $em->persist($category);
                     }
                 }
+            }
+
+            // upload picture
+            $picture = $form->get('picture')->getData();
+            if ($picture) {
+                $fileName = $slugger->slug($tutorial->getTitle())->lower().
+                    '-' .uniqid(). '.' .$picture->guessExtension();
+
+                try {
+                    $picture->move(
+                        $this->getParameter('picture_uploads'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    // TODO: handle file upload
+                    die('Error uploading file');
+                }
+
+                $tutorial->setPicture($fileName);
             }
 
             $em->persist($tutorial);
