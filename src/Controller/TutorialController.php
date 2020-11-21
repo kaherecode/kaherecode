@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Tutorial;
 use App\Form\TutorialType;
 use Symfony\Component\Form\FormInterface;
@@ -43,6 +44,29 @@ class TutorialController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $categories = array_filter(
+                explode(",", $form->get('categories')->getData()),
+                fn ($c) => ctype_alnum(trim($c))
+            );
+            foreach ($categories as $cat) {
+                if (trim($cat)) {
+                    // check if the category already exists
+                    $existingCategory = $em
+                        ->getRepository(Category::class)
+                        ->findOneByLabel(strtolower(trim($cat)));
+
+                    if ($existingCategory) { // if it is, simply add it
+                        $tutorial->addCategory($existingCategory);
+                    } else { // if not create a new one the add it to tutorial
+                        $category = new Category();
+                        $category->setLabel(trim($cat));
+                        $tutorial->addCategory($category);
+                        $em->persist($category);
+                    }
+                }
+            }
+
             $em->persist($tutorial);
             $em->flush();
         }

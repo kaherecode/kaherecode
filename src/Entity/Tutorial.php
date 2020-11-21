@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TutorialRepository;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -94,6 +96,15 @@ class Tutorial
      */
     private $uuid;
 
+    /**
+     * @ORM\ManyToMany(
+     *     targetEntity=Category::class,
+     *     inversedBy="tutorials",
+     *     cascade="persist"
+     * )
+     */
+    private $categories;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +114,7 @@ class Tutorial
     {
         $this->isPublished = false;
         $this->isValidated = true;
+        $this->categories = new ArrayCollection();
     }
 
     public function generateSlug(SluggerInterface $slugger)
@@ -295,6 +307,30 @@ class Tutorial
     public function setUuid(): self
     {
         $this->uuid = uniqid();
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }
