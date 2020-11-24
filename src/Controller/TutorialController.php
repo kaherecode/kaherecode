@@ -5,12 +5,12 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Tutorial;
 use App\Form\TutorialType;
+use App\Service\CloudinaryService;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class TutorialController extends AbstractController
 {
@@ -33,8 +33,11 @@ class TutorialController extends AbstractController
     /**
      * @Route("/tutorials/new", name="new_tutorial")
      */
-    public function create(Request $request, SluggerInterface $slugger)
-    {
+    public function create(
+        Request $request,
+        SluggerInterface $slugger,
+        CloudinaryService $cloudinary
+    ) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $tutorial = new Tutorial();
@@ -70,25 +73,23 @@ class TutorialController extends AbstractController
                 }
             }
 
-            // upload picture
-            $picture = $form->get('picture')->getData();
+            // upload picture to cloudinary
+            $picture = $form->get("picture")->getData();
             if ($picture) {
-                $fileName = $slugger->slug($tutorial->getTitle())->lower().
-                    '-' .uniqid(). '.' .$picture->guessExtension();
+                $upload = $cloudinary->upload(
+                    $picture,
+                    [
+                        "folder" => "kaherecode/tutorials/",
+                        "format" => "webp"
+                    ]
+                );
+                $thumbnailURL = "https://res.cloudinary.com/{$_ENV['CLOUDINARY_CLOUD']}/{$upload['resource_type']}/{$upload['type']}/c_thumb,w_400,g_face/v{$upload['version']}/{$upload['public_id']}.{$upload['format']}";
 
-                try {
-                    $picture->move(
-                        $this->getParameter('picture_uploads'),
-                        $fileName
-                    );
-                } catch (FileException $e) {
-                    // TODO: handle file upload
-                    die('Error uploading file');
-                }
-
-                $tutorial->setPicture($fileName);
+                $tutorial->setPictureURL($upload['secure_url']);
+                $tutorial->setThumbnailURL($thumbnailURL);
             }
 
+            $tutorial->setAuthor($this->getUser());
             $em->persist($tutorial);
             $em->flush();
         }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -146,11 +148,17 @@ class User implements UserInterface
      */
     private $lastLogin;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tutorial::class, mappedBy="author")
+     */
+    private $tutorials;
+
     public function __construct()
     {
         $this->enabled = false;
         $this->archived = false;
         $this->registeredAt = new \DateTime();
+        $this->tutorials = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -396,6 +404,36 @@ class User implements UserInterface
     public function setLastLogin(?\DateTimeInterface $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tutorial[]
+     */
+    public function getTutorials(): Collection
+    {
+        return $this->tutorials;
+    }
+
+    public function addTutorial(Tutorial $tutorial): self
+    {
+        if (!$this->tutorials->contains($tutorial)) {
+            $this->tutorials[] = $tutorial;
+            $tutorial->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTutorial(Tutorial $tutorial): self
+    {
+        if ($this->tutorials->removeElement($tutorial)) {
+            // set the owning side to null (unless already changed)
+            if ($tutorial->getAuthor() === $this) {
+                $tutorial->setAuthor(null);
+            }
+        }
 
         return $this;
     }

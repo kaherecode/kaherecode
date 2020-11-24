@@ -39,7 +39,7 @@ class Tutorial
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picture;
+    private $pictureURL;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -105,6 +105,17 @@ class Tutorial
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $thumbnailURL;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tutorials")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -161,14 +172,14 @@ class Tutorial
         return $this;
     }
 
-    public function getPicture(): ?string
+    public function getPictureURL(): ?string
     {
-        return $this->picture;
+        return $this->pictureURL;
     }
 
-    public function setPicture(?string $picture): self
+    public function setPictureURL(?string $pictureURL): self
     {
-        $this->picture = $picture;
+        $this->pictureURL = $pictureURL;
 
         return $this;
     }
@@ -331,6 +342,30 @@ class Tutorial
     public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getThumbnailURL(): ?string
+    {
+        return $this->thumbnailURL;
+    }
+
+    public function setThumbnailURL(?string $thumbnailURL): self
+    {
+        $this->thumbnailURL = $thumbnailURL;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

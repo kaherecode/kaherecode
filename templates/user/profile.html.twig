@@ -114,17 +114,17 @@
             <div class="mt-5 tabs min-tabs" id="tutorialsTabs">
                 <ul class="tab-list">
                     <li class="tab-item active" data-target="drafts">
-                        Brouillons (20)
+                        Brouillons ({{ user.tutorials|filter(t => not t.isPublished)|length }})
                     </li>
                     <li class="tab-item" data-target="published">
-                        Publiés (40)
+                        Publiés ({{ user.tutorials|filter(t => t.isPublished)|length }})
                     </li>
                 </ul>
                 <div id="drafts" class="tab-content">
-                    {% include 'includes/_profile_tutorials_list.html.twig' %}
+                    {% include 'includes/_profile_tutorials_list.html.twig' with {'tutorials': user.tutorials|filter(t => not t.isPublished)} %}
                 </div>
                 <div id="published" class="tab-content">
-                    {% include 'includes/_profile_tutorials_list.html.twig' %}
+                    {% include 'includes/_profile_tutorials_list.html.twig' with {'tutorials': user.tutorials|filter(t => t.isPublished)} %}
                 </div>
             </div>
         </div>

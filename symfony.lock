@@ -1,4 +1,7 @@
 {
+    "cloudinary/cloudinary_php": {
+        "version": "1.19.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99"
     },
@@ -567,6 +570,9 @@
     },
     "twig/extra-bundle": {
         "version": "v3.0.5"
+    },
+    "twig/intl-extra": {
+        "version": "v3.1.1"
     },
     "twig/twig": {
         "version": "v3.0.5"
