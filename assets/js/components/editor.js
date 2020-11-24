@@ -13,7 +13,7 @@ marked.setOptions({
 
 const textarea = document.querySelector('#editor > textarea')
 const output = document.querySelector('#editor > #output')
-output.innerHTML = marked('# Contenu de l\'article.')
+output.innerHTML = marked(textarea.innerHTML)
 
 textarea.addEventListener('input', (event) => {
   output.innerHTML = marked(event.target.value)

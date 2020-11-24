@@ -23,6 +23,14 @@ class TutorialController extends AbstractController
     }
 
     /**
+     * @Route("/tag/{slug}", name="tag_tutorials")
+     */
+    public function tutorialsByTag($slug)
+    {
+        return $this->render('tutorial/tag_tutorials.html.twig');
+    }
+
+    /**
      * @Route("/tutorial/{slug}", name="tutorial_view")
      */
     public function show($slug)
@@ -92,19 +100,32 @@ class TutorialController extends AbstractController
             $tutorial->setAuthor($this->getUser());
             $em->persist($tutorial);
             $em->flush();
+
+            return $this->redirectToRoute(
+                'edit_tutorial',
+                ['uuid' => $tutorial->getUuid()]
+            );
         }
 
         return $this->render(
-            'tutorial/new_tutorial.html.twig',
+            'tutorial/tutorial_form.html.twig',
             ['form' => $form->createView()]
         );
     }
 
     /**
-     * @Route("/tag/{slug}", name="tag_tutorials")
+     * @Route("/tutorials/{uuid}/edit", name="edit_tutorial")
      */
-    public function tutorialsByTag($slug)
+    public function edit(Request $request, Tutorial $tutorial)
     {
-        return $this->render('tutorial/tag_tutorials.html.twig');
+        /**
+         * @var FormInterface
+         */
+        $form = $this->createForm(TutorialType::class, $tutorial);
+
+        return $this->render(
+            'tutorial/tutorial_form.html.twig',
+            ['form' => $form->createView(), 'tutorial' => $tutorial]
+        );
     }
 }

@@ -13,7 +13,7 @@
         {% endif %}
         <div class="{{ tutorial.thumbnailURL ? 'sm:ml-2' : '' }}">
             <h2 class="font-bold text-lg tracking-wide">
-                <a href="">{{ tutorial.title }}</a>
+                <a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}">{{ tutorial.title }}</a>
             </h2>
             <div class="mt-2">
                 {% if tutorial.isPublished %}

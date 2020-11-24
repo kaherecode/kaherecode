@@ -10,12 +10,15 @@ document.querySelectorAll('.image-picker').forEach((item) => {
   const img = childrenMatches(item, 'img')[0]
 
   if (
-    img.getAttribute('src') === '' ||
-    typeof img.getAttribute('src') === 'undefined'
+    img &&
+    (img.getAttribute('src') === '' ||
+      typeof img.getAttribute('src') === 'undefined')
   ) {
     img.style.display = 'none'
   } else {
-    placeholder.style.display = 'none'
+    if (placeholder) {
+      placeholder.style.display = 'none'
+    }
   }
 
   input.addEventListener('change', (event) => {
