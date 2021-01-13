@@ -7,7 +7,7 @@ const childrenMatches = function (elem, selector) {
 document.querySelectorAll('.image-picker').forEach((item) => {
   const input = childrenMatches(item, 'input[type=file]')[0]
   const placeholder = childrenMatches(item, 'span')[0]
-  const img = childrenMatches(item, 'img')[0]
+  let img = childrenMatches(item, 'img')[0]
 
   if (
     img &&
@@ -17,11 +17,16 @@ document.querySelectorAll('.image-picker').forEach((item) => {
     img.style.display = 'none'
   } else {
     if (placeholder) {
-      placeholder.style.display = 'none'
+      placeholder.style.display = 'block'
     }
   }
 
   input.addEventListener('change', (event) => {
+    if (!img) {
+      img = document.createElement('img')
+      img.className = 'object-cover object-center w-full h-full'
+      item.appendChild(img)
+    }
     img.setAttribute('src', URL.createObjectURL(event.target.files[0]))
     img.style.display = 'block'
     placeholder.style.display = 'none'

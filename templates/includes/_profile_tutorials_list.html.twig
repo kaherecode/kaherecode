@@ -8,7 +8,9 @@
     <div class="p-4 border-solid border-b border-gray-400 w-full sm:flex sm:items-start">
         {% if tutorial.thumbnailURL %}
         <div class="w-56 hidden sm:block">
-            <img src="{{ tutorial.thumbnailURL }}" alt="" class="h-full w-full object-cover" />
+            <a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}">
+                <img src="{{ tutorial.thumbnailURL }}" alt="" class="h-full w-full object-cover" />
+            </a>
         </div>
         {% endif %}
         <div class="{{ tutorial.thumbnailURL ? 'sm:ml-2' : '' }}">

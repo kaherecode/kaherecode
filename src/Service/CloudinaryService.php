@@ -23,4 +23,9 @@ class CloudinaryService
     {
         return \Cloudinary\Uploader::upload($file, $options);
     }
+
+    public function destroy($publicId, $options = [])
+    {
+        return \Cloudinary\Uploader::destroy($publicId, $options);
+    }
 }

@@ -4,7 +4,14 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
-    <title>Écrire un nouveau tutoriel | Kaherecode</title>
+    <title>
+        {% if tutorial is defined %}
+            Modifier le tutoriel {{ tutorial.title }}
+        {% else %}
+            Écrire un nouveau tutoriel
+        {% endif %}
+        | Kaherecode
+    </title>
     <link rel="icon" href="{{ asset('images/favicon.ico') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/prism.css') }}">
     {% block stylesheets %}
@@ -110,7 +117,11 @@
             {{ form_widget(form.description, {'attr': {'rows': 5, 'placeholder': 'Donne une courte description du tutoriel'}}) }}
         </div>
         <div class="mt-4 flex">
-            {{ form_widget(form.categories, {'attr': {'class': 'w-1/3', 'placeholder': 'Tags: php, symfony, rest'}}) }}
+            {% if tutorial is defined %}
+                {{ form_widget(form.categories, {'attr': {'class': 'w-1/3', 'placeholder': 'Tags: php, symfony, rest', 'value': tutorial.categories|join(', ')}}) }}
+            {% else %}
+                {{ form_widget(form.categories, {'attr': {'class': 'w-1/3', 'placeholder': 'Tags: php, symfony, rest'}}) }}
+            {% endif %}
             {{ form_widget(form.sourceCodeLink, {'attr': {'class': 'w-1/3', 'placeholder': 'Code source'}}) }}
             {{ form_widget(form.demoLink, {'attr': {'class': 'w-1/3', 'placeholder': 'Demo'}}) }}
         </div>
