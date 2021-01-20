@@ -13,7 +13,7 @@ pre {
     border-radius: .3em;
     color: #f8f8f2;
     text-shadow: 0 1px rgba(0,0,0,.3);
-    font-family: 'Fira Code';
+    font-family: 'Fira Code' !important;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -63,9 +63,9 @@ pre[class*='hljs'] {
 pre[class*='hljs'] {
   background: #282a36;
 }*/
-
 pre > code {
 	font-size: 0.81em;
+  font-family: 'Fira Code' !important;
 }
 
 pre > code .token {
