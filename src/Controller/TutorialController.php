@@ -98,6 +98,7 @@ class TutorialController extends AbstractController
             }
 
             $tutorial->setAuthor($this->getUser());
+            $tutorial->setContent($request->get("htmlContent"));
             $em->persist($tutorial);
             $em->flush();
 
@@ -184,6 +185,8 @@ class TutorialController extends AbstractController
                 $tutorial->setPictureURL($upload['secure_url']);
                 $tutorial->setThumbnailURL($thumbnailURL);
             }
+
+            $tutorial->setContent($request->get("htmlContent"));
 
             $em->flush();
         }

@@ -13,8 +13,11 @@ marked.setOptions({
 
 const textarea = document.querySelector('#editor > textarea')
 const output = document.querySelector('#editor > #output')
+const htmlContent = document.querySelector('#editor > #htmlContent')
 output.innerHTML = marked(textarea.innerHTML)
 
 textarea.addEventListener('input', (event) => {
-  output.innerHTML = marked(event.target.value)
+  let markedHTML = marked(event.target.value)
+  output.innerHTML = markedHTML
+  htmlContent.value = markedHTML
 })
