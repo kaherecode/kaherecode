@@ -187,6 +187,7 @@ class TutorialController extends AbstractController
             }
 
             $tutorial->setContent($request->get("htmlContent"));
+            $tutorial->setUpdatedAt(new \DateTime());
 
             $em->flush();
         }
@@ -194,6 +195,17 @@ class TutorialController extends AbstractController
         return $this->render(
             'tutorial/tutorial_form.html.twig',
             ['form' => $form->createView(), 'tutorial' => $tutorial]
+        );
+    }
+
+    /**
+     * @Route("/tutorials/{uuid}/preview", name="preview_tutorial")
+     */
+    public function tutorialPreview(Tutorial $tutorial)
+    {
+        return $this->render(
+            'tutorial/preview.html.twig',
+            ['tutorial' => $tutorial]
         );
     }
 }

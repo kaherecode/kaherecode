@@ -135,12 +135,20 @@ article {
         }
     }
 
-    ul>li {
-        list-style-type: disc;
+    ul {
+        @apply pl-5;
+
+        li {
+            list-style-type: square;
+        }
     }
 
-    ol>li {
-        list-style-type: decimal;
+    ol {
+        @apply pl-5;
+
+        li {
+            list-style-type: decimal;
+        }
     }
 
     a {
