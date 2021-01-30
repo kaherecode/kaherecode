@@ -1,18 +1,11 @@
-<h3>Hey {{ user.username }}!</h3>
+{% extends 'emails/base.html.twig' %}
 
+{% block content %}
 <p>
-    Bienvenue sur Kaherecode, c'est vraiment un plaisir de t'avoir avec nous! <br>
-    Pour terminer ton inscription, <a href="{{ absolute_url(path('account_confirmation', {'token': user.confirmationToken})) }}">clique sur ce lien</a>.
+    Bienvenue sur Kaherecode, c'est vraiment un plaisir de t'avoir avec nous!
+    Pour terminer ton inscription, clique sur le lien ci-dessous.
 </p>
-
-<p style="margin-top: 1rem;">
-    Tu peux aussi copier/coller ce lien dans ton navigateur
-    <a href="{{ absolute_url(path('account_confirmation', {'token': user.confirmationToken})) }}">
-        {{ absolute_url(path('account_confirmation', {'token': user.confirmationToken})) }}
-    </a>.
+<p>
+    <a href="{{ url('account_confirmation', {'token': user.confirmationToken}) }}" class="btn">valider mon mail</a>
 </p>
-
-<p style="margin-top: 1rem;">
-    A très bientôt, t'es un(e) champion(ne) {{ user.username }}, <br>
-    Aliou de Kaherecode
-</p>
+{% endblock %}

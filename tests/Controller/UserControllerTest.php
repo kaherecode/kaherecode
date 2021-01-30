@@ -80,9 +80,9 @@ class UserControllerTest extends WebTestCase
         );
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains(
-            'small',
-            'This email address is already taken.'
+        $this->assertStringContainsString(
+            'This value is already used.',
+            $client->getResponse()->getContent()
         );
     }
 
@@ -112,9 +112,9 @@ class UserControllerTest extends WebTestCase
         );
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains(
-            'small',
-            'This username is already taken.'
+        $this->assertStringContainsString(
+            'This value is already used.',
+            $client->getResponse()->getContent()
         );
     }
 

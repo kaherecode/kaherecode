@@ -1,0 +1,30 @@
+{% apply inline_css(source('@styles/email.css')) %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ email.subject }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+</head>
+
+<body>
+    <div class="container">
+        <img src="{{ email.image('@images/kaherecode.svg') }}" alt="Kaherecode">
+        <h1>{{ email.subject }}</h1>
+        <p>Hello {{ email.toName }}!</p>
+
+        {% block content %}{% endblock %}
+
+        <p>
+            A très bientôt, t'es un(e) champion(ne) {{ email.toName }}, <br>
+            Aliou de Kaherecode
+        </p>
+    </div>
+    <div class="footer">
+        <small>&copy; {{ ""|date('Y') }} <a href="{{ url('homepage') }}">kaherecode.com</a>.</small>
+    </div>
+</body>
+
+</html>
+{% endapply %}

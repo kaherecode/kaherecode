@@ -30,35 +30,6 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            // check if email doesn't exists
-            if ($em->getRepository(User::class)->findOneByEmail($user->getEmail())) {
-                $this->addFlash(
-                    'error',
-                    'This email address is already taken. Use another one or log in.'
-                );
-
-                return $this->render(
-                    'user/register.html.twig',
-                    ['form' => $form->createView()]
-                );
-            }
-
-            // check if username doesn't exists
-            if ($em->getRepository(User::class)->findOneByUsername(
-                $user->getUsername()
-            )
-            ) {
-                $this->addFlash(
-                    'error',
-                    'This username is already taken. Use another one or log in.'
-                );
-
-                return $this->render(
-                    'user/register.html.twig',
-                    ['form' => $form->createView()]
-                );
-            }
-
             // encode user password
             $user->setPassword(
                 $passwordEncoder
@@ -78,7 +49,7 @@ class UserController extends AbstractController
                     )
                 )
                 ->to(new Address($user->getEmail(), $user->getFullName()))
-                ->subject("Bienvenue sur Kaherecode " .$user->getUsername(). "!")
+                ->subject("Bienvenue sur Kaherecode {$user->getFullName()}!")
                 ->htmlTemplate('emails/signup.html.twig')
                 ->context(['user' => $user]);
 
