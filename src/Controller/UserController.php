@@ -3,12 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Service\Mailer;
 use App\Form\ProfileType;
 use App\Form\UserRegistrationType;
-use Symfony\Component\Mime\Address;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -21,7 +19,7 @@ class UserController extends AbstractController
     public function register(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
-        MailerInterface $mailer
+        Mailer $mailer
     ) {
         $user = new User();
         $form = $this->createForm(UserRegistrationType::class, $user);
@@ -40,20 +38,7 @@ class UserController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $email = (new TemplatedEmail())
-                // TODO: create a event subscriber to set the same from address for the whole app
-                ->from(
-                    new Address(
-                        'contact@kaherecode.com',
-                        'Aliou de Kaherecode'
-                    )
-                )
-                ->to(new Address($user->getEmail(), $user->getFullName()))
-                ->subject("Bienvenue sur Kaherecode {$user->getFullName()}!")
-                ->htmlTemplate('emails/signup.html.twig')
-                ->context(['user' => $user]);
-
-            $mailer->send($email);
+            $mailer->sendSignUpMessage($user);
 
             $this->addFlash(
                 'success',
@@ -151,7 +136,7 @@ class UserController extends AbstractController
      */
     public function passwordResetRequest(
         Request $request,
-        MailerInterface $mailer
+        Mailer $mailer
     ) {
         if ($request->isMethod(Request::METHOD_POST)) {
             $em = $this->getDoctrine()->getManager();
@@ -170,20 +155,7 @@ class UserController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $email = (new TemplatedEmail())
-                // TODO: create a event subscriber to set the same from address for the whole app
-                ->from(
-                    new Address(
-                        'contact@kaherecode.com',
-                        'Aliou de Kaherecode'
-                    )
-                )
-                ->to(new Address($user->getEmail(), $user->getFullName()))
-                ->subject("Modifie ton mot de passe sur Kaherecode")
-                ->htmlTemplate('emails/password_reset.html.twig')
-                ->context(['user' => $user]);
-
-            $mailer->send($email);
+            $mailer->sendRequestPasswordMessage($user);
 
             $this->addFlash(
                 'success',
