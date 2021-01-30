@@ -2,7 +2,7 @@ import marked from 'marked'
 
 marked.setOptions({
   highlight: function (code, language) {
-    const prism = require('../prism')
+    const prism = require('./prism')
     if (prism.languages[language]) {
       return prism.highlight(code, prism.languages[language], language)
     } else {

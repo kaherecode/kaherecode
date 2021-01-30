@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/prism.css') }}">
     {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
+    {{ encore_entry_link_tags('editor') }}
     {% endblock %}
 </head>
 
@@ -148,6 +149,7 @@
     {{ form_end(form) }}
     {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('editor') }}
     {% endblock %}
 </body>
 
