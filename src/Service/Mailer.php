@@ -22,13 +22,6 @@ class Mailer
     public function sendSignUpMessage(User $user)
     {
         $email = (new TemplatedEmail())
-            // TODO: create a event subscriber to set the same from address for the whole app
-            ->from(
-                new Address(
-                    'contact@kaherecode.com',
-                    'Aliou de Kaherecode'
-                )
-            )
             ->to(new Address($user->getEmail(), $user->getFullName()))
             ->subject("Bienvenue sur Kaherecode {$user->getFullName()}!")
             ->htmlTemplate('emails/signup.html.twig')
@@ -40,13 +33,6 @@ class Mailer
     public function sendRequestPasswordMessage(User $user)
     {
         $email = (new TemplatedEmail())
-            // TODO: create a event subscriber to set the same from address for the whole app
-            ->from(
-                new Address(
-                    'contact@kaherecode.com',
-                    'Aliou de Kaherecode'
-                )
-            )
             ->to(new Address($user->getEmail(), $user->getFullName()))
             ->subject("Modifie ton mot de passe sur Kaherecode")
             ->htmlTemplate('emails/password_reset.html.twig')
