@@ -10,7 +10,7 @@
 
 <body>
     <div class="container">
-        <img src="{{ email.image('@images/kaherecode.svg') }}" alt="Kaherecode">
+        <img src="{{ absolute_url(asset('images/kaherecode.svg')) }}" alt="Kaherecode">
         <h1>{{ email.subject }}</h1>
         <p>Hello {{ email.toName }}!</p>
 
