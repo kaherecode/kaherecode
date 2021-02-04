@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\Mailer;
 use App\Entity\Category;
 use App\Entity\Tutorial;
 use App\Form\TutorialType;
@@ -223,7 +224,7 @@ class TutorialController extends AbstractController
     /**
      * @Route("/tutorials/{uuid}/publish", name="publish_tutorial")
      */
-    public function publishTutorial(Tutorial $tutorial)
+    public function publishTutorial(Tutorial $tutorial, Mailer $mailer)
     {
         if ($tutorial->getTitle() !== null && $tutorial->getTitle() !== ''
             && $tutorial->getContent() !== null && $tutorial->getContent() !== ''
@@ -238,7 +239,7 @@ class TutorialController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            // send a mail to contact to notify a new tutorial
+            $mailer->sendTutorialPublishedMessage($tutorial);
 
             return $this->redirectToRoute(
                 'tutorial_view',

@@ -129,6 +129,9 @@
     "league/html-to-markdown": {
         "version": "4.10.0"
     },
+    "lorenzo/pinky": {
+        "version": "1.0.5"
+    },
     "monolog/monolog": {
         "version": "2.1.1"
     },
@@ -570,6 +573,9 @@
     },
     "twig/extra-bundle": {
         "version": "v3.0.5"
+    },
+    "twig/inky-extra": {
+        "version": "v3.2.1"
     },
     "twig/intl-extra": {
         "version": "v3.1.1"

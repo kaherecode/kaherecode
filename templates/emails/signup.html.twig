@@ -8,4 +8,6 @@
 <p>
     <a href="{{ url('account_confirmation', {'token': user.confirmationToken}) }}" class="btn">valider mon mail</a>
 </p>
+
+{% include 'emails/_email_closing.html.twig' %}
 {% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'emails/base.html.twig' %}
+
+{% block content %}
+<p>
+    A new tutorial with the title <strong>{{ tutorial.title }}</strong> have just been published
+    by {{ tutorial.author.fullName }} - <a href="">@{{ tutorial.author.username }}</a>.
+</p>
+
+<p>
+<strong>Description</strong>: {{ tutorial.description }} <br>
+<strong>Categories</strong>: {{ tutorial.categories|join(', ') }} <br>
+<strong>Published at</strong>: {{ tutorial.publishedAt|format_date() }} <br>
+</p>
+<p>
+    <a href="{{ url('tutorial_view', {'slug': tutorial.slug}) }}" class="btn">take a look</a>
+</p>
+{% endblock %}

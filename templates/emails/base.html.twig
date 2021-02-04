@@ -15,11 +15,6 @@
         <p>Hello {{ email.toName }}!</p>
 
         {% block content %}{% endblock %}
-
-        <p>
-            A très bientôt, t'es un(e) champion(ne) {{ email.toName }}, <br>
-            Aliou de Kaherecode
-        </p>
     </div>
     <div class="footer">
         <small>&copy; {{ ""|date('Y') }} <a href="{{ url('homepage') }}">kaherecode.com</a>.</small>
