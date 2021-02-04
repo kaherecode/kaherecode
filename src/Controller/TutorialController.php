@@ -134,6 +134,8 @@ class TutorialController extends AbstractController
         Tutorial $tutorial,
         CloudinaryService $cloudinary
     ) {
+        $this->denyAccessUnlessGranted('edit', $tutorial);
+
         /**
          * @var FormInterface
          */
@@ -226,6 +228,8 @@ class TutorialController extends AbstractController
      */
     public function publishTutorial(Tutorial $tutorial, Mailer $mailer)
     {
+        $this->denyAccessUnlessGranted('edit', $tutorial);
+
         if ($tutorial->getTitle() !== null && $tutorial->getTitle() !== ''
             && $tutorial->getContent() !== null && $tutorial->getContent() !== ''
             && $tutorial->getPictureURL() !== null
@@ -265,6 +269,8 @@ class TutorialController extends AbstractController
      */
     public function deleteTutorial(Tutorial $tutorial)
     {
+        $this->denyAccessUnlessGranted('edit', $tutorial);
+
         if (!$tutorial->getIsPublished()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($tutorial);
