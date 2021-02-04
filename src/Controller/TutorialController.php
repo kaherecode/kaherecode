@@ -259,4 +259,28 @@ class TutorialController extends AbstractController
             ['uuid' => $tutorial->getUuid()]
         );
     }
+
+    /**
+     * @Route("/tutorials/{uuid}/delete", name="delete_tutorial")
+     */
+    public function deleteTutorial(Tutorial $tutorial)
+    {
+        if (!$tutorial->getIsPublished()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($tutorial);
+            $em->flush();
+
+            return $this->redirectToRoute('profile');
+        } else {
+            $this->addFlash(
+                'error',
+                "You can't delete a published tutorial, however you can archive it."
+            );
+        }
+
+        return $this->redirectToRoute(
+            'edit_tutorial',
+            ['uuid' => $tutorial->getUuid()]
+        );
+    }
 }
