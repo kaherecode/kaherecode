@@ -19,7 +19,18 @@ class TutorialController extends AbstractController
      */
     public function index()
     {
-        return $this->render('tutorial/index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $tutorials = $em->getRepository(Tutorial::class)->findBy(
+            ['isPublished' => true],
+            ['publishedAt' => 'DESC'],
+            10,
+            0
+        );
+
+        return $this->render(
+            'tutorial/index.html.twig',
+            ['tutorials' => $tutorials]
+        );
     }
 
     /**
@@ -206,6 +217,45 @@ class TutorialController extends AbstractController
         return $this->render(
             'tutorial/preview.html.twig',
             ['tutorial' => $tutorial]
+        );
+    }
+
+    /**
+     * @Route("/tutorials/{uuid}/publish", name="publish_tutorial")
+     */
+    public function publishTutorial(Tutorial $tutorial)
+    {
+        if ($tutorial->getTitle() !== null && $tutorial->getTitle() !== ''
+            && $tutorial->getContent() !== null && $tutorial->getContent() !== ''
+            && $tutorial->getPictureURL() !== null
+            && $tutorial->getPictureURL() !== ''
+            && $tutorial->getDescription() !== null
+            && $tutorial->getDescription() !== ''
+            && count($tutorial->getCategories()->toArray()) > 0
+        ) {
+            $tutorial->setIsPublished(true);
+            $tutorial->setPublishedAt(new \DateTime);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            // send a mail to contact to notify a new tutorial
+
+            return $this->redirectToRoute(
+                'tutorial_view',
+                ['slug' => $tutorial->getSlug()]
+            );
+        }
+
+        $this->addFlash(
+            'error',
+            'An error happened publishing the tutorial. Check that those fields
+             have been filled: Picture, Title, Description, Tags, and Content.
+             Then make sure to save the tutorial first before hitting the publish button.'
+        );
+
+        return $this->redirectToRoute(
+            'edit_tutorial',
+            ['uuid' => $tutorial->getUuid()]
         );
     }
 }
