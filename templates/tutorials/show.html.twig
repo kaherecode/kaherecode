@@ -30,8 +30,8 @@
     <div class="mt-5 sm:flex">
         <img src="https://www.kaherecode.com/uploads/users/5dd6b2d294265.png" alt="{{ tutorial.author.fullName }}" class="w-40 h-40 object-cover shadow-xl">
         <div class="mt-3 sm:mt-0 sm:ml-4">
-            <a href="" class="hover:underline"><h4 class="font-bold text-lg">{{ tutorial.author.fullName }}</h4></a>
-            <a href="" class="hover:underline">@{{ tutorial.author.username }}</a>
+            <a href="{{ path('show_user', {'username': tutorial.author.username}) }}" class="hover:underline"><h4 class="font-bold text-lg">{{ tutorial.author.fullName }}</h4></a>
+            <a href="{{ path('show_user', {'username': tutorial.author.username}) }}" class="hover:underline">@{{ tutorial.author.username }}</a>
             <p class="mt-2 text-gray-600">{{ tutorial.author.bio }}</p>
             <ul class="mt-3 flex items-center">
             {% include 'includes/_user_socials.html.twig' with {'user': tutorial.author} %}

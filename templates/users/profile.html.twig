@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% set user = app.user %}
+{% block title %}Mon profile | {{ parent() }}{% endblock %}
+{% block body %}
+{% include 'includes/_show_user.html.twig' %}
+<div class="mt-5 tabs" id="profileTabs">
+    <ul class="tab-list">
+        <li class="tab-item active" data-target="tutorials">
+            Mes tutoriels
+        </li>
+        <li class="tab-item" data-target="bookmarks">
+            Bookmarks
+        </li>
+    </ul>
+    <div id="bookmarks" class="tab-content">
+        <div class="container">
+            <span class="block text-center p-4">Cett fonctionnalité sera rajouter très bientôt &#128521!</span>
+        </div>
+    </div>
+    <div id="tutorials" class="tab-content">
+        <div class="container">
+            <div class="mt-5 tabs min-tabs" id="tutorialsTabs">
+                <ul class="tab-list">
+                    <li class="tab-item active" data-target="drafts">
+                        Brouillons ({{ user.tutorials|filter(t => not t.isPublished)|length }})
+                    </li>
+                    <li class="tab-item" data-target="published">
+                        Publiés ({{ user.tutorials|filter(t => t.isPublished)|length }})
+                    </li>
+                </ul>
+                <div id="drafts" class="tab-content">
+                    {% include 'includes/_profile_tutorials_list.html.twig' with {'tutorials': user.tutorials|filter(t => not t.isPublished)} %}
+                </div>
+                <div id="published" class="tab-content">
+                    {% include 'includes/_profile_tutorials_list.html.twig' with {'tutorials': user.tutorials|filter(t => t.isPublished)} %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

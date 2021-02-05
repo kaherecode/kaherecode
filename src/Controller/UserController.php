@@ -14,6 +14,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     /**
+     * @Route("/@{username}", name="show_user")
+     */
+    public function show(User $user)
+    {
+        return $this->render('users/show.html.twig', ['user' => $user]);
+    }
+
+    /**
      * @Route("/register", name="user_register")
      */
     public function register(
@@ -47,7 +55,7 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            'user/register.html.twig',
+            'users/register.html.twig',
             ['form' => $form->createView()]
         );
     }
@@ -59,7 +67,7 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        return $this->render('user/profile.html.twig');
+        return $this->render('users/profile.html.twig');
     }
 
     /**
@@ -88,7 +96,7 @@ class UserController extends AbstractController
                 );
 
                 return $this->render(
-                    'user/edit_profile.html.twig',
+                    'users/edit_profile.html.twig',
                     ['form' => $form->createView()]
                 );
             }
@@ -103,7 +111,7 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            'user/edit_profile.html.twig',
+            'users/edit_profile.html.twig',
             ['form' => $form->createView()]
         );
     }
@@ -126,7 +134,7 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            'user/account_confirmation.html.twig',
+            'users/account_confirmation.html.twig',
             ['user' => $user]
         );
     }
@@ -163,7 +171,7 @@ class UserController extends AbstractController
             );
         }
 
-        return $this->render('user/password_reset_request.html.twig');
+        return $this->render('users/password_reset_request.html.twig');
     }
 
     /**
@@ -185,7 +193,7 @@ class UserController extends AbstractController
                 $this->addFlash('error', 'Passwords are not the same.');
 
                 return $this->render(
-                    'user/reset_password.html.twig',
+                    'users/reset_password.html.twig',
                     ['user' => $user]
                 );
             }
@@ -202,7 +210,7 @@ class UserController extends AbstractController
                 );
 
                 return $this->render(
-                    'user/reset_password.html.twig',
+                    'users/reset_password.html.twig',
                     ['user' => $user]
                 );
             }
@@ -225,6 +233,6 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('user/reset_password.html.twig', ['user' => $user]);
+        return $this->render('users/reset_password.html.twig', ['user' => $user]);
     }
 }

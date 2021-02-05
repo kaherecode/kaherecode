@@ -14,12 +14,12 @@
 
         <div class="text-left mt-4 flex justify-between items-center">
             <div class="flex items-center">
-                <a href="">
+                <a href="{{ path('show_user', {'username': tutorial.author.username}) }}">
                     <img src="{{ asset('images/avatar.png') }}" alt="alioukahere" class="rounded-full w-12" />
                 </a>
                 <div class="ml-2">
                     <span class="block">
-                        <a href="#" class="font-bold text-gray-800 text-lg">
+                        <a href="{{ path('show_user', {'username': tutorial.author.username}) }}" class="font-bold text-gray-800 text-lg">
                             @{{ tutorial.author.username }}
                         </a>
                     </span>
