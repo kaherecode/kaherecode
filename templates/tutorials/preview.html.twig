@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/prism.css') }}">
+{% endblock %}
+
+{% block title %}{{ tutorial.title }}{% endblock %}
+
+{% block body %}
+{% include 'includes/_show_tutorial.html.twig' %}
+{% endblock %}

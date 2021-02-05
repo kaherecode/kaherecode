@@ -9,6 +9,7 @@ module.exports = {
       colors: {
         darkGray: '#393939',
         darkerGray: '#323232',
+        lightGray: '#f9f9f9',
       },
     },
   },

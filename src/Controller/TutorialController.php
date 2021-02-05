@@ -29,7 +29,7 @@ class TutorialController extends AbstractController
         );
 
         return $this->render(
-            'tutorial/index.html.twig',
+            'tutorials/index.html.twig',
             ['tutorials' => $tutorials]
         );
     }
@@ -39,15 +39,15 @@ class TutorialController extends AbstractController
      */
     public function tutorialsByTag($slug)
     {
-        return $this->render('tutorial/tag_tutorials.html.twig');
+        return $this->render('tutorials/tag_tutorials.html.twig');
     }
 
     /**
      * @Route("/tutorial/{slug}", name="tutorial_view")
      */
-    public function show($slug)
+    public function show(Tutorial $tutorial)
     {
-        return $this->render('tutorial/show.html.twig');
+        return $this->render('tutorials/show.html.twig', ['tutorial' => $tutorial]);
     }
 
     /**
@@ -121,7 +121,7 @@ class TutorialController extends AbstractController
         }
 
         return $this->render(
-            'tutorial/tutorial_form.html.twig',
+            'tutorials/tutorial_form.html.twig',
             ['form' => $form->createView()]
         );
     }
@@ -207,7 +207,7 @@ class TutorialController extends AbstractController
         }
 
         return $this->render(
-            'tutorial/tutorial_form.html.twig',
+            'tutorials/tutorial_form.html.twig',
             ['form' => $form->createView(), 'tutorial' => $tutorial]
         );
     }
@@ -218,7 +218,7 @@ class TutorialController extends AbstractController
     public function tutorialPreview(Tutorial $tutorial)
     {
         return $this->render(
-            'tutorial/preview.html.twig',
+            'tutorials/preview.html.twig',
             ['tutorial' => $tutorial]
         );
     }
