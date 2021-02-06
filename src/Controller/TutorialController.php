@@ -200,7 +200,9 @@ class TutorialController extends AbstractController
                 $tutorial->setThumbnailURL($thumbnailURL);
             }
 
-            $tutorial->setContent($request->get("htmlContent"));
+            if (! empty($request->get("htmlContent"))) {
+                $tutorial->setContent($request->get("htmlContent"));
+            }
             $tutorial->setUpdatedAt(new \DateTime());
 
             $em->flush();
