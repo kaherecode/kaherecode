@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
-{% block title %}Python tutoriels | {{ parent() }}{% endblock %}
+{% block title %}{{ tag|capitalize }} tutoriels | {{ parent() }}{% endblock %}
 {% block body %}
 <div class="hero text-center py-20">
     <div class="container">
         <h1 class="mt-4 font-bold text-3xl tracking-wide text-gray-900">
-            Tutoriels - PYTHON
+            Tutoriels - {{ tag|upper }}
         </h1>
     </div>
 </div>
@@ -20,6 +20,6 @@
         </span>
     </div> #}
 
-    {% include 'includes/_tutorials_list.html.twig' %}
+    {% include 'includes/_tutorials_list.html.twig' with {'tutorials': tag.tutorials} %}
 </div>
 {% endblock %}

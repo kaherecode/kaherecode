@@ -98,12 +98,12 @@ class Tutorial
 
     /**
      * @ORM\ManyToMany(
-     *     targetEntity=Category::class,
+     *     targetEntity=Tag::class,
      *     inversedBy="tutorials",
      *     cascade="persist"
      * )
      */
-    private $categories;
+    private $tags;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -125,7 +125,7 @@ class Tutorial
     {
         $this->isPublished = false;
         $this->isValidated = true;
-        $this->categories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function generateSlug(SluggerInterface $slugger)
@@ -323,25 +323,25 @@ class Tutorial
     }
 
     /**
-     * @return Collection|Category[]
+     * @return Collection|Tag[]
      */
-    public function getCategories(): Collection
+    public function getTags(): Collection
     {
-        return $this->categories;
+        return $this->tags;
     }
 
-    public function addCategory(Category $category): self
+    public function addTag(Tag $tag): self
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
         }
 
         return $this;
     }
 
-    public function removeCategory(Category $category): self
+    public function removeTag(Tag $tag): self
     {
-        $this->categories->removeElement($category);
+        $this->tags->removeElement($tag);
 
         return $this;
     }

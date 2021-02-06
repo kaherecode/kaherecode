@@ -5,9 +5,9 @@
         </h1>
 
         <ul class="tags flex flex-wrap justify-center text-gray-700 space-x-5">
-            {% for category in tutorial.categories %}
+            {% for tag in tutorial.tags %}
             <li>
-            <a href="{{ path('tag_tutorials', {'slug': category}) }}">#{{ category }}</a>
+            <a href="{{ path('tag_tutorials', {'label': tag}) }}">#{{ tag }}</a>
             </li>
             {% endfor %}
         </ul>

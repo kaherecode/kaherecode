@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Service\Mailer;
-use App\Entity\Category;
+use App\Entity\Tag;
 use App\Entity\Tutorial;
 use App\Form\TutorialType;
 use App\Service\CloudinaryService;
@@ -35,11 +35,11 @@ class TutorialController extends AbstractController
     }
 
     /**
-     * @Route("/tag/{slug}", name="tag_tutorials")
+     * @Route("/tag/{label}", name="tag_tutorials")
      */
-    public function tutorialsByTag($slug)
+    public function tutorialsByTag(Tag $tag)
     {
-        return $this->render('tutorials/tag_tutorials.html.twig');
+        return $this->render('tutorials/tag_tutorials.html.twig', ['tag' => $tag]);
     }
 
     /**
@@ -70,25 +70,25 @@ class TutorialController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            // set the tutorial categories
-            $categories = array_filter(
-                explode(",", $form->get('categories')->getData()),
+            // set the tutorial tags
+            $tags = array_filter(
+                explode(",", $form->get('tags')->getData()),
                 fn ($c) => ctype_alnum(trim($c))
             );
-            foreach ($categories as $cat) {
+            foreach ($tags as $cat) {
                 if (trim($cat)) {
-                    // check if the category already exists
-                    $existingCategory = $em
-                        ->getRepository(Category::class)
+                    // check if the tag already exists
+                    $existingTag = $em
+                        ->getRepository(Tag::class)
                         ->findOneByLabel(strtolower(trim($cat)));
 
-                    if ($existingCategory) { // if it is, simply add it to tutorial
-                        $tutorial->addCategory($existingCategory);
+                    if ($existingTag) { // if it is, simply add it to tutorial
+                        $tutorial->addTag($existingTag);
                     } else { // if not create a new one the add it to tutorial
-                        $category = new Category();
-                        $category->setLabel(trim($cat));
-                        $tutorial->addCategory($category);
-                        $em->persist($category);
+                        $tag = new Tag();
+                        $tag->setLabel(trim($cat));
+                        $tutorial->addTag($tag);
+                        $em->persist($tag);
                     }
                 }
             }
@@ -145,30 +145,30 @@ class TutorialController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            // remove all categories from tutorial
-            foreach ($tutorial->getCategories() as $category) {
-                $tutorial->removeCategory($category);
+            // remove all tags from tutorial
+            foreach ($tutorial->getTags() as $tag) {
+                $tutorial->removeTag($tag);
             }
 
-            // set the tutorial categories
-            $categories = array_filter(
-                explode(",", $form->get('categories')->getData()),
+            // set the tutorial tags
+            $tags = array_filter(
+                explode(",", $form->get('tags')->getData()),
                 fn ($c) => ctype_alnum(trim($c))
             );
-            foreach ($categories as $cat) {
+            foreach ($tags as $cat) {
                 if (trim($cat)) {
-                    // check if the category already exists
-                    $existingCategory = $em
-                        ->getRepository(Category::class)
+                    // check if the tag already exists
+                    $existingTag = $em
+                        ->getRepository(Tag::class)
                         ->findOneByLabel(strtolower(trim($cat)));
 
-                    if ($existingCategory) { // if it is, simply add it to tutorial
-                        $tutorial->addCategory($existingCategory);
+                    if ($existingTag) { // if it is, simply add it to tutorial
+                        $tutorial->addTag($existingTag);
                     } else { // if not create a new one the add it to tutorial
-                        $category = new Category();
-                        $category->setLabel(trim($cat));
-                        $tutorial->addCategory($category);
-                        $em->persist($category);
+                        $tag = new Tag();
+                        $tag->setLabel(trim($cat));
+                        $tutorial->addTag($tag);
+                        $em->persist($tag);
                     }
                 }
             }
@@ -236,7 +236,7 @@ class TutorialController extends AbstractController
             && $tutorial->getPictureURL() !== ''
             && $tutorial->getDescription() !== null
             && $tutorial->getDescription() !== ''
-            && count($tutorial->getCategories()->toArray()) > 0
+            && count($tutorial->getTags()->toArray()) > 0
         ) {
             $tutorial->setIsPublished(true);
             $tutorial->setPublishedAt(new \DateTime);

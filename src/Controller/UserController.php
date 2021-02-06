@@ -154,7 +154,7 @@ class UserController extends AbstractController
             if (!$user) {
                 $this->addFlash('error', 'This email address is not registered.');
 
-                return $this->render('user/password_reset_request.html.twig');
+                return $this->render('users/password_reset_request.html.twig');
             }
 
             $user->setConfirmationToken(sha1(uniqid()));

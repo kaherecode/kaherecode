@@ -26,7 +26,7 @@ class TutorialType extends AbstractType
             ->add('videoLink', TextType::class, ['required' => false])
             ->add('sourceCodeLink', TextType::class, ['required' => false])
             ->add('demoLink', TextType::class, ['required' => false])
-            ->add('categories', TextType::class, ['mapped' => false, 'required' => false]);
+            ->add('tags', TextType::class, ['mapped' => false, 'required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

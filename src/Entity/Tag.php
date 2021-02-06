@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ORM\Entity(repositoryClass=TagRepository::class)
  */
-class Category
+class Tag
 {
     /**
      * @ORM\Id
@@ -25,7 +25,7 @@ class Category
     private $label;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tutorial::class, mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity=Tutorial::class, mappedBy="tags")
      */
     private $tutorials;
 
@@ -68,7 +68,7 @@ class Category
     {
         if (!$this->tutorials->contains($tutorial)) {
             $this->tutorials[] = $tutorial;
-            $tutorial->addCategory($this);
+            $tutorial->addTag($this);
         }
 
         return $this;
@@ -77,7 +77,7 @@ class Category
     public function removeTutorial(Tutorial $tutorial): self
     {
         if ($this->tutorials->removeElement($tutorial)) {
-            $tutorial->removeCategory($this);
+            $tutorial->removeTag($this);
         }
 
         return $this;
