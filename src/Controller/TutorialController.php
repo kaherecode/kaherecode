@@ -10,7 +10,6 @@ use App\Service\CloudinaryService;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TutorialController extends AbstractController
@@ -55,8 +54,7 @@ class TutorialController extends AbstractController
      */
     public function create(
         Request $request,
-        SluggerInterface $slugger,
-        CloudinaryService $cloudinary
+        CloudinaryService $uploader
     ) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -93,20 +91,13 @@ class TutorialController extends AbstractController
                 }
             }
 
-            // upload picture to cloudinary
             $picture = $form->get("picture")->getData();
             if ($picture) {
-                $upload = $cloudinary->upload(
-                    $picture,
-                    [
-                        "folder" => "kaherecode/tutorials/",
-                        "format" => "webp"
-                    ]
-                );
-                $thumbnailURL = "https://res.cloudinary.com/{$_ENV['CLOUDINARY_CLOUD']}/{$upload['resource_type']}/{$upload['type']}/c_thumb,w_400,g_face/v{$upload['version']}/{$upload['public_id']}.{$upload['format']}";
+                $upload = $uploader->upload($picture);
 
-                $tutorial->setPictureURL($upload['secure_url']);
-                $tutorial->setThumbnailURL($thumbnailURL);
+                $tutorial->setPictureURL($upload['fileURL']);
+                $tutorial
+                    ->setThumbnailURL($upload['thumbnailURL'] ?? $upload['fileURL']);
             }
 
             $tutorial->setAuthor($this->getUser());
@@ -132,7 +123,7 @@ class TutorialController extends AbstractController
     public function edit(
         Request $request,
         Tutorial $tutorial,
-        CloudinaryService $cloudinary
+        CloudinaryService $uploader
     ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
@@ -173,31 +164,17 @@ class TutorialController extends AbstractController
                 }
             }
 
-            // upload picture to cloudinary
             $picture = $form->get("picture")->getData();
-            if ($picture) { // if user updated the picture
-                // check if tutotial already have a picture and delete it
+            if ($picture) {
                 if ($tutorial->getPictureURL() !== null) {
-                    $publicId = array_slice(explode("/", $tutorial->getPictureURL()), -3, 3);
-                    $publicId[2] = implode(
-                        array_slice(explode(".", $publicId[2]), 0, -1),
-                        "."
-                    );
-                    $publicId = implode("/", $publicId);
-                    $cloudinary->destroy($publicId);
+                    $uploader->delete($tutorial->getPictureURL());
                 }
 
-                $upload = $cloudinary->upload(
-                    $picture,
-                    [
-                        "folder" => "kaherecode/tutorials/",
-                        "format" => "webp"
-                    ]
-                );
-                $thumbnailURL = "https://res.cloudinary.com/{$_ENV['CLOUDINARY_CLOUD']}/{$upload['resource_type']}/{$upload['type']}/c_thumb,w_400,g_face/v{$upload['version']}/{$upload['public_id']}.{$upload['format']}";
+                $upload = $uploader->upload($picture);
 
-                $tutorial->setPictureURL($upload['secure_url']);
-                $tutorial->setThumbnailURL($thumbnailURL);
+                $tutorial->setPictureURL($upload['fileURL']);
+                $tutorial
+                    ->setThumbnailURL($upload['thumbnailURL'] ?? $upload['fileURL']);
             }
 
             if (! empty($request->get("htmlContent"))) {
