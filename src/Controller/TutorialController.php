@@ -34,11 +34,38 @@ class TutorialController extends AbstractController
     }
 
     /**
+     * @Route("/tutorials", name="tutorials")
+     */
+    public function tutorials(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tutorials = $em->getRepository(Tutorial::class)->findBy(
+            ['isPublished' => true],
+            ['publishedAt' => 'DESC']
+        );
+
+        return $this->render(
+            'tutorials/tutorials.html.twig',
+            ['tutorials' => $tutorials]
+        );
+    }
+
+    /**
      * @Route("/tag/{label}", name="tag_tutorials")
      */
     public function tutorialsByTag(Tag $tag)
     {
-        return $this->render('tutorials/tag_tutorials.html.twig', ['tag' => $tag]);
+        // TODO: define a function in repo to get tutorials
+        $em = $this->getDoctrine()->getManager();
+        $tutorials = $em->getRepository(Tutorial::class)->findBy(
+            ['isPublished' => true],
+            ['publishedAt' => 'DESC']
+        );
+
+        return $this->render(
+            'tutorials/tutorials.html.twig',
+            ['tag' => $tag, 'tutorials' => $tutorials]
+        );
     }
 
     /**
