@@ -5,7 +5,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
                     <a href="{{ path('show_user', {'username': tutorial.author.username}) }}">
-                        <img src="{{ tutorial.author.avatar is null ? asset('images/avatar.png') : tutorial.author.avatar }}" alt="{{ tutorial.author.fullName }}" class="w-12 rounded-full" />
+                        <img src="{{ tutorial.author.avatar is null ? asset('images/avatar.png') : tutorial.author.avatar }}" alt="{{ tutorial.author.fullName }}" class="w-12 h-12 object-cover rounded-full" />
                     </a>
                     <div class="ml-3">
                         <span class="block">

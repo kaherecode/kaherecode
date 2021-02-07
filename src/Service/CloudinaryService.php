@@ -36,8 +36,12 @@ class CloudinaryService implements UploaderInterface
      */
     public function upload(UploadedFile $file, $options = []): array
     {
-        $options['folder'] = self::UPLOAD_FOLDER;
-        $options['format'] = self::IMAGE_FORMAT;
+        if (! isset($options['folder'])) {
+            $options['folder'] = self::UPLOAD_FOLDER;
+        }
+        if (! isset($options['format'])) {
+            $options['format'] = self::IMAGE_FORMAT;
+        }
         $data = \Cloudinary\Uploader::upload($file, $options);
 
         // it's a looong string and I don't actually know another way to do it

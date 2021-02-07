@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Service\Mailer;
 use App\Form\ProfileType;
 use App\Form\UserRegistrationType;
+use App\Service\CloudinaryService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -75,7 +76,8 @@ class UserController extends AbstractController
      */
     public function editProfile(
         Request $request,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder,
+        CloudinaryService $uploader
     ) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -99,6 +101,18 @@ class UserController extends AbstractController
                     'users/edit_profile.html.twig',
                     ['form' => $form->createView()]
                 );
+            }
+
+            $avatar = $form->get("avatar")->getData();
+            if ($avatar) {
+                if ($user->getAvatar() !== null) {
+                    $uploader->delete($user->getAvatar());
+                }
+
+                $upload = $uploader
+                    ->upload($avatar, ['folder' => 'kaherecode/users/']);
+
+                $user->setAvatar($upload['fileURL']);
             }
 
             $em = $this->getDoctrine()->getManager();

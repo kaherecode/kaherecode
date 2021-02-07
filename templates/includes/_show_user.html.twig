@@ -1,6 +1,6 @@
 <div class="hero text-center py-6">
     <div class="container">
-        <img src="{{ asset("images/avatar.png") }}" alt="{{ user.username }}" class="rounded-full w-48 m-auto" />
+        <img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" class="rounded-full w-48 h-48 object-cover m-auto">
         <h1 class="mt-4 font-bold text-xl tracking-wide text-gray-900">
             {{ user.fullName }}
         </h1>
