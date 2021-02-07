@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta charset="UTF-8">
-        <title>{% block title %}Kaherecode{% endblock %}</title>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Kaherecode
+			{% endblock %}
+		</title>
 
-        <link rel="icon" href="{{ asset('images/favicon.ico') }}">
+		<link rel="icon" href="{{ asset('images/favicon.ico') }}">
 
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-    </head>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+	</head>
 
-    <body class="bg-gray-200">
-        {% include 'includes/_header.html.twig' %}
+	<body class="bg-gray-200">
+		{% include 'includes/_header.html.twig' %}
 
-        {% block body %}{% endblock %}
+		{% block body %}{% endblock %}
 
-        {% include 'includes/_footer.html.twig' %}
+		{% include 'includes/_footer.html.twig' %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </body>
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</body>
 </html>

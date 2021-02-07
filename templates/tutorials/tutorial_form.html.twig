@@ -1,161 +1,160 @@
 <!DOCTYPE html>
 <html lang="fr">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta charset="UTF-8">
+		<title>
+			{% if tutorial is defined %}
+				Modifier le tutoriel
+				{{ tutorial.title }}
+			{% else %}
+				Écrire un nouveau tutoriel
+			{% endif %}
+			| Kaherecode
+		</title>
+		<link rel="icon" href="{{ asset('images/favicon.ico') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/prism.css') }}">
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+			{{ encore_entry_link_tags('editor') }}
+		{% endblock %}
+	</head>
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="UTF-8">
-    <title>
-        {% if tutorial is defined %}
-        Modifier le tutoriel {{ tutorial.title }}
-        {% else %}
-        Écrire un nouveau tutoriel
-        {% endif %}
-        | Kaherecode
-    </title>
-    <link rel="icon" href="{{ asset('images/favicon.ico') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/prism.css') }}">
-    {% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
-    {{ encore_entry_link_tags('editor') }}
-    {% endblock %}
-</head>
+	<body class="bg-gray-200">
+		<div class="px-8 py-4 flex flex-wrap items-center justify-between shadow-lg fixed top-0 left-0 right-0 bg-gray-100" style="z-index: 999">
+			<a href="{{ path("profile") }}">&#8592; Mon Profil</a>
+			<ul class="flex flex-wrap items-center">
+				<li>
+					<a href="" class="flex items-center">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings text-gray-900 w-4 h-4">
+							<circle cx="12" cy="12" r="3"/>
+							<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+						</svg>
+						<span class="hidden ml-1 md:block">Règle d'écriture</span>
+					</a>
+				</li>
+				<li class="ml-4 md:ml-6">
+					<button type="submit" form="tutorialForm" href="" class="flex items-center justify-center md:bg-gray-800 md:py-1 md:w-32">
+						<span class="md:hidden">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save text-gray-900 w-4 h-4">
+								<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+								<polyline points="17 21 17 13 7 13 7 21"/>
+								<polyline points="7 3 7 8 15 8"/>
+							</svg>
+						</span>
+						<span class="hidden md:block">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save text-gray-200 w-4 h-4">
+								<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+								<polyline points="17 21 17 13 7 13 7 21"/>
+								<polyline points="7 3 7 8 15 8"/>
+							</svg>
+						</span>
+						<span class="hidden ml-1 text-gray-200 md:block">
+							Enregistrer
+						</span>
+					</button>
+				</li>
 
-<body class="bg-gray-200">
-    <div class="px-8 py-4 flex flex-wrap items-center justify-between shadow-lg fixed top-0 left-0 right-0 bg-gray-100" style="z-index: 999">
-        <a href="{{ path("profile") }}">&#8592; Mon Profil</a>
-        <ul class="flex flex-wrap items-center">
-            <li>
-                <a href="" class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings text-gray-900 w-4 h-4">
-                        <circle cx="12" cy="12" r="3" />
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                    </svg>
-                    <span class="hidden ml-1 md:block">Règle d'écriture</span>
-                </a>
-            </li>
-            <li class="ml-4 md:ml-6">
-                <button type="submit" form="tutorialForm" href="" class="flex items-center justify-center md:bg-gray-800 md:py-1 md:w-32">
-                    <span class="md:hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save text-gray-900 w-4 h-4">
-                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-                            <polyline points="17 21 17 13 7 13 7 21" />
-                            <polyline points="7 3 7 8 15 8" />
-                        </svg>
-                    </span>
-                    <span class="hidden md:block">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save text-gray-200 w-4 h-4">
-                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-                            <polyline points="17 21 17 13 7 13 7 21" />
-                            <polyline points="7 3 7 8 15 8" />
-                        </svg>
-                    </span>
-                    <span class="hidden ml-1 text-gray-200 md:block">
-                        Enregistrer
-                    </span>
-                </button>
-            </li>
-            {% if tutorial is defined %}
-            {% if not tutorial.isPublished %}
-            <li class="ml-4 md:ml-6">
-                <a href="{{ path('publish_tutorial', {'uuid': tutorial.uuid}) }}" class="flex items-center justify-center md:bg-gray-800 md:py-1 md:w-24">
-                    <span class="md:hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload text-gray-900 w-4 h-4">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                            <polyline points="17 8 12 3 7 8" />
-                            <line x1="12" y1="3" x2="12" y2="15" />
-                        </svg>
-                    </span>
-                    <span class="hidden md:block">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload text-gray-200 w-4 h-4">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                            <polyline points="17 8 12 3 7 8" />
-                            <line x1="12" y1="3" x2="12" y2="15" />
-                        </svg>
-                    </span>
-                    <span class="ml-1 text-gray-200 hidden md:block">Publier</span>
-                </a>
-            </li>
-            <li class="ml-4 md:ml-6">
-                <a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-gray-900 w-4 h-4">
-                        <polyline points="3 6 5 6 21 6" />
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                        <line x1="10" y1="11" x2="10" y2="17" />
-                        <line x1="14" y1="11" x2="14" y2="17" />
-                    </svg>
-                </a>
-            </li>
-            {% endif %}
-            <li class="ml-4 md:ml-6">
-                <a href="{{ path('preview_tutorial', {'uuid': tutorial.uuid}) }}" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link text-gray-900 w-4 h-4">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                        <polyline points="15 3 21 3 21 9" />
-                        <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-    {{ form_start(form, {'attr': {'class': 'editor-form', 'id': 'tutorialForm'}}) }}
-    <div class="mt-24 mx-4 lg:w-10/12 lg:mx-auto xl:w-7/12">
-        {% for message in app.flashes('error') %}
-        <small class="block text-sm text-red-600">{{ message }}</small>
-        {% endfor %}
-        <div class="bg-gray-300 rounded-md">
-            <div class="text-center text-gray-700 relative flex justify-center items-center image-picker article-image-picker">
-                {% if tutorial is not defined or tutorial.pictureURL is null %}
-                <span>Sélectionne une image à la une</span>
-                {% else %}
-                <img src="{{ tutorial.pictureURL }}" alt="" class="object-cover object-center w-full h-full" />
-                {% endif %}
-                {{ form_widget(form.picture, {'attr': {'class': 'w-full absolute outline-none', 'accept': 'image/*'}}) }}
-            </div>
-            <div class="p-3">
-                {{ form_widget(form.videoLink, {'attr': {'class': 'video-link', 'placeholder': 'Lien Youtube de la vidéo'}}) }}
-            </div>
-        </div>
-        <div class="mt-4">
-            {{ form_widget(form.title, {'attr': {'class': 'title', 'placeholder': 'Comment faire une app géniale'}}) }}
-        </div>
-        <div class="mt-4">
-            {{ form_widget(form.description, {'attr': {'rows': 5, 'placeholder': 'Donne une courte description du tutoriel'}}) }}
-        </div>
-        <div class="mt-4 flex">
-            {% if tutorial is defined %}
-            {{ form_widget(form.tags, {'attr': {'class': 'w-1/3', 'placeholder': 'Tags: php, symfony, rest', 'value': tutorial.tags|join(', ')}}) }}
-            {% else %}
-            {{ form_widget(form.tags, {'attr': {'class': 'w-1/3', 'placeholder': 'Tags: php, symfony, rest'}}) }}
-            {% endif %}
-            {{ form_widget(form.sourceCodeLink, {'attr': {'class': 'w-1/3', 'placeholder': 'Code source'}}) }}
-            {{ form_widget(form.demoLink, {'attr': {'class': 'w-1/3', 'placeholder': 'Demo'}}) }}
-        </div>
-    </div>
-    <div class="mt-8 flex editor" id="editor">
-        {{ form_widget(form.markdownContent, {'attr': {'class': 'py-4 px-8 resize-none outline-none text-lg w-full md:w-1/2'}}) }}
-        <div class="separator w-8 py-4 flex flex-col items-center bg-gray-200">
-            <span class="cursor-pointer">
-                {#
-                <ViewIcon value={{ size: '1.3rem', color: '#4a5568' }} /> #}
-            </span>
-            <span class="cursor-pointer mt-4">
-                {#
-                <TogglePreviewIcon value={{ size: '1.3rem', color: '#4a5568' }} /> #}
-            </span>
-            {# <span className='cursor-pointer mt-4'>
-                <FullscreenIcon value={{ size: '1.3rem', color: '#4a5568' }} />
-            </span> #}
-        </div>
-        <article class="bg-white overflow-auto py-4 px-8 text-lg hidden md:block md:w-1/2" id="output">
-        </article>
-        <input type="hidden" name="htmlContent" id="htmlContent">
-    </div>
-    {{ form_end(form) }}
-    {% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-    {{ encore_entry_script_tags('editor') }}
-    {% endblock %}
-</body>
+				{% if tutorial is defined %}
+					{% if not tutorial.isPublished %}
+						<li class="ml-4 md:ml-6">
+							<a href="{{ path('publish_tutorial', {'uuid': tutorial.uuid}) }}" class="flex items-center justify-center md:bg-gray-800 md:py-1 md:w-24">
+								<span class="md:hidden">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload text-gray-900 w-4 h-4">
+										<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+										<polyline points="17 8 12 3 7 8"/>
+										<line x1="12" y1="3" x2="12" y2="15"/>
+									</svg>
+								</span>
+								<span class="hidden md:block">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload text-gray-200 w-4 h-4">
+										<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+										<polyline points="17 8 12 3 7 8"/>
+										<line x1="12" y1="3" x2="12" y2="15"/>
+									</svg>
+								</span>
+								<span class="ml-1 text-gray-200 hidden md:block">Publier</span>
+							</a>
+						</li>
+						<li class="ml-4 md:ml-6">
+							<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-gray-900 w-4 h-4">
+									<polyline points="3 6 5 6 21 6"/>
+									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+									<line x1="10" y1="11" x2="10" y2="17"/>
+									<line x1="14" y1="11" x2="14" y2="17"/>
+								</svg>
+							</a>
+						</li>
+					{% endif %}
 
+					<li class="ml-4 md:ml-6">
+						<a href="{{ path('preview_tutorial', {'uuid': tutorial.uuid}) }}" target="_blank">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link text-gray-900 w-4 h-4">
+								<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+								<polyline points="15 3 21 3 21 9"/>
+								<line x1="10" y1="14" x2="21" y2="3"/>
+							</svg>
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+
+		{{ form_start(form, {'attr': {'class': 'editor-form', 'id': 'tutorialForm'}}) }}
+		<div class="mt-24 mx-4 lg:w-10/12 lg:mx-auto xl:w-7/12">
+			{% for message in app.flashes('error') %}
+				<small class="block text-sm text-red-600">{{ message }}</small>
+			{% endfor %}
+
+			<div class="bg-gray-300 rounded-md">
+				<div class="text-center text-gray-700 relative flex justify-center items-center image-picker article-image-picker">
+					{% if tutorial is not defined or tutorial.pictureURL is null %}
+						<span>Sélectionne une image à la une</span>
+					{% else %}
+						<img src="{{ tutorial.pictureURL }}" alt="" class="object-cover object-center w-full h-full"/>
+					{% endif %}
+					{{ form_widget(form.picture, {'attr': {'class': 'w-full absolute outline-none', 'accept': 'image/*'}}) }}
+				</div>
+
+				<div class="p-3">
+					{{ form_widget(form.videoLink, {'attr': {'class': 'video-link', 'placeholder': 'Lien Youtube de la vidéo'}}) }}
+				</div>
+			</div>
+
+			<div class="mt-4">
+				{{ form_widget(form.title, {'attr': {'class': 'title', 'placeholder': 'Comment faire une app géniale'}}) }}
+			</div>
+
+			<div class="mt-4">
+				{{ form_widget(form.description, {'attr': {'rows': 5, 'placeholder': 'Donne une courte description du tutoriel'}}) }}
+			</div>
+
+			<div class="mt-4 flex">
+				{% if tutorial is defined %}
+					{{ form_widget(form.tags, {'attr': {'class': 'w-1/3', 'placeholder': 'Tags: php, symfony, rest', 'value': tutorial.tags|join(', ')}}) }}
+				{% else %}
+					{{ form_widget(form.tags, {'attr': {'class': 'w-1/3', 'placeholder': 'Tags: php, symfony, rest'}}) }}
+				{% endif %}
+				{{ form_widget(form.sourceCodeLink, {'attr': {'class': 'w-1/3', 'placeholder': 'Code source'}}) }}
+				{{ form_widget(form.demoLink, {'attr': {'class': 'w-1/3', 'placeholder': 'Demo'}}) }}
+			</div>
+		</div>
+
+		<div class="mt-8 flex editor" id="editor">
+			{{ form_widget(form.markdownContent, {'attr': {'class': 'py-4 px-8 resize-none outline-none text-lg w-full md:w-1/2'}}) }}
+			<div class="separator w-8 py-4 flex flex-col items-center bg-gray-200">
+				<span class="cursor-pointer"></span>
+				<span class="cursor-pointer mt-4"></span>
+			</div>
+			<article class="bg-white overflow-auto py-4 px-8 text-lg hidden md:block md:w-1/2" id="output"></article>
+			<input type="hidden" name="htmlContent" id="htmlContent">
+		</div>
+		{{ form_end(form) }}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+			{{ encore_entry_script_tags('editor') }}
+		{% endblock %}
+	</body>
 </html>

@@ -1,57 +1,58 @@
 {% extends 'base.html.twig' %}
-{% block title %}Des tutoriels pratiques pour apprendre à coder | {{ parent() }}{% endblock %}
+
+{% block title %}Des tutoriels pratiques pour apprendre à coder |
+	{{ parent() }}
+{% endblock %}
+
 {% block body %}
-{# hero section #}
-<div class="hero text-center px-4 pt-12 pb-20">
-    <h2 class="font-bold text-3xl tracking-wide text-gray-900 lg:text-4xl">
-        Learn. Code. Share.
-    </h2>
-    <h1 class="text-xl font-semibold text-gray-900 md:w-4/6 m-auto">
-        Apprends à programmer avec des tutoriels pratiques écris par des
-        développeurs.
-    </h1>
-    <p class="mt-6 text-gray-900 md:w-4/6 lg:w-2/5 m-auto text-lg">
-        Kaherecode est une communauté en herbe pour les développeurs. Un
-        endroit pour apprendre et partager autour de la programmation
-        informatique.
-        <a href="" class="text-blue-600 underline">
-            Rejoins-nous maintenant
-        </a>
-        .
-    </p>
-</div>
+	<div class="hero text-center px-4 pt-12 pb-20">
+		<h2 class="font-bold text-3xl tracking-wide text-gray-900 lg:text-4xl">
+			Learn. Code. Share.
+		</h2>
+		<h1 class="text-xl font-semibold text-gray-900 md:w-4/6 m-auto">
+			Apprends à programmer avec des tutoriels pratiques écris par des
+						        développeurs.
+		</h1>
+		<p class="mt-6 text-gray-900 md:w-4/6 lg:w-2/5 m-auto text-lg">
+			Kaherecode est une communauté en herbe pour les développeurs. Un
+						        endroit pour apprendre et partager autour de la programmation
+						        informatique.
+			<a href="" class="text-blue-600 underline">
+				Rejoins-nous maintenant
+			</a>
+			.
+		</p>
+	</div>
 
-{# recent tutorials #}
-<div class="container">
-    <div class="mt-5 flex items-center justify-between">
-        <h2 class="font-bold text-gray-900 text-2xl">
-            Tutoriels récents
-        </h2>
-        <span>
-            <a href="#" class="underline text-blue-500">
-                Voir plus...
-            </a>
-        </span>
-    </div>
+	<div class="container">
+		<div class="mt-5 flex items-center justify-between">
+			<h2 class="font-bold text-gray-900 text-2xl">
+				Tutoriels récents
+			</h2>
+			<span>
+				<a href="#" class="underline text-blue-500">
+					Voir plus...
+				</a>
+			</span>
+		</div>
 
-    {% include 'includes/_tutorials_list.html.twig' %}
-</div>
+		{% include 'includes/_tutorials_list.html.twig' %}
+	</div>
 
-<hr>
+	<hr>
 
-{# js tutorials #}
-<div class="container">
-    <div class="mt-5 flex items-center justify-between">
-        <h2 class="font-bold text-gray-900 text-2xl">
-            Javascript
-        </h2>
-        <span>
-            <a href="#" class="underline text-blue-500">
-                Voir plus...
-            </a>
-        </span>
-    </div>
+	<div class="container">
+		<div class="mt-5 flex items-center justify-between">
+			<h2 class="font-bold text-gray-900 text-2xl">
+				Javascript
+			</h2>
+			<span>
+				<a href="#" class="underline text-blue-500">
+					Voir plus...
+				</a>
+			</span>
+		</div>
 
-    {% include 'includes/_tutorials_list.html.twig' %}
-</div>
+		{% include 'includes/_tutorials_list.html.twig' %}
+	</div>
 {% endblock %}

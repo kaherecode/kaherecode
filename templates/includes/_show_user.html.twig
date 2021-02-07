@@ -1,50 +1,52 @@
 <div class="hero text-center py-6">
-    <div class="container">
-        <img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" class="rounded-full w-48 h-48 object-cover m-auto">
-        <h1 class="mt-4 font-bold text-xl tracking-wide text-gray-900">
-            {{ user.fullName }}
-        </h1>
-        <h2 class="font-semibold text-gray-900">@{{ user.username }}</h2>
-        <p class="mt-2 text-gray-800 md:w-2/3 md:mx-auto lg:w-3/5">
-            {{ user.bio }}
-        </p>
-        <ul class="mt-2 flex items-center justify-center">
-            {% include 'includes/_user_socials.html.twig' %}
-        </ul>
-    </div>
+	<div class="container">
+		<img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" class="rounded-full w-48 h-48 object-cover m-auto">
+		<h1 class="mt-4 font-bold text-xl tracking-wide text-gray-900">
+			{{ user.fullName }}
+		</h1>
+		<h2 class="font-semibold text-gray-900">@{{ user.username }}</h2>
+		<p class="mt-2 text-gray-800 md:w-2/3 md:mx-auto lg:w-3/5">
+			{{ user.bio }}
+		</p>
+		<ul class="mt-2 flex items-center justify-center">
+			{% include 'includes/_user_socials.html.twig' %}
+		</ul>
+	</div>
 </div>
+
 <div class="mt-5">
-    <div class="container sm:flex sm:justify-center">
-        <div class="sm:w-1/2 sm:p-2 lg:w-1/3 xl:w-1/4">
-            <div class="bg-white p-4 rounded-lg shadow-md">
-                <span class="font-bold text-4xl">{{ user.tutorials|filter(t => t.isPublished)|length }}</span>
-                <span class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text text-gray-700 h-4 w-4">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                        <polyline points="14 2 14 8 20 8" />
-                        <line x1="16" y1="13" x2="8" y2="13" />
-                        <line x1="16" y1="17" x2="8" y2="17" />
-                        <polyline points="10 9 9 9 8 9" />
-                    </svg>
-                    <span class="text-gray-700 ml-1 text-sm">
-                        Tutoriels
-                    </span>
-                </span>
-            </div>
-        </div>
-        <div class="mt-4 sm:w-1/2 sm:mt-0 sm:p-2 lg:w-1/3 xl:w-1/4">
-            <div class="bg-white p-4 rounded-lg shadow-md">
-                <span class="font-bold text-4xl">48,706</span>
-                <span class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-700 h-4 w-4">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                    </svg>
-                    <span class="text-gray-700 ml-1 text-sm">
-                        Pages vues
-                    </span>
-                </span>
-            </div>
-        </div>
-    </div>
+	<div class="container sm:flex sm:justify-center">
+		<div class="sm:w-1/2 sm:p-2 lg:w-1/3 xl:w-1/4">
+			<div class="bg-white p-4 rounded-lg shadow-md">
+				<span class="font-bold text-4xl">{{ user.tutorials|filter(t => t.isPublished)|length }}</span>
+				<span class="flex items-center">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text text-gray-700 h-4 w-4">
+						<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+						<polyline points="14 2 14 8 20 8"/>
+						<line x1="16" y1="13" x2="8" y2="13"/>
+						<line x1="16" y1="17" x2="8" y2="17"/>
+						<polyline points="10 9 9 9 8 9"/>
+					</svg>
+					<span class="text-gray-700 ml-1 text-sm">
+						Tutoriels
+					</span>
+				</span>
+			</div>
+		</div>
+
+		<div class="mt-4 sm:w-1/2 sm:mt-0 sm:p-2 lg:w-1/3 xl:w-1/4">
+			<div class="bg-white p-4 rounded-lg shadow-md">
+				<span class="font-bold text-4xl">48,706</span>
+				<span class="flex items-center">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-700 h-4 w-4">
+						<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+						<circle cx="12" cy="12" r="3"/>
+					</svg>
+					<span class="text-gray-700 ml-1 text-sm">
+						Pages vues
+					</span>
+				</span>
+			</div>
+		</div>
+	</div>
 </div>

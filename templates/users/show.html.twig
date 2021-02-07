@@ -1,25 +1,34 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{ user.fullName }} | {{ parent() }}{% endblock %}
+
+{% block title %}
+	{{ user.fullName }}
+	|
+	{{ parent() }}
+{% endblock %}
+
 {% block body %}
-{% include 'includes/_show_user.html.twig' %}
-<div class="mt-5 tabs" id="profileTabs">
-    <ul class="tab-list">
-        <li class="tab-item active" data-target="tutorials">
-            Tutoriels
-        </li>
-        <li class="tab-item" data-target="courses">
-            Cours
-        </li>
-    </ul>
-    <div id="courses" class="tab-content">
-        <div class="container">
-            <span class="block text-center p-4">Cett fonctionnalité sera rajouter très bientôt &#128521!</span>
-        </div>
-    </div>
-    <div id="tutorials" class="tab-content">
-        <div class="container">
-            {% include 'includes/_tutorials_list.html.twig' with {'tutorials': user.tutorials} %}
-        </div>
-    </div>
-</div>
+	{% include 'includes/_show_user.html.twig' %}
+
+	<div class="mt-5 tabs" id="profileTabs">
+		<ul class="tab-list">
+			<li class="tab-item active" data-target="tutorials">
+				Tutoriels
+			</li>
+			<li class="tab-item" data-target="courses">
+				Cours
+			</li>
+		</ul>
+
+		<div id="courses" class="tab-content">
+			<div class="container">
+				<span class="block text-center p-4">Cett fonctionnalité sera rajouter très bientôt &#128521!</span>
+			</div>
+		</div>
+
+		<div id="tutorials" class="tab-content">
+			<div class="container">
+				{% include 'includes/_tutorials_list.html.twig' with {'tutorials': user.tutorials} %}
+			</div>
+		</div>
+	</div>
 {% endblock %}

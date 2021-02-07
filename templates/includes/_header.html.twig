@@ -1,221 +1,228 @@
 <header class="">
-    <div class="flex justify-between items-center text-gray-400 p-3 bg-darkGray">
-        <a href="{{ path('homepage') }}">
-            <img src="{{ asset('images/kaherecode.svg') }}" alt="Kaherecode" class="w-12 sm:w-14">
-        </a>
-        <ul class="flex items-center md:hidden">
-            <li>
-                <a href="">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-300 h-7 w-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </a>
-            </li>
-            <li class="ml-6">
-                <span  class="toggle-item" data-target="mobileMenu">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-300 h-8 w-8">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </span>
-            </li>
-            {% if is_granted('ROLE_USER') %}
-            <li class="ml-6">
-                <span class="toggle-item" data-target="loggedInMenu">
-                    <img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" class="rounded-full w-12 h-12 object-cover cursor-pointer">
-                </span>
-            </li>
-            {% endif %}
-        </ul>
-        <ul class="hidden md:flex items-center">
-            <li class="ml-6">
-                <a href="{{ path('tutorials') }}" class="hover:text-white">
-                    Tutoriels
-                </a>
-            </li>
-            <li class="ml-6">
-                <a href="https://discord.gg/qANvrVW" target="_blank" class="hover:text-white">
-                    Chat
-                </a>
-            </li>
-        </ul>
-        <ul class="hidden md:flex items-center">
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-300 h-7 w-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </a>
-            </li>
-            {% if is_granted('ROLE_USER') %}
-            <li class="ml-6">
-                <span  class="toggle-item" data-target="loggedInMenu">
-                    <img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" class="rounded-full w-12 h-12 object-cover cursor-pointer">
-                </span>
-            </li>
-            {% else %}
-            <li class="ml-6">
-                <a href="{{ path('app_login') }}" class="btn">Connexion</a>
-            </li>
-            <li class="ml-6">
-                <a href="{{ path('user_register') }}" class="btn">Inscription</a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-    <div class="hidden md:block text-gray-700 text-sm py-1 bg-darkerGray">
-        <ul class="flex justify-center items-center">
-            <li>
-                <a href="{{ path('tag_tutorials', {'label': 'javascript'}) }}">
-                    #
-                    <span class="text-gray-500 hover:text-gray-400">
-                        javascript
-                    </span>
-                </a>
-            </li>
-            <li class="ml-5">
-                <a href="{{ path('tag_tutorials', {'label': 'python'}) }}">
-                    #<span class="text-gray-500 hover:text-gray-400">python</span>
-                </a>
-            </li>
-            <li class="ml-5">
-                <a href="{{ path('tag_tutorials', {'label': 'css'}) }}">
-                    #<span class="text-gray-500 hover:text-gray-400">css</span>
-                </a>
-            </li>
-            <li class="ml-5">
-                <a href="{{ path('tag_tutorials', {'label': 'php'}) }}">
-                    #<span class="text-gray-500 hover:text-gray-400">php</span>
-                </a>
-            </li>
-            <li class="ml-5">
-                <a href="{{ path('tag_tutorials', {'label': 'react'}) }}">
-                    #<span class="text-gray-500 hover:text-gray-400">react</span>
-                </a>
-            </li>
-            <li class="ml-5">
-                <a href="{{ path('tag_tutorials', {'label': 'angular'}) }}">
-                    #
-                    <span class="text-gray-500 hover:text-gray-400">angular</span>
-                </a>
-            </li>
-            <li class="ml-5">
-                <a href="{{ path('tag_tutorials', {'label': 'vue'}) }}">
-                    #<span class="text-gray-500 hover:text-gray-400">vue</span>
-                </a>
-            </li>
-            <li class="ml-5">
-                <a href="{{ path('tag_tutorials', {'label': 'django'}) }}">
-                    #<span class="text-gray-500 hover:text-gray-400">django</span>
-                </a>
-            </li>
-            <li class="ml-5">
-                <a href="{{ path('tag_tutorials', {'label': 'symfony'}) }}">
-                    #
-                    <span class="text-gray-500 hover:text-gray-400">symfony</span>
-                </a>
-            </li>
-            <li class="ml-5">
-                <a href="{{ path('tag_tutorials', {'label': 'laravel'}) }}">
-                    #
-                    <span class="text-gray-500 hover:text-gray-400">laravel</span>
-                </a>
-            </li>
-            <li class="ml-5">
-                <a href="{{ path('tag_tutorials', {'label': 'nodejs'}) }}">
-                    #<span class="text-gray-500 hover:text-gray-400">nodejs</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    {# mobile menu #}
-    <div class="text-gray-300 py-5 absolute w-full hidden bg-darkerGray md:hidden" id="mobileMenu">
-        <ul class="text-center">
-            <li>
-                <a href="#">Cours</a>
-            </li>
-            <li class="mt-4">
-                <a href="#">Tutoriels</a>
-            </li>
-            <li class="mt-4">
-                <a href="#">Forum</a>
-            </li>
-            <li class="mt-4">
-                <a href="#">Chat</a>
-            </li>
-        </ul>
-        {% if not is_granted('ROLE_USER') %}
-        <hr class="my-5" />
-        <ul class="flex px-5 justify-between items-center">
-            <li>
-                <a href="{{ path('app_login') }}" class="btn">Connexion</a>
-            </li>
-            <li>
-                <a href="{{ path('user_register') }}" class="btn">Inscription</a>
-            </li>
-        </ul>
-        {% endif %}
-    </div>
-    {# logged in menu #}
-    <ul id="loggedInMenu" class="fixed bg-gray-100 shadow-2xl w-56 hidden" style="right: 5px; top: 78px; z-index: 9999;">
-        <li class="">
-            <a href="{{ path('profile') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
-                <span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user h-5 w-5 text-gray-700">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
-                </span>
-                Mon profil
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('edit_profile') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
-                <span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit h-5 w-5 text-gray-700">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                    </svg>
-                </span>
-                Modifier mon profil
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('new_tutorial') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
-                <span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text h-5 w-5 text-gray-700">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                        <polyline points="14 2 14 8 20 8" />
-                        <line x1="16" y1="13" x2="8" y2="13" />
-                        <line x1="16" y1="17" x2="8" y2="17" />
-                        <polyline points="10 9 9 9 8 9" />
-                    </svg>
-                </span>
-                Nouveau tutoriel
-            </a>
-        </li>
-        <li>
-            <a href="#" class="text-gray-800 flex items-center hover:bg-gray-200">
-                <span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home h-5 w-5 text-gray-700">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                        <polyline points="9 22 9 12 15 12 15 22" />
-                    </svg>
-                </span>
-                Tableau de bord
-            </a>
-        </li>
-        <hr />
-        <li>
-            <a href="{{ path('app_logout') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
-                <span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out h-5 w-5 text-gray-700">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                        <polyline points="16 17 21 12 16 7" />
-                        <line x1="21" y1="12" x2="9" y2="12" />
-                    </svg>
-                </span>
-                Me déconnecter
-            </a>
-        </li>
-    </ul>
+	<div class="flex justify-between items-center text-gray-400 p-3 bg-darkGray">
+		<a href="{{ path('homepage') }}">
+			<img src="{{ asset('images/kaherecode.svg') }}" alt="Kaherecode" class="w-12 sm:w-14">
+		</a>
+
+		<ul class="flex items-center md:hidden">
+			<li>
+				<a href="">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="text-gray-300 h-7 w-6">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+					</svg>
+				</a>
+			</li>
+			<li class="ml-6">
+				<span class="toggle-item" data-target="mobileMenu">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="text-gray-300 h-8 w-8">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+					</svg>
+				</span>
+			</li>
+			{% if is_granted('ROLE_USER') %}
+				<li class="ml-6">
+					<span class="toggle-item" data-target="loggedInMenu">
+						<img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" class="rounded-full w-12 h-12 object-cover cursor-pointer">
+					</span>
+				</li>
+			{% endif %}
+		</ul>
+
+		<ul class="hidden md:flex items-center">
+			<li class="ml-6">
+				<a href="{{ path('tutorials') }}" class="hover:text-white">
+					Tutoriels
+				</a>
+			</li>
+			<li class="ml-6">
+				<a href="https://discord.gg/qANvrVW" target="_blank" class="hover:text-white">
+					Chat
+				</a>
+			</li>
+		</ul>
+
+		<ul class="hidden md:flex items-center">
+			<li>
+				<a href="#">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="text-gray-300 h-7 w-6">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+					</svg>
+				</a>
+			</li>
+			{% if is_granted('ROLE_USER') %}
+				<li class="ml-6">
+					<span class="toggle-item" data-target="loggedInMenu">
+						<img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" class="rounded-full w-12 h-12 object-cover cursor-pointer">
+					</span>
+				</li>
+			{% else %}
+				<li class="ml-6">
+					<a href="{{ path('app_login') }}" class="btn">Connexion</a>
+				</li>
+				<li class="ml-6">
+					<a href="{{ path('user_register') }}" class="btn">Inscription</a>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+
+	<div class="hidden md:block text-gray-700 text-sm py-1 bg-darkerGray">
+		<ul class="flex justify-center items-center">
+			<li>
+				<a href="{{ path('tag_tutorials', {'label': 'javascript'}) }}">
+					#
+					<span class="text-gray-500 hover:text-gray-400">
+						javascript
+					</span>
+				</a>
+			</li>
+			<li class="ml-5">
+				<a href="{{ path('tag_tutorials', {'label': 'python'}) }}">
+					#<span class="text-gray-500 hover:text-gray-400">python</span>
+				</a>
+			</li>
+			<li class="ml-5">
+				<a href="{{ path('tag_tutorials', {'label': 'css'}) }}">
+					#<span class="text-gray-500 hover:text-gray-400">css</span>
+				</a>
+			</li>
+			<li class="ml-5">
+				<a href="{{ path('tag_tutorials', {'label': 'php'}) }}">
+					#<span class="text-gray-500 hover:text-gray-400">php</span>
+				</a>
+			</li>
+			<li class="ml-5">
+				<a href="{{ path('tag_tutorials', {'label': 'react'}) }}">
+					#<span class="text-gray-500 hover:text-gray-400">react</span>
+				</a>
+			</li>
+			<li class="ml-5">
+				<a href="{{ path('tag_tutorials', {'label': 'angular'}) }}">
+					#
+					<span class="text-gray-500 hover:text-gray-400">angular</span>
+				</a>
+			</li>
+			<li class="ml-5">
+				<a href="{{ path('tag_tutorials', {'label': 'vue'}) }}">
+					#<span class="text-gray-500 hover:text-gray-400">vue</span>
+				</a>
+			</li>
+			<li class="ml-5">
+				<a href="{{ path('tag_tutorials', {'label': 'django'}) }}">
+					#<span class="text-gray-500 hover:text-gray-400">django</span>
+				</a>
+			</li>
+			<li class="ml-5">
+				<a href="{{ path('tag_tutorials', {'label': 'symfony'}) }}">
+					#
+					<span class="text-gray-500 hover:text-gray-400">symfony</span>
+				</a>
+			</li>
+			<li class="ml-5">
+				<a href="{{ path('tag_tutorials', {'label': 'laravel'}) }}">
+					#
+					<span class="text-gray-500 hover:text-gray-400">laravel</span>
+				</a>
+			</li>
+			<li class="ml-5">
+				<a href="{{ path('tag_tutorials', {'label': 'nodejs'}) }}">
+					#<span class="text-gray-500 hover:text-gray-400">nodejs</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	{# mobile menu #}
+	<div class="text-gray-300 py-5 absolute w-full hidden bg-darkerGray md:hidden" id="mobileMenu">
+		<ul class="text-center">
+			<li>
+				<a href="#">Cours</a>
+			</li>
+			<li class="mt-4">
+				<a href="#">Tutoriels</a>
+			</li>
+			<li class="mt-4">
+				<a href="#">Forum</a>
+			</li>
+			<li class="mt-4">
+				<a href="#">Chat</a>
+			</li>
+		</ul>
+
+		{% if not is_granted('ROLE_USER') %}
+			<hr class="my-5"/>
+			<ul class="flex px-5 justify-between items-center">
+				<li>
+					<a href="{{ path('app_login') }}" class="btn">Connexion</a>
+				</li>
+				<li>
+					<a href="{{ path('user_register') }}" class="btn">Inscription</a>
+				</li>
+			</ul>
+		{% endif %}
+	</div>
+
+	{# logged in menu #}
+	<ul id="loggedInMenu" class="fixed bg-gray-100 shadow-2xl w-56 hidden" style="right: 5px; top: 78px; z-index: 9999;">
+		<li class="">
+			<a href="{{ path('profile') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
+				<span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user h-5 w-5 text-gray-700">
+						<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+						<circle cx="12" cy="7" r="4"/>
+					</svg>
+				</span>
+				Mon profil
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('edit_profile') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
+				<span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit h-5 w-5 text-gray-700">
+						<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+						<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+					</svg>
+				</span>
+				Modifier mon profil
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('new_tutorial') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
+				<span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text h-5 w-5 text-gray-700">
+						<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+						<polyline points="14 2 14 8 20 8"/>
+						<line x1="16" y1="13" x2="8" y2="13"/>
+						<line x1="16" y1="17" x2="8" y2="17"/>
+						<polyline points="10 9 9 9 8 9"/>
+					</svg>
+				</span>
+				Nouveau tutoriel
+			</a>
+		</li>
+		<li>
+			<a href="#" class="text-gray-800 flex items-center hover:bg-gray-200">
+				<span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home h-5 w-5 text-gray-700">
+						<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+						<polyline points="9 22 9 12 15 12 15 22"/>
+					</svg>
+				</span>
+				Tableau de bord
+			</a>
+		</li>
+		<hr/>
+		<li>
+			<a href="{{ path('app_logout') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
+				<span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out h-5 w-5 text-gray-700">
+						<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+						<polyline points="16 17 21 12 16 7"/>
+						<line x1="21" y1="12" x2="9" y2="12"/>
+					</svg>
+				</span>
+				Me déconnecter
+			</a>
+		</li>
+	</ul>
 </header>
