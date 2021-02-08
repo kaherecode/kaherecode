@@ -29,7 +29,7 @@
 
 				<a href="{{ path('tutorial_view', {'slug': tutorial.slug}) }}">
 					<h2 class="mt-3 font-bold text-lg tracking-wide">
-						{{ tutorial.title }}
+						{{ tutorial.title|length > 55 ? tutorial.title|slice(0, 55) ~ '...' : tutorial.title }}
 					</h2>
 				</a>
 
