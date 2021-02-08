@@ -10,13 +10,10 @@
 			Learn. Code. Share.
 		</h2>
 		<h1 class="text-xl font-semibold text-gray-900 md:w-4/6 m-auto">
-			Apprends à programmer avec des tutoriels pratiques écris par des
-						        développeurs.
+			Apprends à programmer avec des tutoriels pratiques écris par des développeurs.
 		</h1>
 		<p class="mt-6 text-gray-900 md:w-4/6 lg:w-2/5 m-auto text-lg">
-			Kaherecode est une communauté en herbe pour les développeurs. Un
-						        endroit pour apprendre et partager autour de la programmation
-						        informatique.
+			Kaherecode est une communauté en herbe pour les développeurs. Un endroit pour apprendre et partager autour de la programmation informatique.
 			<a href="" class="text-blue-600 underline">
 				Rejoins-nous maintenant
 			</a>
@@ -30,7 +27,7 @@
 				Tutoriels récents
 			</h2>
 			<span>
-				<a href="#" class="underline text-blue-500">
+				<a href="{{ path('tutorials') }}" class="underline text-blue-500">
 					Voir plus...
 				</a>
 			</span>
@@ -39,7 +36,47 @@
 		{% include 'includes/_tutorials_list.html.twig' %}
 	</div>
 
-	<hr>
+	<div class="sm:mt-3 text-center py-12 bg-darkGray" style="background-color: #0f0f0f; background: linear-gradient(333deg, #0f0f0f 17%, #3c3b3c 80%);">
+		<div class="container">
+			<h2 class="font-bold text-gray-100 text-2xl">Que veux-tu apprendre aujourd'hui?</h2>
+
+			<div class="mt-6 flex flex-wrap space-x-6 lg:space-x-8 items-center justify-center">
+				<a href="{{ path('tag_tutorials', {'label': 'javascript'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/javascript.svg') }}" alt="" class="h-12">
+				</a>
+				<a href="{{ path('tag_tutorials', {'label': 'python'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/python.svg') }}" alt="" class="h-12">
+				</a>
+				<a href="{{ path('tag_tutorials', {'label': 'css'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/css.svg') }}" alt="" class="h-12">
+				</a>
+				<a href="{{ path('tag_tutorials', {'label': 'php'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/php.svg') }}" alt="" class="h-12">
+				</a>
+				<a href="{{ path('tag_tutorials', {'label': 'react'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/react.svg') }}" alt="" class="h-12">
+				</a>
+				<a href="{{ path('tag_tutorials', {'label': 'angular'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/angular.svg') }}" alt="" class="h-12">
+				</a>
+				<a href="{{ path('tag_tutorials', {'label': 'vue'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/vue.svg') }}" alt="" class="h-12">
+				</a>
+				<a href="{{ path('tag_tutorials', {'label': 'django'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/django.svg') }}" alt="" class="h-12">
+				</a>
+				<a href="{{ path('tag_tutorials', {'label': 'symfony'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/symfony.svg') }}" alt="" class="h-12">
+				</a>
+				<a href="{{ path('tag_tutorials', {'label': 'laravel'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/laravel.svg') }}" alt="" class="h-12">
+				</a>
+				<a href="{{ path('tag_tutorials', {'label': 'nodejs'}) }}" class="bg-white p-2 rounded-md my-3">
+					<img src="{{ asset('images/nodejs.svg') }}" alt="" class="h-12">
+				</a>
+			</div>
+		</div>
+	</div>
 
 	<div class="container">
 		<div class="mt-5 flex items-center justify-between">
@@ -47,7 +84,7 @@
 				Javascript
 			</h2>
 			<span>
-				<a href="#" class="underline text-blue-500">
+				<a href="{{ path('tag_tutorials', {'label': 'javascript'}) }}" class="underline text-blue-500">
 					Voir plus...
 				</a>
 			</span>
