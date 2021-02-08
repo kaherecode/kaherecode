@@ -200,17 +200,21 @@
 				Nouveau tutoriel
 			</a>
 		</li>
-		<li>
-			<a href="#" class="text-gray-800 flex items-center hover:bg-gray-200">
-				<span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home h-5 w-5 text-gray-700">
-						<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-						<polyline points="9 22 9 12 15 12 15 22"/>
-					</svg>
-				</span>
-				Tableau de bord
-			</a>
-		</li>
+
+		{% if is_granted('ROLE_ADMIN') %}
+			<li>
+				<a href="#" class="text-gray-800 flex items-center hover:bg-gray-200">
+					<span class="bg-gray-200 flex justify-center py-3 mr-2 w-12">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home h-5 w-5 text-gray-700">
+							<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+							<polyline points="9 22 9 12 15 12 15 22"/>
+						</svg>
+					</span>
+					Tableau de bord
+				</a>
+			</li>
+		{% endif %}
+
 		<hr/>
 		<li>
 			<a href="{{ path('app_logout') }}" class="text-gray-800 flex items-center hover:bg-gray-200">
