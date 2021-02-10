@@ -31,12 +31,12 @@
 		<ul class="hidden md:flex items-center">
 			<li class="ml-6">
 				<a href="{{ path('tutorials') }}" class="hover:text-white">
-					Tutoriels
+					{{ 'Tutorials'|trans }}
 				</a>
 			</li>
 			<li class="ml-6">
 				<a href="https://discord.gg/qANvrVW" target="_blank" class="hover:text-white">
-					Chat
+					{{ 'Chat'|trans }}
 				</a>
 			</li>
 		</ul>
@@ -57,10 +57,10 @@
 				</li>
 			{% else %}
 				<li class="ml-6">
-					<a href="{{ path('app_login') }}" class="btn">Connexion</a>
+					<a href="{{ path('app_login') }}" class="btn">{{ 'Log In'|trans }}</a>
 				</li>
 				<li class="ml-6">
-					<a href="{{ path('user_register') }}" class="btn">Inscription</a>
+					<a href="{{ path('user_register') }}" class="btn">{{ 'Sign Up'|trans }}</a>
 				</li>
 			{% endif %}
 		</ul>
@@ -135,17 +135,11 @@
 	{# mobile menu #}
 	<div class="text-gray-300 py-5 absolute w-full hidden bg-darkerGray md:hidden" id="mobileMenu">
 		<ul class="text-center">
-			<li>
-				<a href="#">Cours</a>
+			<li class="mt-4">
+				<a href="#">{{ 'Tutorials'|trans }}</a>
 			</li>
 			<li class="mt-4">
-				<a href="#">Tutoriels</a>
-			</li>
-			<li class="mt-4">
-				<a href="#">Forum</a>
-			</li>
-			<li class="mt-4">
-				<a href="#">Chat</a>
+				<a href="#">{{ 'Chat'|trans }}</a>
 			</li>
 		</ul>
 
@@ -153,10 +147,10 @@
 			<hr class="my-5"/>
 			<ul class="flex px-5 justify-between items-center">
 				<li>
-					<a href="{{ path('app_login') }}" class="btn">Connexion</a>
+					<a href="{{ path('app_login') }}" class="btn">{{ 'Log In'|trans }}</a>
 				</li>
 				<li>
-					<a href="{{ path('user_register') }}" class="btn">Inscription</a>
+					<a href="{{ path('user_register') }}" class="btn">{{ 'Sign Up'|trans }}</a>
 				</li>
 			</ul>
 		{% endif %}
@@ -172,7 +166,7 @@
 						<circle cx="12" cy="7" r="4"/>
 					</svg>
 				</span>
-				Mon profil
+				{{ 'My Profile'|trans }}
 			</a>
 		</li>
 		<li>
@@ -183,7 +177,7 @@
 						<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
 					</svg>
 				</span>
-				Modifier mon profil
+				{{ 'Update my Profile'|trans }}
 			</a>
 		</li>
 		<li>
@@ -197,7 +191,7 @@
 						<polyline points="10 9 9 9 8 9"/>
 					</svg>
 				</span>
-				Nouveau tutoriel
+				{{ 'New Tutorial'|trans }}
 			</a>
 		</li>
 
@@ -210,7 +204,7 @@
 							<polyline points="9 22 9 12 15 12 15 22"/>
 						</svg>
 					</span>
-					Tableau de bord
+					{{ 'Admin.'|trans }}
 				</a>
 			</li>
 		{% endif %}
@@ -225,7 +219,7 @@
 						<line x1="21" y1="12" x2="9" y2="12"/>
 					</svg>
 				</span>
-				Me déconnecter
+				{{ 'Log Out'|trans }}
 			</a>
 		</li>
 	</ul>

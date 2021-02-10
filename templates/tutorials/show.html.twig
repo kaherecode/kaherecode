@@ -14,7 +14,7 @@
 
 	<div class="container bg-lightGray p-4 xl:px-20">
 		<hr>
-		<h3 class="mt-5 text-xl font-bold">Partage cet article</h3>
+		<h3 class="mt-5 text-xl font-bold">{{ 'Share this tutorial'|trans }}</h3>
 		<ul class="mt-3 flex items-center justify-start">
 			<li class="">
 				<a href="" class="inline-block text-center p-3 rounded-full" style="background-color: #1ea1f2">
@@ -34,7 +34,7 @@
 
 		<hr class="mt-5">
 
-		<h3 class="mt-5 text-xl font-bold">Merci à</h3>
+		<h3 class="mt-5 text-xl font-bold">{{ 'Thanks to'|trans }}</h3>
 
 		<div class="mt-5 sm:flex">
 			<img src="{{ tutorial.author.avatar is null ? asset('images/avatar.png') : tutorial.author.avatar }}" alt="{{ tutorial.author.fullName }}" class="w-40 h-40 object-cover shadow-xl"/>
@@ -53,7 +53,7 @@
 
 	<div class="container py-5">
 		<h3 class="font-bold text-gray-900 text-xl">
-			Continue de lire
+			{{ 'Keep reading'|trans }}
 		</h3>
 
 		{# {% include 'includes/_tutorials_list.html.twig' %} #}
@@ -62,7 +62,7 @@
 	<div class="bg-lightGray py-5">
 		<div class="container">
 			<h3 class="font-bold text-gray-900 text-xl">
-				Discussion
+				{{ 'Discussion'|trans }}
 			</h3>
 		</div>
 	</div>

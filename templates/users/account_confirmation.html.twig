@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Confirme ton compte |
+{% block title %}
+	{{ 'Confirm your account'|trans }}
+	|
 	{{ parent() }}
 {% endblock %}
 
@@ -8,12 +10,13 @@
 	<div class="container">
 		<div class="mt-20 mb-20 md:mt-40 md:mb-40 md:w-1/2 md:mx-auto lg:w-1/3">
 			{% if user %}
-				<h1 class="font-bold text-xl mb-4">Bienvenue
-					{{ user.username }}! Ton compte à été valider!</h1>
-				<a class="text-blue-500 underline" href="{{ path('app_login') }}">Connecte-toi</a>
+				<h1 class="font-bold text-xl mb-4">{{ 'Welcome'|trans }}
+					{{ user.username }}!
+					{{ 'Your account have been validated!'|trans }}</h1>
+				<a class="text-blue-500 underline" href="{{ path('app_login') }}">{{ 'Log In'|trans }}</a>
 			{% else %}
-				<h1 class="font-bold text-xl mb-4">Tu n'as aucune confirmation.</h1>
-				<a class="text-blue-500 underline" href="{{ path('homepage') }}">Aller à l'accueil</a>
+				<h1 class="font-bold text-xl mb-4">{{ 'You have no confirmation.'|trans }}</h1>
+				<a class="text-blue-500 underline" href="{{ path('homepage') }}">{{ 'Go back to the homepage'|trans }}</a>
 			{% endif %}
 		</div>
 	</div>

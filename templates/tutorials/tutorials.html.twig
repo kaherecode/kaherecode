@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Tutoriels
+{% block title %}
+	{{ 'Tutorial lists'|trans }}
 	{{ tag is defined ? tag|upper : '' }}
 	|
 	{{ parent() }}
@@ -10,8 +11,8 @@
 	<div class="hero text-center py-20">
 		<div class="container">
 			<h1 class="mt-4 font-bold text-3xl tracking-wide text-gray-900">
-				Liste des Tutoriels
-				{{ tag is defined ? tag|upper : '' }}
+				{{ 'Tutorial lists'|trans }}
+				{{ tag is defined ? ' - ' ~ tag|upper : '' }}
 			</h1>
 			<div class="mt-4">
 				<input type="search" class="rounded w-full p-3 outline-none bg-white" placeholder="Rechercher..." style="max-width: 700px;">

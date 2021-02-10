@@ -4,7 +4,7 @@
 		<h2 class="font-bold text-4xl tracking-wide">Kaherecode</h2>
 
 		<p class="text-lg mt-2">
-			Apprends à programmer avec des tutoriels pratiques écris par des développeurs.
+			{{ 'Learn to program with hands-on tutorials written by developers.'|trans }}
 		</p>
 
 		<ul class="mt-6 flex items-center justify-center">
@@ -44,22 +44,23 @@
 		<div class="container flex flex-wrap lg:justify-between">
 			<ul class="flex w-full justify-center lg:w-1/3 lg:justify-start">
 				<li>
-					<a href="">Écrire</a>
+					<a href="">{{ 'Write'|trans }}</a>
 				</li>
 				<li class="ml-8">
-					<a href="">Contact</a>
+					<a href="">{{ 'Contact'|trans }}</a>
 				</li>
 				<li class="ml-8">
-					<a href="">Chat</a>
+					<a href="">{{ 'Chat'|trans }}</a>
 				</li>
 			</ul>
 			<div class="w-full text-center lg:w-1/3">
 				&copy;
 				{{ ''|date('Y') }}
-				<a href="/" class="underline text-white">kaherecode.com</a>. Tous Droits Réservés.
+				<a href="/" class="underline text-white">kaherecode.com</a>.
+				{{ 'All Rights Reserved.'|trans }}
 			</div>
 			<div class="w-full text-center lg:w-1/3 lg:text-right">
-				Développé et Maintenue par
+				{{ 'Developed and maintained by'|trans }}
 				<a href="" class="underline text-white">alioukahere</a>.
 			</div>
 		</div>

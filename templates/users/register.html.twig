@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription |
+{% block title %}
+	{{ 'Sign Up'|trans }}
+	|
 	{{ parent() }}
 {% endblock %}
 
 {% block body %}
 	<div class="container">
 		<div class="mt-20 mb-20 md:mt-32 md:mb-32 md:w-1/2 md:mx-auto lg:w-1/3">
-			<h1 class="font-bold text-2xl">Inscris Toi</h1>
+			<h1 class="font-bold text-2xl">{{ 'Sign Up'|trans }}</h1>
 
 			<div class="mt-4">
 				{% for message in app.flashes('success') %}
@@ -21,32 +23,32 @@
 
 			{{ form_start(form) }}
 			<div class="form-group">
-				{{ form_widget(form.fullName, {'attr': {'placeholder': 'Prénom et Nom', 'autofocus': 1}}) }}
+				{{ form_widget(form.fullName, {'attr': {'placeholder': 'Full Name'|trans, 'autofocus': 1}}) }}
 				<small class="block text-sm text-red-600">{{ form_errors(form.fullName) }}</small>
 			</div>
 
 			<div class="form-group">
-				{{ form_widget(form.email, {'attr': {'placeholder': 'Adresse email'}}) }}
+				{{ form_widget(form.email, {'attr': {'placeholder': 'Email address'|trans}}) }}
 				<small class="block text-sm text-red-600">{{ form_errors(form.email) }}</small>
 			</div>
 
 			<div class="form-group">
-				{{ form_widget(form.username, {'attr': {'placeholder': 'Pseudo'}}) }}
+				{{ form_widget(form.username, {'attr': {'placeholder': 'Username'|trans}}) }}
 				<small class="block text-sm text-red-600">{{ form_errors(form.username) }}</small>
 			</div>
 
 			<div class="form-group">
-				{{ form_widget(form.password, {'attr': {'placeholder': 'Mot de passe'}}) }}
+				{{ form_widget(form.password, {'attr': {'placeholder': 'Password'|trans}}) }}
 				<small class="block text-sm text-red-600">{{ form_errors(form.password) }}</small>
 			</div>
 
 			<div class="mt-1">
 				<a href="{{ path('app_login') }}" class="text-sm text-blue-500 underline">
-					J'ai déjà un compte
+					{{ 'I already have an account'|trans }}
 				</a>
 			</div>
 			<div class="form-group">
-				<input type="submit" id="signup" class="btn" value="M'inscrire">
+				<input type="submit" id="signup" class="btn" value="{{ 'Sign me Up'|trans }}">
 			</div>
 			{{ form_end(form) }}
 		</div>

@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Des tutoriels pratiques pour apprendre à coder |
+{% block title %}
+	{{ 'Practical tutorials to learn to code'|trans }}
+	|
 	{{ parent() }}
 {% endblock %}
 
@@ -10,25 +12,24 @@
 			Learn. Code. Share.
 		</h2>
 		<h1 class="text-xl font-semibold text-gray-900 md:w-4/6 m-auto">
-			Apprends à programmer avec des tutoriels pratiques écris par des développeurs.
+			{{ 'Learn to program with hands-on tutorials written by developers.'|trans }}
 		</h1>
 		<p class="mt-6 text-gray-900 md:w-4/6 lg:w-2/5 m-auto text-lg">
-			Kaherecode est une communauté en herbe pour les développeurs. Un endroit pour apprendre et partager autour de la programmation informatique.
-			<a href="" class="text-blue-600 underline">
-				Rejoins-nous maintenant
+			{{ 'Kaherecode is an aspiring community for developers. A place to learn and share about programming.'|trans }}
+			<a href="{{ path('user_register') }}" class="text-blue-600 underline">
+				{{ 'Join us now'|trans }}...
 			</a>
-			.
 		</p>
 	</div>
 
 	<div class="container">
 		<div class="mt-5 flex items-center justify-between">
 			<h2 class="font-bold text-gray-900 text-2xl">
-				Tutoriels récents
+				{{ 'Recents tutorials'|trans }}
 			</h2>
 			<span>
 				<a href="{{ path('tutorials') }}" class="underline text-blue-500">
-					Voir plus...
+					{{ 'View more'|trans }}...
 				</a>
 			</span>
 		</div>
@@ -38,7 +39,7 @@
 
 	<div class="sm:mt-3 text-center py-12 bg-darkGray" style="background-color: #0f0f0f; background: linear-gradient(333deg, #0f0f0f 17%, #3c3b3c 80%);">
 		<div class="container">
-			<h2 class="font-bold text-gray-100 text-2xl">Que veux-tu apprendre aujourd'hui?</h2>
+			<h2 class="font-bold text-gray-100 text-2xl">{{ 'What do you want to learn today?'|trans }}</h2>
 
 			<div class="mt-6 flex flex-wrap space-x-6 lg:space-x-8 items-center justify-center">
 				<a href="{{ path('tag_tutorials', {'label': 'javascript'}) }}" class="bg-white p-2 rounded-md my-3">
@@ -85,7 +86,7 @@
 			</h2>
 			<span>
 				<a href="{{ path('tag_tutorials', {'label': 'javascript'}) }}" class="underline text-blue-500">
-					Voir plus...
+					{{ 'View more'|trans }}...
 				</a>
 			</span>
 		</div>
