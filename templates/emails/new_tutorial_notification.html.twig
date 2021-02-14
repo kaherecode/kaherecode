@@ -3,7 +3,7 @@
 {% block content %}
 <p>
     A new tutorial with the title <strong>{{ tutorial.title }}</strong> have just been published
-    by {{ tutorial.author.fullName }} - <a href="">@{{ tutorial.author.username }}</a>.
+    by {{ tutorial.author.fullName }} - <a href="{{ path('show_user', {'username': tutorial.author.username}) }}">@{{ tutorial.author.username }}</a>.
 </p>
 
 <p>

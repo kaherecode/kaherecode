@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-use App\Service\Mailer;
 use App\Entity\Tag;
+use App\Service\Mailer;
 use App\Entity\Tutorial;
 use App\Form\TutorialType;
 use App\Service\CloudinaryService;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -273,14 +274,21 @@ class TutorialController extends AbstractController
     /**
      * @Route("/tutorials/{uuid}/delete", name="delete_tutorial")
      */
-    public function deleteTutorial(Tutorial $tutorial)
-    {
+    public function deleteTutorial(
+        Tutorial $tutorial,
+        Security $security,
+        CloudinaryService $uploader
+    ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
-        if (!$tutorial->getIsPublished()) {
+        if (!$tutorial->getIsPublished() || $security->isGranted('ROLE_ADMIN')) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($tutorial);
             $em->flush();
+
+            if ($tutorial->getPictureURL() !== null) {
+                $uploader->delete($tutorial->getPictureURL());
+            }
 
             return $this->redirectToRoute('profile');
         } else {

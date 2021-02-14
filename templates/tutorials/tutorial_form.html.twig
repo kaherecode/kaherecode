@@ -77,6 +77,8 @@
 								<span class="ml-1 text-gray-200 hidden md:block">{{ 'Publish'|trans }}</span>
 							</a>
 						</li>
+					{% endif %}
+					{% if not tutorial.isPublished or is_granted('ROLE_ADMIN') %}
 						<li class="ml-4 md:ml-6">
 							<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-gray-900 w-4 h-4">
