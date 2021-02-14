@@ -28,7 +28,7 @@ class TutorialEntityListener
 
     public function preUpdate(Tutorial $tutorial, LifecycleEventArgs $event)
     {
-        if (!$tutorial->getIsPublished()) {
+        if (!$tutorial->getIsPublished() && $tutorial->getPublishedAt() !== null) {
             $tutorial->generateSlug($this->_slugger);
         }
     }

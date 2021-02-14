@@ -96,28 +96,9 @@ class TutorialController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            // set the tutorial tags
-            $tags = array_filter(
-                explode(",", $form->get('tags')->getData()),
-                fn ($c) => ctype_alnum(trim($c))
+            $tutorial->setTags(
+                $this->buildTags($form->get('tags')->getData())
             );
-            foreach ($tags as $cat) {
-                if (trim($cat)) {
-                    // check if the tag already exists
-                    $existingTag = $em
-                        ->getRepository(Tag::class)
-                        ->findOneByLabel(strtolower(trim($cat)));
-
-                    if ($existingTag) { // if it is, simply add it to tutorial
-                        $tutorial->addTag($existingTag);
-                    } else { // if not create a new one the add it to tutorial
-                        $tag = new Tag();
-                        $tag->setLabel(trim($cat));
-                        $tutorial->addTag($tag);
-                        $em->persist($tag);
-                    }
-                }
-            }
 
             $picture = $form->get("picture")->getData();
             if ($picture) {
@@ -169,28 +150,9 @@ class TutorialController extends AbstractController
                 $tutorial->removeTag($tag);
             }
 
-            // set the tutorial tags
-            $tags = array_filter(
-                explode(",", $form->get('tags')->getData()),
-                fn ($c) => ctype_alnum(trim($c))
+            $tutorial->setTags(
+                $this->buildTags($form->get('tags')->getData())
             );
-            foreach ($tags as $cat) {
-                if (trim($cat)) {
-                    // check if the tag already exists
-                    $existingTag = $em
-                        ->getRepository(Tag::class)
-                        ->findOneByLabel(strtolower(trim($cat)));
-
-                    if ($existingTag) { // if it is, simply add it to tutorial
-                        $tutorial->addTag($existingTag);
-                    } else { // if not create a new one the add it to tutorial
-                        $tag = new Tag();
-                        $tag->setLabel(trim($cat));
-                        $tutorial->addTag($tag);
-                        $em->persist($tag);
-                    }
-                }
-            }
 
             $picture = $form->get("picture")->getData();
             if ($picture) {
@@ -302,5 +264,35 @@ class TutorialController extends AbstractController
             'edit_tutorial',
             ['uuid' => $tutorial->getUuid()]
         );
+    }
+
+    protected function buildTags(string $tagsString): array
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tagsObject = [];
+
+        $tags = array_filter(
+            explode(",", $tagsString),
+            fn ($c) => ctype_alnum(trim($c))
+        );
+
+        foreach ($tags as $tag) {
+            if (trim($tag)) {
+                // check if the tag already exists
+                $existingTag = $em
+                        ->getRepository(Tag::class)
+                        ->findOneByLabel(strtolower(trim($tag)));
+
+                if ($existingTag) { // if it is, simply add it to the tags array
+                    $tagsObject[] = $existingTag;
+                } else { // if not create a new one the add it to the tags array
+                    $t = new Tag();
+                    $t->setLabel(trim($tag));
+                    $tagsObject[] = $t;
+                }
+            }
+        }
+
+        return $tagsObject;
     }
 }

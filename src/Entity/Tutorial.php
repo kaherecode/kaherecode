@@ -346,6 +346,22 @@ class Tutorial
         return $this;
     }
 
+    public function setTags(array $tags): self
+    {
+        $isAllTags = true;
+        for ($i=0; $i < count($tags); $i++) {
+            if (! $tags[$i] instanceof Tag) {
+                $isAllTags = false;
+            }
+        }
+
+        if ($isAllTags) {
+            $this->tags = $tags;
+        }
+
+        return $this;
+    }
+
     public function getThumbnailURL(): ?string
     {
         return $this->thumbnailURL;
