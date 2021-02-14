@@ -7,6 +7,7 @@ use App\Service\Mailer;
 use App\Form\ProfileType;
 use App\Form\UserRegistrationType;
 use App\Service\CloudinaryService;
+use App\Repository\TutorialRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,9 +18,17 @@ class UserController extends AbstractController
     /**
      * @Route("/@{username}", name="show_user")
      */
-    public function show(User $user)
+    public function show(User $user, TutorialRepository $tutorialRepository)
     {
-        return $this->render('users/show.html.twig', ['user' => $user]);
+        $tutorials = $tutorialRepository->findBy(
+            ['author' => $user, 'isPublished' => true],
+            ['publishedAt' => 'DESC']
+        );
+
+        return $this->render(
+            'users/show.html.twig',
+            ['user' => $user, 'tutorials' => $tutorials]
+        );
     }
 
     /**
