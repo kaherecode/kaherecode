@@ -18,7 +18,7 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo apt update
+      - run: sudo apt update -y && sudo apt install libxslt-dev -y
       - run: sudo docker-php-ext-install zip pdo_mysql xsl
 
       # restore composer cache
