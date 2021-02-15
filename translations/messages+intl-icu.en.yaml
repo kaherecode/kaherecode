@@ -56,8 +56,6 @@ Courses: Courses
 'Enter your email address, we will send you a link to renew your password.': 'Enter your email address, we will send you a link to renew your password.'
 Validate: Validate
 'Confirm your account': 'Confirm your account'
-Welcome: Welcome
-'Your account have been validated!': 'Your account have been validated!'
 'You have no confirmation.': 'You have no confirmation.'
 'Go back to the homepage': 'Go back to the homepage'
 'Update your Profile': 'Update your Profile'
@@ -71,3 +69,5 @@ Username: Username
 'New password': 'New password'
 'Confirm your password': 'Confirm your password'
 'You did not requested a password change.': 'You did not requested a password change.'
+'account_validated': 'Welcome {username}! Your account have been successfully validated.'
+'This value is already used': 'This value is already used'

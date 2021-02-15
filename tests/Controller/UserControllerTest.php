@@ -4,12 +4,15 @@ namespace App\Tests\Controller;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserControllerTest extends WebTestCase
 {
     public function testRegister()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $crawler = $client->request('GET', '/register');
         $client->submitForm(
             'signup',
@@ -22,12 +25,14 @@ class UserControllerTest extends WebTestCase
         );
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('small', 'Thanks for registering.');
+        $this->assertSelectorTextContains('small', $translator->trans('Thanks for registering.'));
     }
 
     public function testUserAccountConfirmation()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $crawler = $client->request('GET', '/register');
         $client->submitForm(
             'signup',
@@ -50,13 +55,15 @@ class UserControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains(
             'h1',
-            'Bienvenue orion! Ton compte à été valider!'
+            $translator->trans('account_validated', ['username' => 'orion'])
         );
     }
 
     public function testRegisterDuplicateEmail()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $crawler = $client->request('GET', '/register');
         $client->submitForm(
             'signup',
@@ -81,7 +88,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            'This value is already used.',
+            $translator->trans('This value is already used'),
             $client->getResponse()->getContent()
         );
     }
@@ -89,6 +96,8 @@ class UserControllerTest extends WebTestCase
     public function testRegisterDuplicateUsername()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $crawler = $client->request('GET', '/register');
         $client->submitForm(
             'signup',
@@ -113,7 +122,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            'This value is already used.',
+            $translator->trans('This value is already used'),
             $client->getResponse()->getContent()
         );
     }
@@ -149,13 +158,15 @@ class UserControllerTest extends WebTestCase
     public function testEditProfileWithWrongPassword()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
         $userRepository = static::$container->get(UserRepository::class);
+
         $user = $userRepository->findOneByEmail('kaherecode@mail.com');
         $client->loginUser($user);
 
         $client->request('GET', '/profile/edit');
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Modifie ton profil');
+        $this->assertSelectorTextContains('h1', $translator->trans('Update your Profile'));
 
         $client->submitForm(
             'editProfile',
@@ -169,7 +180,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            'Your password is not correct, try again!',
+            $translator->trans('Your password is not correct, try again'),
             $client->getResponse()->getContent()
         );
     }
@@ -177,13 +188,15 @@ class UserControllerTest extends WebTestCase
     public function testEditProfile()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
         $userRepository = static::$container->get(UserRepository::class);
+
         $user = $userRepository->findOneByEmail('kaherecode@mail.com');
         $client->loginUser($user);
 
         $client->request('GET', '/profile/edit');
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Modifie ton profil');
+        $this->assertSelectorTextContains('h1', $translator->trans('Update your Profile'));
 
         $client->submitForm(
             'editProfile',
@@ -202,7 +215,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            'Your profile have been successfully updated!',
+            $translator->trans('Your profile have been successfully updated'),
             $client->getResponse()->getContent()
         );
     }
@@ -210,6 +223,8 @@ class UserControllerTest extends WebTestCase
     public function testPasswordResetRequestWithNonExistingEmail()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $client->request('GET', '/password-reset/request');
         $this->assertResponseIsSuccessful();
 
@@ -219,7 +234,7 @@ class UserControllerTest extends WebTestCase
         );
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            'This email address is not registered.',
+            $translator->trans('This email address is not registered'),
             $client->getResponse()->getContent()
         );
     }
@@ -227,6 +242,8 @@ class UserControllerTest extends WebTestCase
     public function testPasswordResetWithDifferentPasswordConfirmation()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $client->request('GET', '/password-reset/request');
 
         $client->submitForm(
@@ -246,7 +263,7 @@ class UserControllerTest extends WebTestCase
             ['password' => '1234$ecreT', 'confirmPassword' => '1234$eceT']
         );
         $this->assertStringContainsString(
-            'Passwords are not the same.',
+            $translator->trans('Passwords are not the same'),
             $client->getResponse()->getContent()
         );
     }
@@ -254,6 +271,8 @@ class UserControllerTest extends WebTestCase
     public function testPasswordResetWithNoSecurePassword()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $client->request('GET', '/password-reset/request');
 
         $client->submitForm(
@@ -273,7 +292,7 @@ class UserControllerTest extends WebTestCase
             ['password' => '123', 'confirmPassword' => '123']
         );
         $this->assertStringContainsString(
-            'Password is not valid. Sould be 8 or more characters. Should contains at least 1 special chars, 1 digit and 1 uppercace letter.',
+            $translator->trans('Password is not valid. Sould be 8 or more characters. Should contains at least 1 special chars, 1 digit and 1 uppercace letter.'),
             $client->getResponse()->getContent()
         );
     }
@@ -281,6 +300,8 @@ class UserControllerTest extends WebTestCase
     public function testPasswordReset()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $client->request('GET', '/password-reset/request');
         $this->assertResponseIsSuccessful();
 
@@ -290,7 +311,7 @@ class UserControllerTest extends WebTestCase
         );
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            'A mail have been sent to you, check it to update your password.',
+            $translator->trans('A mail have been sent to you, check it to update your password.'),
             $client->getResponse()->getContent()
         );
 
@@ -301,7 +322,7 @@ class UserControllerTest extends WebTestCase
             '/reset-password/' .$user->getConfirmationToken()
         );
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Modifie ton mot de passe');
+        $this->assertSelectorTextContains('h1', $translator->trans('Change my password'));
 
         $client->submitForm(
             'resetPassword',

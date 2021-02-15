@@ -56,8 +56,6 @@ Courses: Cours
 'Enter your email address, we will send you a link to renew your password.': 'Entre ton adresse email, nous t''enverrons un lien pour modifier ton mot de passe'
 Validate: Valider
 'Confirm your account': 'Confirme ton compte'
-Welcome: Bienvenue
-'Your account have been validated!': 'Ton compte a été validé!'
 'You have no confirmation.': 'Tu n''as aucune confirmation.'
 'Go back to the homepage': 'Retour à la page d''accueil'
 'Update your Profile': 'Modifie ton profil'
@@ -71,3 +69,5 @@ Username: Pseudo
 'New password': 'Nouveau mot de passe'
 'Confirm your password': 'Confirme ton mot de passe'
 'You did not requested a password change.': 'Tu n''as fais aucune demande pour changer ton mot de passe.'
+'account_validated': 'Bienvenue {username}! Ton compte à été valider avec succès.'
+'This value is already used': 'Cette valeur est déjà utilisée'

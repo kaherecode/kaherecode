@@ -4,16 +4,19 @@ namespace App\Tests\Controller;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityControllerTest extends WebTestCase
 {
     public function testLogin()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $crawler = $client->request('GET', '/login');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Connecte Toi');
+        $this->assertSelectorTextContains('h1', $translator->trans('Log In'));
 
         $client->submitForm(
             'login',
@@ -26,6 +29,8 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginWithWrongCredentials()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $client->catchExceptions(false);
         $client->followRedirects();
         $crawler = $client->request('GET', '/login');
@@ -36,7 +41,7 @@ class SecurityControllerTest extends WebTestCase
         );
 
         $this->assertStringContainsString(
-            'Email could not be found.',
+            $translator->trans('Email could not be found'),
             $client->getResponse()->getContent()
         );
     }
@@ -44,6 +49,8 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginWithNotConfirmedAccount()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $client->catchExceptions(false);
         $client->followRedirects();
 
@@ -65,7 +72,7 @@ class SecurityControllerTest extends WebTestCase
         );
 
         $this->assertStringContainsString(
-            'Please activate your account before you log in. Check your emails for confirmation.',
+            $translator->trans('Please activate your account before you log in. Check your emails for confirmation.'),
             $client->getResponse()->getContent()
         );
     }
@@ -73,6 +80,8 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginWithArchivedAccount()
     {
         $client = static::createClient();
+        $translator = static::$container->get(TranslatorInterface::class);
+
         $client->catchExceptions(false);
         $client->followRedirects();
 
@@ -102,7 +111,7 @@ class SecurityControllerTest extends WebTestCase
         );
 
         $this->assertStringContainsString(
-            'Your account have been deactivated.',
+            $translator->trans('Your account have been deactivated.'),
             $client->getResponse()->getContent()
         );
     }
