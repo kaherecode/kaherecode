@@ -75,9 +75,25 @@ class TutorialController extends AbstractController
     /**
      * @Route("/tutorial/{slug}", name="tutorial_view")
      */
-    public function show(Tutorial $tutorial)
-    {
-        return $this->render('tutorials/show.html.twig', ['tutorial' => $tutorial]);
+    public function show(
+        Tutorial $tutorial,
+        TutorialRepository $tutorialRepository
+    ) {
+        $relatedTutorials = [];
+        $relatedTutorials[] = $tutorialRepository
+            ->getUserLastPublishedTutorial($tutorial);
+        $relatedTutorials = array_unique(
+            array_merge(
+                $relatedTutorials,
+                $tutorialRepository->findRelatedTutorials($tutorial)
+            ),
+            SORT_REGULAR
+        );
+
+        return $this->render(
+            'tutorials/show.html.twig',
+            ['tutorial' => $tutorial, 'relatedTutorials' => $relatedTutorials]
+        );
     }
 
     /**

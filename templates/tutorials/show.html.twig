@@ -56,7 +56,7 @@
 			{{ 'Keep reading'|trans }}
 		</h3>
 
-		{# {% include 'includes/_tutorials_list.html.twig' %} #}
+		{% include 'includes/_tutorials_list.html.twig' with {'tutorials': relatedTutorials} %}
 	</div>
 
 	<div class="bg-lightGray py-5">
