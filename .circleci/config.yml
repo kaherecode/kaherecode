@@ -29,7 +29,7 @@ jobs:
 
       - run:
           name: "Install Dependencies"
-          command: composer install -n --prefer-dist
+          command: composer update && composer install -n --prefer-dist
 
       # save composer cache
       - save_cache:
