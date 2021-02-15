@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Tutorial;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Tutorial|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,22 +19,22 @@ class TutorialRepository extends ServiceEntityRepository
         parent::__construct($registry, Tutorial::class);
     }
 
-    // /**
-    //  * @return Tutorial[] Returns an array of Tutorial objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Tutorial[] Returns an array of Tutorial objects
+     */
+    public function findAllPublishedByTag(string $label)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('t.isPublished = :isPublished')
+            ->setParameter('isPublished', true)
+            ->orderBy('t.publishedAt', 'DESC')
+            ->innerJoin('t.tags', 'c')
+            ->andWhere('c.label = :tag')
+            ->setParameter('tag', $label)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Tutorial

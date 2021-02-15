@@ -7,6 +7,7 @@ use App\Service\Mailer;
 use App\Entity\Tutorial;
 use App\Form\TutorialType;
 use App\Service\CloudinaryService;
+use App\Repository\TutorialRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -18,29 +19,31 @@ class TutorialController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index()
+    public function index(TutorialRepository $tutorialRepository)
     {
-        $em = $this->getDoctrine()->getManager();
-        $tutorials = $em->getRepository(Tutorial::class)->findBy(
+        $tutorials = $tutorialRepository->findBy(
             ['isPublished' => true],
             ['publishedAt' => 'DESC'],
             10,
             0
         );
 
+        $jsTutorials = $tutorialRepository->findAllPublishedByTag('javascript');
+
         return $this->render(
             'tutorials/index.html.twig',
-            ['tutorials' => $tutorials]
+            ['tutorials' => $tutorials, 'jsTutorials' => $jsTutorials]
         );
     }
 
     /**
      * @Route("/tutorials", name="tutorials")
      */
-    public function tutorials(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $tutorials = $em->getRepository(Tutorial::class)->findBy(
+    public function tutorials(
+        Request $request,
+        TutorialRepository $tutorialRepository
+    ) {
+        $tutorials = $tutorialRepository->findBy(
             ['isPublished' => true],
             ['publishedAt' => 'DESC']
         );
@@ -54,18 +57,18 @@ class TutorialController extends AbstractController
     /**
      * @Route("/tag/{label}", name="tag_tutorials")
      */
-    public function tutorialsByTag(Tag $tag)
-    {
-        // TODO: define a function in repo to get tutorials
-        $em = $this->getDoctrine()->getManager();
-        $tutorials = $em->getRepository(Tutorial::class)->findBy(
-            ['isPublished' => true],
-            ['publishedAt' => 'DESC']
-        );
+    public function tutorialsByTag(
+        Tag $tag,
+        TutorialRepository $tutorialRepository
+    ) {
+        $tutorials = $tutorialRepository->findAllPublishedByTag($tag->getLabel());
 
         return $this->render(
             'tutorials/tutorials.html.twig',
-            ['tag' => $tag, 'tutorials' => $tutorials]
+            [
+                'tag' => $tag,
+                'tutorials' => $tutorials
+            ]
         );
     }
 
