@@ -90,7 +90,7 @@
 						</span>
 					</div>
 				</div>
-				<div class="flex items-start py-3 pl-12 border-gray-400 border-l">
+				<div class="flex items-start py-3 ml-6 pl-6 border-gray-400 border-l">
 					<img src="{{ asset('images/avatar.png') }}" alt="" class="w-12 h-12 object-cover rounded-full">
 					<div class="ml-3">
 						<span class="block text-gray-600">
@@ -111,7 +111,7 @@
 						</span>
 					</div>
 				</div>
-				<div class="flex items-start py-3 pl-12 border-gray-400 border-l">
+				<div class="flex items-start py-3 ml-6 pl-6 border-gray-400 border-l">
 					<img src="{{ asset('images/avatar.png') }}" alt="" class="w-12 h-12 object-cover rounded-full">
 					<div class="ml-3">
 						<span class="block text-gray-600">
@@ -175,6 +175,30 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<div class="comment-form-overlay hidden">
+		<div class="comment-form p-8 hidden">
+			<h4 class="font-bold text-xl">{{ 'Contribute to the discussion'|trans }}</h4>
+			<hr class="mt-2">
+			<form action="" class="mt-2">
+				<textarea name="" id="" rows="7" class="border-none" placeholder="Markdown content..."></textarea>
+				<hr class="mt-2">
+				<p class="mt-2">
+					<span class="flex items-center">
+						<svg xmlns="http://www.w3.org/2000/svg" class="w-4 mr-1" viewbox="0 0 20 20" fill="currentColor">
+							<path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+							<path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+						</svg>
+						{{ 'Preview'|trans }}
+					</span>
+				</p>
+				<p class="mt-6 space-x-3">
+					<a href="" class="btn">{{ 'Post'|trans }}</a>
+					<a href="" class="text-blue-600 underline">{{ 'Cancel'|trans }}</a>
+				</p>
+			</form>
 		</div>
 	</div>
 {% endblock %}
