@@ -2,6 +2,11 @@
 <div class="ml-3 w-full">
 	<span class="block text-gray-600">
 		<a href="{{ path('show_user', {'username': comment.author.username}) }}" class="font-bold text-gray-900 hover:underline">@{{ comment.author.username }}</a>
+		{% if comment.author == comment.tutorial.author %}
+			<small class="bg-green-500 text-gray-200 px-1 text-xs">{{ 'author'|trans }}</small>
+		{% elseif comment.author.hasRoles('ROLE_ADMIN') %}
+			<small class="bg-blue-500 text-gray-200 px-1 text-xs">{{ 'team'|trans }}</small>
+		{% endif %}
 		&#8226;
 		<span class="text-xs">{{ comment.createdAt|ago }}</span>
 	</span>
