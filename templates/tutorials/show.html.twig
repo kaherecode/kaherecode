@@ -187,7 +187,7 @@
 		<div class="comment-form p-8 hidden">
 			<h4 class="font-bold text-xl">{{ 'Contribute to the discussion'|trans }}</h4>
 			<hr class="mt-2">
-			{{ form_start(form) }}
+			{{ form_start(form, {'attr': {'action': path('add_comment', {'uuid': tutorial.uuid})}}) }}
 			{{ form_widget(form.markdownContent, {'attr': {'class': 'border-none', 'rows': 7, 'placeholder': 'Markdown content...'}}) }}
 			<hr class="mt-2">
 			<p class="mt-2">
