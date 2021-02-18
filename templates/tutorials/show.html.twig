@@ -65,7 +65,12 @@
 				{{ 'Discussion'|trans }}
 			</h3>
 			<p class="mt-2">
-				<a href="" class="text-blue-600 hover:underline">{{ 'Contribute to the discussion'|trans }}.</a>
+				{% if is_granted('ROLE_USER') %}
+					<span class="cursor-pointer text-blue-600 hover:underline open-comment-form">{{ 'Contribute to the discussion'|trans }}.</span>
+				{% else %}
+					{{ 'You must be logged in to participate to the discussion'|trans }}.
+					<a href="{{ path('app_login') }}" class="text-blue-600 underline">{{ 'Log In'|trans }}</a>.
+				{% endif %}
 			</p>
 
 			<div class="mt-6">
@@ -81,12 +86,12 @@
 							Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, architecto ea ut dolorum repudiandae dolores soluta a quam provident quia autem minus nesciunt neque numquam perspiciatis consequuntur laboriosam? Quibusdam, sapiente?
 						</p>
 						<span class="block mt-3">
-							<a href="#" class="text-blue-600 hover:underline text-xs flex items-center">
+							<span class="text-blue-600 hover:underline text-xs flex items-center cursor-pointer open-comment-form">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
 								</svg>
 								<span class="ml-1">{{ 'Reply'|trans }}</span>
-							</a>
+							</span>
 						</span>
 					</div>
 				</div>
@@ -178,7 +183,7 @@
 		</div>
 	</div>
 
-	<div class="comment-form-overlay hidden">
+	<div class="comment-form-overlay hidden" id="commentForm">
 		<div class="comment-form p-8 hidden">
 			<h4 class="font-bold text-xl">{{ 'Contribute to the discussion'|trans }}</h4>
 			<hr class="mt-2">
@@ -196,7 +201,7 @@
 				</p>
 				<p class="mt-6 space-x-3">
 					<a href="" class="btn">{{ 'Post'|trans }}</a>
-					<a href="" class="text-blue-600 underline">{{ 'Cancel'|trans }}</a>
+					<span class="text-blue-600 underline cursor-pointer" id="closeCommentForm">{{ 'Cancel'|trans }}</span>
 				</p>
 			</form>
 		</div>
