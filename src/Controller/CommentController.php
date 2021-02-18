@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Tutorial;
+use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,12 +15,40 @@ class CommentController extends AbstractController
     /**
      * @Route("/comment/{uuid}", name="add_comment", methods={"POST"})
      */
-    public function addComment(Tutorial $tutorial, Request $request): Response
-    {
-        dd($request->request->get("comment")["markdownContent"]);
+    public function addComment(
+        Tutorial $tutorial,
+        Request $request,
+        CommentRepository $commentRepository
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
-        return $this->render('comment/index.html.twig', [
-            'controller_name' => 'CommentController',
-        ]);
+        $comment = new Comment();
+        $comment->setAuthor($this->getUser());
+        $comment->setTutorial($tutorial);
+        $comment->setMarkdownContent(
+            $request->request->get('comment')['markdownContent']
+        );
+        $comment->setContent($request->request->get('htmlContent'));
+
+        if ($request->query->get('commentID')) {
+            $replyTo = $commentRepository->find($request->query->get('commentID'));
+
+            if ($replyTo) {
+                $comment->setReplyTo($replyTo);
+            }
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($comment);
+        $em->flush();
+
+        // TODO: check for spam
+        // TODO: send a notif email to support and author
+        // TODO: if a reply, notify parent comment author
+
+        return $this->redirectToRoute(
+            'tutorial_view',
+            ['slug' => $tutorial->getSlug()]
+        );
     }
 }

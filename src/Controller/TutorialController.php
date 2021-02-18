@@ -9,6 +9,7 @@ use App\Entity\Tutorial;
 use App\Form\CommentType;
 use App\Form\TutorialType;
 use App\Service\CloudinaryService;
+use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,7 +80,8 @@ class TutorialController extends AbstractController
      */
     public function show(
         Tutorial $tutorial,
-        TutorialRepository $tutorialRepository
+        TutorialRepository $tutorialRepository,
+        CommentRepository $commentRepository
     ) {
         $relatedTutorials = [];
         $relatedTutorials[] = $tutorialRepository
@@ -92,6 +94,11 @@ class TutorialController extends AbstractController
             SORT_REGULAR
         );
 
+        $comments = $commentRepository->findBy(
+            ['state' => Comment::STATE_SUBMITTED, 'tutorial' => $tutorial, 'replyTo' => null],
+            ['createdAt' => 'DESC']
+        );
+
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
 
@@ -100,6 +107,7 @@ class TutorialController extends AbstractController
             [
                 'tutorial' => $tutorial,
                 'relatedTutorials' => $relatedTutorials,
+                'comments' => $comments,
                 'form' => $commentForm->createView()
             ]
         );

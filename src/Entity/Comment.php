@@ -12,9 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment
 {
-    private const STATE_SPAM = 'spam';
-    private const STATE_SUBMITTED = 'submitted';
-    private const STATE_PUBLISHED = 'published';
+    public const STATE_SPAM = 'spam';
+    public const STATE_SUBMITTED = 'submitted';
+    public const STATE_PUBLISHED = 'published';
 
     /**
      * @ORM\Id

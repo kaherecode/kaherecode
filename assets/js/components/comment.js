@@ -14,11 +14,16 @@ const commentForm = document.querySelector('#commentForm > .comment-form')
 
 const openComments = document.querySelectorAll('.open-comment-form')
 const closeComment = document.querySelector('#closeCommentForm')
+const form = document.querySelector('#commentForm > .comment-form > form')
 
 if (openComments) {
   openComments.forEach((item) => {
     item.addEventListener('click', (event) => {
       event.preventDefault()
+
+      if (item.getAttribute('comment')) {
+        form.action = `${form.action}?commentID=${item.getAttribute('comment')}`
+      }
 
       if (
         commentForm.style.display === 'none' ||
@@ -36,6 +41,7 @@ if (closeComment) {
 
     if (commentForm.style.display === 'block') {
       commentForm.style.display = 'none'
+      form.action = form.action.split('?')[0]
     }
   })
 }

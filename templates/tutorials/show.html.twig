@@ -74,111 +74,67 @@
 			</p>
 
 			<div class="mt-6">
-				<div class="flex items-start py-3">
-					<img src="{{ asset('images/avatar.png') }}" alt="" class="w-12 h-12 object-cover rounded-full">
-					<div class="ml-3">
-						<span class="block text-gray-600">
-							<a href="#" class="font-bold text-gray-900 hover:underline">@alioukahere</a>
-							&#8226;
-							<span class="text-xs">1 hour ago</span>
-						</span>
-						<p class="mt-1">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, architecto ea ut dolorum repudiandae dolores soluta a quam provident quia autem minus nesciunt neque numquam perspiciatis consequuntur laboriosam? Quibusdam, sapiente?
-						</p>
-						<span class="block mt-3">
-							<span class="text-blue-600 hover:underline text-xs flex items-center cursor-pointer open-comment-form">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
-								</svg>
-								<span class="ml-1">{{ 'Reply'|trans }}</span>
+				{% for comment in comments %}
+					<div class="flex items-start py-3">
+						<img src="{{ comment.author.avatar is null ? asset('images/avatar.png') : comment.author.avatar }}" alt="{{ comment.author.fullName }}" class="w-12 h-12 object-cover rounded-full">
+						<div class="ml-3 w-full">
+							<span class="block text-gray-600">
+								<a href="{{ path('show_user', {'username': comment.author.username}) }}" class="font-bold text-gray-900 hover:underline">@{{ comment.author.username }}</a>
+								&#8226;
+								<span class="text-xs">{{ comment.createdAt|ago }}</span>
 							</span>
-						</span>
+							<div class="mt-1 w-full">
+								{{ comment.content|raw }}
+							</div>
+							{% if is_granted('ROLE_USER') %}
+								<span class="block mt-3">
+									<span class="text-blue-600 hover:underline text-xs flex items-center cursor-pointer open-comment-form" comment="{{ comment.id }}">
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+										</svg>
+										<span class="ml-1">{{ 'Reply'|trans }}</span>
+									</span>
+								</span>
+							{% else %}
+								<small class="text-gray-700">
+									{{ 'You must be logged in to participate to the discussion'|trans }}.
+									<a href="{{ path('app_login') }}" class="text-blue-600 underline">{{ 'Log In'|trans }}</a>.
+								</small>
+							{% endif %}
+						</div>
 					</div>
-				</div>
-				<div class="flex items-start py-3 ml-6 pl-6 border-gray-400 border-l">
-					<img src="{{ asset('images/avatar.png') }}" alt="" class="w-12 h-12 object-cover rounded-full">
-					<div class="ml-3">
-						<span class="block text-gray-600">
-							<a href="#" class="font-bold text-gray-900 hover:underline">@alioukahere</a>
-							&#8226;
-							<span class="text-xs">2 min. ago</span>
-						</span>
-						<p class="mt-1">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, architecto ea ut dolorum repudiandae dolores soluta a quam provident quia autem minus nesciunt neque numquam perspiciatis consequuntur laboriosam? Quibusdam, sapiente?
-						</p>
-						<span class="block mt-3">
-							<a href="#" class="text-blue-600 hover:underline text-xs flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
-								</svg>
-								<span class="ml-1">Reply</span>
-							</a>
-						</span>
-					</div>
-				</div>
-				<div class="flex items-start py-3 ml-6 pl-6 border-gray-400 border-l">
-					<img src="{{ asset('images/avatar.png') }}" alt="" class="w-12 h-12 object-cover rounded-full">
-					<div class="ml-3">
-						<span class="block text-gray-600">
-							<a href="#" class="font-bold text-gray-900 hover:underline">@alioukahere</a>
-							&#8226;
-							<span class="text-xs">2 min. ago</span>
-						</span>
-						<p class="mt-1">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, architecto ea ut dolorum repudiandae dolores soluta a quam provident quia autem minus nesciunt neque numquam perspiciatis consequuntur laboriosam? Quibusdam, sapiente?
-						</p>
-						<span class="block mt-3">
-							<a href="#" class="text-blue-600 hover:underline text-xs flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
-								</svg>
-								<span class="ml-1">Reply</span>
-							</a>
-						</span>
-					</div>
-				</div>
-				<div class="flex items-start py-3 border-gray-400">
-					<img src="{{ asset('images/avatar.png') }}" alt="" class="w-12 h-12 object-cover rounded-full">
-					<div class="ml-3">
-						<span class="block text-gray-600">
-							<a href="#" class="font-bold text-gray-900 hover:underline">@alioukahere</a>
-							&#8226;
-							<span class="text-xs">2 days ago</span>
-						</span>
-						<p class="mt-1">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, architecto ea ut dolorum repudiandae dolores soluta a quam provident quia autem minus nesciunt neque numquam perspiciatis consequuntur laboriosam? Quibusdam, sapiente?
-						</p>
-						<span class="block mt-3">
-							<a href="#" class="text-blue-600 hover:underline text-xs flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
-								</svg>
-								<span class="ml-1">Reply</span>
-							</a>
-						</span>
-					</div>
-				</div>
-				<div class="flex items-start py-3 border-gray-400">
-					<img src="{{ asset('images/avatar.png') }}" alt="" class="w-12 h-12 object-cover rounded-full">
-					<div class="ml-3">
-						<span class="block text-gray-600">
-							<a href="#" class="font-bold text-gray-900 hover:underline">@alioukahere</a>
-							&#8226;
-							<span class="text-xs">2 days ago</span>
-						</span>
-						<p class="mt-1">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, architecto ea ut dolorum repudiandae dolores soluta a quam provident quia autem minus nesciunt neque numquam perspiciatis consequuntur laboriosam? Quibusdam, sapiente?
-						</p>
-						<span class="block mt-3">
-							<a href="#" class="text-blue-600 hover:underline text-xs flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
-								</svg>
-								<span class="ml-1">Reply</span>
-							</a>
-						</span>
-					</div>
-				</div>
+
+					{% for c in comment.responses %}
+						<div class="flex items-start py-3 ml-6 pl-6 border-gray-400 border-l">
+							<img src="{{ c.author.avatar is null ? asset('images/avatar.png') : c.author.avatar }}" alt="{{ c.author.fullName }}" class="w-12 h-12 object-cover rounded-full">
+							<div class="ml-3 w-full">
+								<span class="block text-gray-600">
+									<a href="{{ path('show_user', {'username': c.author.username}) }}" class="font-bold text-gray-900 hover:underline">@{{ c.author.username }}</a>
+									&#8226;
+									<span class="text-xs">{{ c.createdAt|ago }}</span>
+								</span>
+								<div class="mt-1 w-full">
+									{{ c.content|raw }}
+								</div>
+								{% if is_granted('ROLE_USER') %}
+									<span class="block mt-3">
+										<span class="text-blue-600 hover:underline text-xs flex items-center cursor-pointer open-comment-form" comment="{{ comment.id }}">
+											<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+											</svg>
+											<span class="ml-1">{{ 'Reply'|trans }}</span>
+										</span>
+									</span>
+								{% else %}
+									<small class="text-gray-700">
+										{{ 'You must be logged in to participate to the discussion'|trans }}.
+										<a href="{{ path('app_login') }}" class="text-blue-600 underline">{{ 'Log In'|trans }}</a>.
+									</small>
+								{% endif %}
+							</div>
+						</div>
+					{% endfor %}
+				{% endfor %}
 			</div>
 		</div>
 	</div>

@@ -117,6 +117,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
+    "knplabs/knp-time-bundle": {
+        "version": "v1.15.0"
+    },
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
