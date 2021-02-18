@@ -1,25 +1,30 @@
 const commentFormOverlay = document.querySelector('#commentForm')
 const commentForm = document.querySelector('#commentForm > .comment-form')
 
-document.querySelectorAll('.open-comment-form').forEach((item) => {
-  item.addEventListener('click', (event) => {
-    event.preventDefault()
+const openComments = document.querySelectorAll('.open-comment-form')
+const closeComment = document.querySelector('#closeCommentForm')
 
-    if (
-      commentForm.style.display === 'none' ||
-      commentForm.style.display === ''
-    ) {
-      commentForm.style.display = 'block'
-    }
+if (openComments) {
+  openComments.forEach((item) => {
+    item.addEventListener('click', (event) => {
+      event.preventDefault()
+
+      if (
+        commentForm.style.display === 'none' ||
+        commentForm.style.display === ''
+      ) {
+        commentForm.style.display = 'block'
+      }
+    })
   })
-})
+}
 
-document
-  .querySelector('#closeCommentForm')
-  .addEventListener('click', (event) => {
+if (closeComment) {
+  closeComment.addEventListener('click', (event) => {
     event.preventDefault()
 
     if (commentForm.style.display === 'block') {
       commentForm.style.display = 'none'
     }
   })
+}

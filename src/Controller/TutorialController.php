@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
+use App\Entity\Comment;
 use App\Service\Mailer;
 use App\Entity\Tutorial;
+use App\Form\CommentType;
 use App\Form\TutorialType;
 use App\Service\CloudinaryService;
 use App\Repository\TutorialRepository;
@@ -90,9 +92,16 @@ class TutorialController extends AbstractController
             SORT_REGULAR
         );
 
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+
         return $this->render(
             'tutorials/show.html.twig',
-            ['tutorial' => $tutorial, 'relatedTutorials' => $relatedTutorials]
+            [
+                'tutorial' => $tutorial,
+                'relatedTutorials' => $relatedTutorials,
+                'form' => $commentForm->createView()
+            ]
         );
     }
 

@@ -67,6 +67,7 @@ class Comment
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime;
         $this->responses = new ArrayCollection();
     }
 
