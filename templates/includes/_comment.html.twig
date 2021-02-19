@@ -21,9 +21,11 @@
 				</svg>
 				<span class="ml-1">{{ 'Reply'|trans }}</span>
 			</span>
-			<span class="ml-2">
-				<a href="" class="text-blue-600 hover:underline">{{ 'Delete'|trans }}</a>
-			</span>
+			{% if app.user == comment.author or is_granted('ROLE_ADMIN') %}
+				<span class="ml-2">
+					<a href="{{ path('delete_comment', {'id': comment.id}) }}" class="text-blue-600 hover:underline">{{ 'Delete'|trans }}</a>
+				</span>
+			{% endif %}
 		</span>
 	{% else %}
 		<small class="text-gray-700">
