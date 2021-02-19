@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\User;
+use App\Entity\Comment;
 use App\Entity\Tutorial;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -50,6 +51,17 @@ class Mailer
             ->subject("A new tutorial have been published!")
             ->htmlTemplate('emails/new_tutorial_notification.html.twig')
             ->context(['tutorial' => $tutorial]);
+
+        $this->mailer->send($email);
+    }
+
+    public function sendNewCommentMessageToSupport(Comment $comment)
+    {
+        $email = (new NotificationEmail())
+            ->to($_ENV['FROM_EMAIL'])
+            ->subject("A new comment have just been submitted!")
+            ->htmlTemplate('emails/new_comment_support_notification.html.twig')
+            ->context(['comment' => $comment]);
 
         $this->mailer->send($email);
     }

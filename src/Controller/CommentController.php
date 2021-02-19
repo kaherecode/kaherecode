@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Service\Mailer;
 use App\Entity\Tutorial;
 use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,8 @@ class CommentController extends AbstractController
     public function addComment(
         Tutorial $tutorial,
         Request $request,
-        CommentRepository $commentRepository
+        CommentRepository $commentRepository,
+        Mailer $mailer
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -36,6 +38,8 @@ class CommentController extends AbstractController
 
             if ($replyTo) {
                 $comment->setReplyTo($replyTo);
+
+                // TODO: if a reply, notify parent comment author
             }
         }
 
@@ -44,8 +48,8 @@ class CommentController extends AbstractController
         $em->flush();
 
         // TODO: check for spam
-        // TODO: send a notif email to support and author
-        // TODO: if a reply, notify parent comment author
+        // TODO: send a mail to author if comment not spam (published state)
+        $mailer->sendNewCommentMessageToSupport($comment);
 
         $target = $this->generateUrl(
             'tutorial_view',
