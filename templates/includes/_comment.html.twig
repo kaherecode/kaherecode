@@ -15,7 +15,7 @@
 	</div>
 	{% if is_granted('ROLE_USER') %}
 		<span class="flex mt-3 text-xs">
-			<span class="text-blue-600 hover:underline flex items-center cursor-pointer open-comment-form" comment="{{ comment.id }}">
+			<span class="text-blue-600 hover:underline flex items-center cursor-pointer open-comment-form" comment="{{ comment.replyTo ? comment.replyTo.id : comment.id }}">
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
 				</svg>

@@ -57,6 +57,7 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="responses")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $replyTo;
 
