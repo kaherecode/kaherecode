@@ -5,7 +5,7 @@ Tutorials: Tutoriels
 'Created at': 'Créer le'
 'Updated at': 'Modifier le'
 Chat: Chat
-'Log In': 'Connexion'
+'Log In': 'Connecte Toi'
 'Sign Up': 'Inscription'
 'My Profile': 'Mon Profil'
 'Update my Profile': 'Modifier mon Profil'
@@ -80,3 +80,4 @@ Cancel: Annuler
 author: auteur
 'Markdown content...': 'Contenu markdown...'
 team: équipe
+Delete: Supprimer

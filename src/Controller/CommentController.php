@@ -46,9 +46,16 @@ class CommentController extends AbstractController
         // TODO: send a notif email to support and author
         // TODO: if a reply, notify parent comment author
 
-        return $this->redirectToRoute(
+        $target = $this->generateUrl(
             'tutorial_view',
             ['slug' => $tutorial->getSlug()]
         );
+
+        return $this->redirect("{$target}#comments");
+    }
+
+    public function delete(Comment $comment)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
     }
 }

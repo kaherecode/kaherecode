@@ -61,7 +61,7 @@
 
 	<div class="bg-lightGray py-5">
 		<div class="container">
-			<h3 class="font-bold text-gray-900 text-xl">
+			<h3 class="font-bold text-gray-900 text-xl" id="comments">
 				{{ 'Discussion'|trans }}
 			</h3>
 			<p class="mt-2">
@@ -69,7 +69,7 @@
 					<span class="cursor-pointer text-blue-600 hover:underline open-comment-form">{{ 'Contribute to the discussion'|trans }}.</span>
 				{% else %}
 					{{ 'You must be logged in to participate to the discussion'|trans }}.
-					<a href="{{ path('app_login') }}" class="text-blue-600 underline">{{ 'Log In'|trans }}</a>.
+					<a href="{{ path('app_login') }}?target={{ app.request.uri }}#comments" class="text-blue-600 underline">{{ 'Log In'|trans }}</a>.
 				{% endif %}
 			</p>
 

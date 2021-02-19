@@ -14,18 +14,21 @@
 		{{ comment.content|raw }}
 	</div>
 	{% if is_granted('ROLE_USER') %}
-		<span class="block mt-3">
-			<span class="text-blue-600 hover:underline text-xs flex items-center cursor-pointer open-comment-form" comment="{{ comment.id }}">
+		<span class="flex mt-3 text-xs">
+			<span class="text-blue-600 hover:underline flex items-center cursor-pointer open-comment-form" comment="{{ comment.id }}">
 				<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
 				</svg>
 				<span class="ml-1">{{ 'Reply'|trans }}</span>
 			</span>
+			<span class="ml-2">
+				<a href="" class="text-blue-600 hover:underline">{{ 'Delete'|trans }}</a>
+			</span>
 		</span>
 	{% else %}
 		<small class="text-gray-700">
 			{{ 'You must be logged in to participate to the discussion'|trans }}.
-			<a href="{{ path('app_login') }}" class="text-blue-600 underline">{{ 'Log In'|trans }}</a>.
+			<a href="{{ path('app_login') }}?target={{ app.request.uri }}#comments" class="text-blue-600 underline">{{ 'Log In'|trans }}</a>.
 		</small>
 	{% endif %}
 </div>
