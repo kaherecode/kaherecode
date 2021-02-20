@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Service\Mailer;
 use App\Entity\Tutorial;
-use App\Service\SpamChecker;
+use App\Message\CommentMessage;
 use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -23,7 +24,7 @@ class CommentController extends AbstractController
         Request $request,
         CommentRepository $commentRepository,
         Mailer $mailer,
-        SpamChecker $spamChecker
+        MessageBusInterface $bus
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -40,27 +41,22 @@ class CommentController extends AbstractController
 
             if ($replyTo) {
                 $comment->setReplyTo($replyTo);
-
-                // TODO: if a reply, notify parent comment author
             }
-        }
-
-        // check for spam
-        $context = [
-                'user_ip' => $request->getClientIp(),
-                'user_agent' => $request->headers->get('user-agent'),
-                'referrer' => $request->headers->get('referer'),
-                'permalink' => $request->getUri(),
-            ];
-        if ($spamChecker->isSpam($comment, $context)) {
-            throw new \RuntimeException('This comment is a spam!');
         }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($comment);
         $em->flush();
 
-        // TODO: send a mail to author if comment not spam (published state)
+        // check for spam
+        $context = [
+            'user_ip' => $request->getClientIp(),
+            'user_agent' => $request->headers->get('user-agent'),
+            'referrer' => $request->headers->get('referer'),
+            'permalink' => $request->getUri(),
+        ];
+        $bus->dispatch(new CommentMessage($comment->getId(), $context));
+
         $mailer->sendNewCommentMessageToSupport($comment);
 
         $target = $this->generateUrl(

@@ -95,7 +95,11 @@ class TutorialController extends AbstractController
         );
 
         $comments = $commentRepository->findBy(
-            ['state' => Comment::STATE_SUBMITTED, 'tutorial' => $tutorial, 'replyTo' => null],
+            [
+                'state' => Comment::STATE_SUBMITTED,
+                'tutorial' => $tutorial,
+                'replyTo' => null
+            ],
             ['createdAt' => 'DESC']
         );
 

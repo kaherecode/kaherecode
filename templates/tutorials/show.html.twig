@@ -74,12 +74,12 @@
 			</p>
 
 			<div class="mt-6">
-				{% for comment in comments %}
+				{% for comment in comments|filter(co => co.state == constant('STATE_PUBLISHED', co) or co.state == constant('STATE_SUBMITTED', co)) %}
 					<div class="flex items-start py-3">
 						{% include "includes/_comment.html.twig" %}
 					</div>
 
-					{% for c in comment.responses %}
+					{% for c in comment.responses|filter(co => co.state == constant('STATE_PUBLISHED', co) or co.state == constant('STATE_SUBMITTED', co)) %}
 						<div class="flex items-start py-3 ml-6 pl-6 border-gray-400 border-l">
 							{% include "includes/_comment.html.twig" with {'comment': c} %}
 						</div>
