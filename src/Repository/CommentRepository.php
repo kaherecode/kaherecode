@@ -37,16 +37,17 @@ class CommentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
-    /*
-    public function findOneBySomeField($value): ?Comment
+    /**
+     * @return Comment[] Returns an array of Comment objects
+     */
+    public function findOlderSpams(int $days)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.state = :state')
+            ->setParameter('state', Comment::STATE_SPAM)
+            ->andWhere("c.createdAt < :date")
+            ->setParameter('date', new \DateTime("-{$days} days"))
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }
