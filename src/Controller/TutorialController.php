@@ -94,14 +94,7 @@ class TutorialController extends AbstractController
             SORT_REGULAR
         );
 
-        $comments = $commentRepository->findBy(
-            [
-                'state' => Comment::STATE_SUBMITTED,
-                'tutorial' => $tutorial,
-                'replyTo' => null
-            ],
-            ['createdAt' => 'DESC']
-        );
+        $comments = $commentRepository->getTutorialComments($tutorial);
 
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);

@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Tutorial;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,22 +20,24 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    // /**
-    //  * @return Comment[] Returns an array of Comment objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Comment[] Returns an array of Comment objects
+     */
+    public function getTutorialComments(Tutorial $tutorial)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('c.tutorial = :tutorial')
+            ->setParameter('tutorial', $tutorial)
+            ->andWhere('c.state = :submitted')
+            ->setParameter('submitted', Comment::STATE_SUBMITTED)
+            ->orWhere('c.state = :published')
+            ->setParameter('published', Comment::STATE_PUBLISHED)
+            ->andWhere('c.replyTo is NULL')
+            ->orderBy('c.createdAt', 'DESC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Comment
