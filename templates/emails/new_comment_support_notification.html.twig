@@ -8,7 +8,7 @@
 <p>
     <strong>Tutorial</strong>: {{ comment.tutorial.title }} <br>
     <strong>Extract</strong>: {{ (comment.content|striptags|slice(0, 100))|raw }} <br>
-    <strong>Submitted at</strong>: {{ comment.createdAt|format_date() }} <br>
+    <strong>Submitted at</strong>: {{ comment.createdAt|format_datetime() }} <br>
 </p>
 <p>
     <a href="{{ url('tutorial_view', {'slug': comment.tutorial.slug}) }}#comments" class="btn">take a look</a>

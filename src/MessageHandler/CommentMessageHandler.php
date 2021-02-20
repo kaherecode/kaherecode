@@ -3,6 +3,7 @@
 namespace App\MessageHandler;
 
 use App\Entity\Comment;
+use App\Service\Mailer;
 use App\Service\SpamChecker;
 use App\Message\CommentMessage;
 use App\Repository\CommentRepository;
@@ -26,14 +27,21 @@ class CommentMessageHandler implements MessageHandlerInterface
      */
     protected $commentRepository;
 
+    /**
+     * @var Mailer
+     */
+    protected $mailer;
+
     public function __construct(
         SpamChecker $spamChecker,
         EntityManagerInterface $entityManager,
-        CommentRepository $commentRepository
+        CommentRepository $commentRepository,
+        Mailer $mailer
     ) {
         $this->spamChecker = $spamChecker;
         $this->entityManager = $entityManager;
         $this->commentRepository = $commentRepository;
+        $this->mailer = $mailer;
     }
 
     public function __invoke(CommentMessage $message)
@@ -51,8 +59,11 @@ class CommentMessageHandler implements MessageHandlerInterface
         } else {
             $comment->setState(Comment::STATE_PUBLISHED);
 
-            // TODO: if a reply, notify parent comment author
-            // TODO: send a mail to author if comment not spam (published state)
+            $this->mailer->sendNewCommentMessageToAuthor($comment);
+
+            if ($comment->getReplyTo()) {
+                $this->mailer->sendNewCommentMessageToDiscussion($comment);
+            }
         }
 
         $this->entityManager->flush();

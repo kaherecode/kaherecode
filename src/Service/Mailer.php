@@ -65,4 +65,74 @@ class Mailer
 
         $this->mailer->send($email);
     }
+
+    public function sendNewCommentMessageToAuthor(Comment $comment)
+    {
+        $email = (new TemplatedEmail())
+            ->to(
+                new Address(
+                    $comment->getTutorial()->getAuthor()->getEmail(),
+                    $comment->getTutorial()->getAuthor()->getFullName()
+                )
+            )
+            ->subject("A new comment have just been submitted to your tutorial!")
+            ->htmlTemplate('emails/new_comment_support_notification.html.twig')
+            ->context(['comment' => $comment]);
+
+        $this->mailer->send($email);
+    }
+
+    public function sendNewCommentMessageToDiscussion(Comment $comment)
+    {
+        $discussions = $comment->getReplyTo()->getResponses()->toArray();
+
+        // get only published comments from discussions
+        $discussions = array_filter(
+            $discussions,
+            fn ($c) => $c->getState() === Comment::STATE_PUBLISHED
+        );
+
+        // get published comments authors
+        $authors = array_map(
+            fn ($c) => $c->getAuthor(),
+            $discussions
+        );
+
+        // get unique authors array
+        $authors = array_unique($authors, SORT_REGULAR);
+
+        // remove replyTo author from authors array
+        $authors = array_filter(
+            $authors,
+            fn ($u) =>
+                $u !== $comment->getReplyTo()->getAuthor()
+                && $u !== $comment->getAuthor()
+        );
+
+        // build addresses
+        $addresses = array_map(
+            fn ($u) =>
+                new Address(
+                    $u->getEmail(),
+                    $u->getFullName()
+                ),
+            $authors
+        );
+
+        $email = (new TemplatedEmail())
+            ->to(
+                new Address(
+                    $comment->getReplyTo()->getAuthor()->getEmail(),
+                    $comment->getReplyTo()->getAuthor()->getFullName()
+                ),
+            )
+            ->addBcc(
+                ...$addresses
+            )
+            ->subject("A response to your comment have just been submitted!")
+            ->htmlTemplate('emails/new_comment_support_notification.html.twig')
+            ->context(['comment' => $comment]);
+
+        $this->mailer->send($email);
+    }
 }
