@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Service\Mailer;
 use App\Entity\Tutorial;
+use App\Service\SpamChecker;
 use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,8 @@ class CommentController extends AbstractController
         Tutorial $tutorial,
         Request $request,
         CommentRepository $commentRepository,
-        Mailer $mailer
+        Mailer $mailer,
+        SpamChecker $spamChecker
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -43,11 +45,21 @@ class CommentController extends AbstractController
             }
         }
 
+        // check for spam
+        $context = [
+                'user_ip' => $request->getClientIp(),
+                'user_agent' => $request->headers->get('user-agent'),
+                'referrer' => $request->headers->get('referer'),
+                'permalink' => $request->getUri(),
+            ];
+        if ($spamChecker->isSpam($comment, $context)) {
+            throw new \RuntimeException('This comment is a spam!');
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($comment);
         $em->flush();
 
-        // TODO: check for spam
         // TODO: send a mail to author if comment not spam (published state)
         $mailer->sendNewCommentMessageToSupport($comment);
 
