@@ -301,6 +301,15 @@ class Tutorial
         return $this;
     }
 
+    public function getVideoId()
+    {
+        if ($this->videoLink === null || $this->videoLink === '') {
+            return null;
+        }
+
+        return explode('/', $this->videoLink)[3];
+    }
+
     public function getMarkdownContent(): ?string
     {
         return $this->markdownContent;
