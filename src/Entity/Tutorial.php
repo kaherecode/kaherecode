@@ -121,6 +121,11 @@ class Tutorial
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $views;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -427,6 +432,18 @@ class Tutorial
                 $comment->setTutorial(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(int $views): self
+    {
+        $this->views = $views;
 
         return $this;
     }
