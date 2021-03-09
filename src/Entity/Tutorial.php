@@ -126,6 +126,11 @@ class Tutorial
      */
     private $views = 0;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $readTime = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -444,6 +449,18 @@ class Tutorial
     public function setViews(int $views): self
     {
         $this->views = $views;
+
+        return $this;
+    }
+
+    public function getReadTime(): ?int
+    {
+        return $this->readTime;
+    }
+
+    public function setReadTime(int $readTime): self
+    {
+        $this->readTime = $readTime;
 
         return $this;
     }

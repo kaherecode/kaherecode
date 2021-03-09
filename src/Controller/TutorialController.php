@@ -19,6 +19,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TutorialController extends AbstractController
 {
+    private const WORD_PER_MIN = 250;
+
     /**
      * @Route("/", name="homepage")
      */
@@ -84,8 +86,11 @@ class TutorialController extends AbstractController
         CommentRepository $commentRepository
     ) {
         $relatedTutorials = [];
-        $relatedTutorials[] = $tutorialRepository
+        $userLastPublishedTutorial = $tutorialRepository
             ->getUserLastPublishedTutorial($tutorial);
+        if ($userLastPublishedTutorial) {
+            $relatedTutorials[] = $userLastPublishedTutorial;
+        }
         $relatedTutorials = array_unique(
             array_merge(
                 $relatedTutorials,
@@ -240,6 +245,11 @@ class TutorialController extends AbstractController
             && $tutorial->getDescription() !== ''
             && count($tutorial->getTags()->toArray()) > 0
         ) {
+            // calculate read time
+            $wordCount = str_word_count(strip_tags($tutorial->getContent()));
+            $minutes = (int) ceil($wordCount / self::WORD_PER_MIN);
+            $tutorial->setReadTime($minutes);
+
             $tutorial->setIsPublished(true);
             $tutorial->setPublishedAt(new \DateTime);
             $em = $this->getDoctrine()->getManager();
