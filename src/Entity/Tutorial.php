@@ -124,7 +124,7 @@ class Tutorial
     /**
      * @ORM\Column(type="integer")
      */
-    private $views;
+    private $views = 0;
 
     public function getId(): ?int
     {
