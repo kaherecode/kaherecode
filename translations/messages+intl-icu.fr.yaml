@@ -5,7 +5,7 @@ Tutorials: Tutoriels
 'Created at': 'Créer le'
 'Updated at': 'Modifier le'
 Chat: Chat
-'Log In': 'Connexion'
+'Log In': 'Connecte Toi'
 'Sign Up': 'Inscription'
 'My Profile': 'Mon Profil'
 'Update my Profile': 'Modifier mon Profil'
@@ -71,3 +71,13 @@ Username: Pseudo
 'You did not requested a password change.': 'Tu n''as fais aucune demande pour changer ton mot de passe.'
 'account_validated': 'Bienvenue {username}! Ton compte à été valider avec succès.'
 'This value is already used': 'Cette valeur est déjà utilisée'
+'Reply': 'Répondre'
+'Contribute to the discussion': 'Participe à la discussion'
+Preview: Afficher
+Post: Poster
+Cancel: Annuler
+'You must be logged in to participate to the discussion': 'Tu dois être connecté pour participer à la discussion'
+author: auteur
+'Markdown content...': 'Contenu markdown...'
+team: équipe
+Delete: Supprimer

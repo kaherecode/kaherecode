@@ -1,0 +1,36 @@
+<img src="{{ comment.author.avatar is null ? asset('images/avatar.png') : comment.author.avatar }}" alt="{{ comment.author.fullName }}" class="w-12 h-12 object-cover rounded-full">
+<div class="ml-3 w-full">
+	<span class="block text-gray-600">
+		<a href="{{ path('show_user', {'username': comment.author.username}) }}" class="font-bold text-gray-900 hover:underline">@{{ comment.author.username }}</a>
+		{% if comment.author == comment.tutorial.author %}
+			<small class="bg-green-500 text-gray-200 px-1 text-xs">{{ 'author'|trans }}</small>
+		{% elseif comment.author.hasRoles('ROLE_ADMIN') %}
+			<small class="bg-blue-500 text-gray-200 px-1 text-xs">{{ 'team'|trans }}</small>
+		{% endif %}
+		&#8226;
+		<span class="text-xs">{{ comment.createdAt|ago }}</span>
+	</span>
+	<div class="mt-1 w-full">
+		{{ comment.content|raw }}
+	</div>
+	{% if is_granted('ROLE_USER') %}
+		<span class="flex mt-3 text-xs">
+			<span class="text-blue-600 hover:underline flex items-center cursor-pointer open-comment-form" comment="{{ comment.replyTo ? comment.replyTo.id : comment.id }}">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+				</svg>
+				<span class="ml-1">{{ 'Reply'|trans }}</span>
+			</span>
+			{% if app.user == comment.author or is_granted('ROLE_ADMIN') %}
+				<span class="ml-2">
+					<a href="{{ path('delete_comment', {'id': comment.id}) }}" class="text-blue-600 hover:underline">{{ 'Delete'|trans }}</a>
+				</span>
+			{% endif %}
+		</span>
+	{% else %}
+		<small class="text-gray-700">
+			{{ 'You must be logged in to participate to the discussion'|trans }}.
+			<a href="{{ path('app_login') }}?target={{ app.request.uri }}#comments" class="text-blue-600 underline">{{ 'Log In'|trans }}</a>.
+		</small>
+	{% endif %}
+</div>

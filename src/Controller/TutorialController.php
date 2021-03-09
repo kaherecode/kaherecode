@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
+use App\Entity\Comment;
 use App\Service\Mailer;
 use App\Entity\Tutorial;
+use App\Form\CommentType;
 use App\Form\TutorialType;
 use App\Service\CloudinaryService;
+use App\Repository\CommentRepository;
+use App\Repository\TutorialRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -18,29 +22,31 @@ class TutorialController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index()
+    public function index(TutorialRepository $tutorialRepository)
     {
-        $em = $this->getDoctrine()->getManager();
-        $tutorials = $em->getRepository(Tutorial::class)->findBy(
+        $tutorials = $tutorialRepository->findBy(
             ['isPublished' => true],
             ['publishedAt' => 'DESC'],
             10,
             0
         );
 
+        $jsTutorials = $tutorialRepository->findAllPublishedByTag('javascript');
+
         return $this->render(
             'tutorials/index.html.twig',
-            ['tutorials' => $tutorials]
+            ['tutorials' => $tutorials, 'jsTutorials' => $jsTutorials]
         );
     }
 
     /**
      * @Route("/tutorials", name="tutorials")
      */
-    public function tutorials(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $tutorials = $em->getRepository(Tutorial::class)->findBy(
+    public function tutorials(
+        Request $request,
+        TutorialRepository $tutorialRepository
+    ) {
+        $tutorials = $tutorialRepository->findBy(
             ['isPublished' => true],
             ['publishedAt' => 'DESC']
         );
@@ -54,27 +60,54 @@ class TutorialController extends AbstractController
     /**
      * @Route("/tag/{label}", name="tag_tutorials")
      */
-    public function tutorialsByTag(Tag $tag)
-    {
-        // TODO: define a function in repo to get tutorials
-        $em = $this->getDoctrine()->getManager();
-        $tutorials = $em->getRepository(Tutorial::class)->findBy(
-            ['isPublished' => true],
-            ['publishedAt' => 'DESC']
-        );
+    public function tutorialsByTag(
+        Tag $tag,
+        TutorialRepository $tutorialRepository
+    ) {
+        $tutorials = $tutorialRepository->findAllPublishedByTag($tag->getLabel());
 
         return $this->render(
             'tutorials/tutorials.html.twig',
-            ['tag' => $tag, 'tutorials' => $tutorials]
+            [
+                'tag' => $tag,
+                'tutorials' => $tutorials
+            ]
         );
     }
 
     /**
      * @Route("/tutorial/{slug}", name="tutorial_view")
      */
-    public function show(Tutorial $tutorial)
-    {
-        return $this->render('tutorials/show.html.twig', ['tutorial' => $tutorial]);
+    public function show(
+        Tutorial $tutorial,
+        TutorialRepository $tutorialRepository,
+        CommentRepository $commentRepository
+    ) {
+        $relatedTutorials = [];
+        $relatedTutorials[] = $tutorialRepository
+            ->getUserLastPublishedTutorial($tutorial);
+        $relatedTutorials = array_unique(
+            array_merge(
+                $relatedTutorials,
+                $tutorialRepository->findRelatedTutorials($tutorial)
+            ),
+            SORT_REGULAR
+        );
+
+        $comments = $commentRepository->getTutorialComments($tutorial);
+
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+
+        return $this->render(
+            'tutorials/show.html.twig',
+            [
+                'tutorial' => $tutorial,
+                'relatedTutorials' => $relatedTutorials,
+                'comments' => $comments,
+                'form' => $commentForm->createView()
+            ]
+        );
     }
 
     /**

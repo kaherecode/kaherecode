@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Tutorial;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Tutorial|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,22 +19,62 @@ class TutorialRepository extends ServiceEntityRepository
         parent::__construct($registry, Tutorial::class);
     }
 
-    // /**
-    //  * @return Tutorial[] Returns an array of Tutorial objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Tutorial[] Returns an array of Tutorial objects
+     */
+    public function findAllPublishedByTag(string $label)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('t.isPublished = :isPublished')
+            ->setParameter('isPublished', true)
+            ->orderBy('t.publishedAt', 'DESC')
+            ->innerJoin('t.tags', 'c')
+            ->andWhere('c.label = :tag')
+            ->setParameter('tag', $label)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
+    /**
+     * @return Tutorial[] Returns an array of Tutorial objects
+     */
+    public function findRelatedTutorials(Tutorial $tutorial, $limit = null)
+    {
+        $query = $this->createQueryBuilder('t')
+            ->innerJoin('t.tags', 'c')
+            ->addSelect('c')
+            ->andWhere("c IN(:tags)")
+            ->setParameter('tags', array_values($tutorial->getTags()->toArray()))
+            ->andWhere('t.id != :id')
+            ->setParameter('id', $tutorial->getId())
+            ->andWhere('t.isPublished = true');
+
+        if ($limit) {
+            $query->setMaxResults($limit);
+        }
+
+        return $query
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Tutorial Returns a Tutorial object or null
+     */
+    public function getUserLastPublishedTutorial(Tutorial $tutorial)
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.author = :author')
+            ->setParameter('author', $tutorial->getAuthor())
+            ->andWhere('t.id != :id')
+            ->setParameter('id', $tutorial->getId())
+            ->orderBy('t.publishedAt', 'DESC')
+            ->setMaxResults(1)
+            ->andWhere('t.isPublished = true')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Tutorial

@@ -116,6 +116,16 @@ class Tutorial
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="tutorial", orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $views;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +136,7 @@ class Tutorial
         $this->isPublished = false;
         $this->isValidated = true;
         $this->tags = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function generateSlug(SluggerInterface $slugger)
@@ -295,6 +306,15 @@ class Tutorial
         return $this;
     }
 
+    public function getVideoId()
+    {
+        if ($this->videoLink === null || $this->videoLink === '') {
+            return null;
+        }
+
+        return explode('/', $this->videoLink)[3];
+    }
+
     public function getMarkdownContent(): ?string
     {
         return $this->markdownContent;
@@ -382,6 +402,48 @@ class Tutorial
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setTutorial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getTutorial() === $this) {
+                $comment->setTutorial(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(int $views): self
+    {
+        $this->views = $views;
 
         return $this;
     }

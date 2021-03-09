@@ -142,7 +142,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             return new RedirectResponse($targetPath);
         }
 
-        // TODO: redirect to last visited url
+        if ($request->query->get('target')) {
+            return new RedirectResponse($request->query->get('target'));
+        }
+
         return new RedirectResponse($this->urlGenerator->generate('homepage'));
     }
 

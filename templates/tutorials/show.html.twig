@@ -56,14 +56,62 @@
 			{{ 'Keep reading'|trans }}
 		</h3>
 
-		{# {% include 'includes/_tutorials_list.html.twig' %} #}
+		{% include 'includes/_tutorials_list.html.twig' with {'tutorials': relatedTutorials} %}
 	</div>
 
 	<div class="bg-lightGray py-5">
 		<div class="container">
-			<h3 class="font-bold text-gray-900 text-xl">
+			<h3 class="font-bold text-gray-900 text-xl" id="comments">
 				{{ 'Discussion'|trans }}
 			</h3>
+			<p class="mt-2">
+				{% if is_granted('ROLE_USER') %}
+					<span class="cursor-pointer text-blue-600 hover:underline open-comment-form">{{ 'Contribute to the discussion'|trans }}.</span>
+				{% else %}
+					{{ 'You must be logged in to participate to the discussion'|trans }}.
+					<a href="{{ path('app_login') }}?target={{ app.request.uri }}#comments" class="text-blue-600 underline">{{ 'Log In'|trans }}</a>.
+				{% endif %}
+			</p>
+
+			<div class="mt-6">
+				{% for comment in comments|filter(co => co.state == constant('STATE_PUBLISHED', co) or co.state == constant('STATE_SUBMITTED', co)) %}
+					<div class="flex items-start py-3">
+						{% include "includes/_comment.html.twig" %}
+					</div>
+
+					{% for c in comment.responses|filter(co => co.state == constant('STATE_PUBLISHED', co) or co.state == constant('STATE_SUBMITTED', co)) %}
+						<div class="flex items-start py-3 ml-6 pl-6 border-gray-400 border-l">
+							{% include "includes/_comment.html.twig" with {'comment': c} %}
+						</div>
+					{% endfor %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<div class="comment-form-overlay hidden" id="commentForm">
+		<div class="comment-form p-8 hidden">
+			<h4 class="font-bold text-xl">{{ 'Contribute to the discussion'|trans }}</h4>
+			<hr class="mt-2">
+			{{ form_start(form, {'attr': {'action': path('add_comment', {'uuid': tutorial.uuid})}}) }}
+			{{ form_widget(form.markdownContent, {'attr': {'class': 'border-none', 'rows': 7, 'placeholder': 'Markdown content...'}}) }}
+			<article id="output" class="hidden h-48 overflow-auto"></article>
+			<input type="hidden" name="htmlContent" id="htmlContent">
+			<hr class="mt-2">
+			<p class="mt-2">
+				<span class="flex items-center cursor-pointer" id="togglePreview">
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-4 mr-1" viewbox="0 0 20 20" fill="currentColor">
+						<path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+						<path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+					</svg>
+					{{ 'Preview'|trans }}
+				</span>
+			</p>
+			<p class="mt-6 space-x-3">
+				<button type="submit" class="btn">{{ 'Post'|trans }}</button>
+				<span class="text-blue-600 underline cursor-pointer" id="closeCommentForm">{{ 'Cancel'|trans }}</span>
+			</p>
+			{{ form_end(form) }}
 		</div>
 	</div>
 {% endblock %}

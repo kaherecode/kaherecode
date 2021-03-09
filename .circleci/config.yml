@@ -18,8 +18,8 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo apt update
-      - run: sudo docker-php-ext-install zip pdo_mysql
+      - run: sudo apt update -y && sudo apt install libxslt-dev -y
+      - run: sudo docker-php-ext-install zip pdo_mysql xsl
 
       # restore composer cache
       - restore_cache:
@@ -29,7 +29,7 @@ jobs:
 
       - run:
           name: "Install Dependencies"
-          command: composer install -n --prefer-dist
+          command: composer update && composer install -n --prefer-dist
 
       # save composer cache
       - save_cache:
@@ -43,6 +43,7 @@ jobs:
             php bin/console doctrine:database:create --env=test
             php bin/console doctrine:migrations:migrate --env=test
             php bin/console doctrine:fixtures:load -n --env=test
+            php bin/console messenger:setup-transports --env=test
 
       # restore yarn cache
       - restore_cache:
