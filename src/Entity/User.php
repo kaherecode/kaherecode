@@ -161,6 +161,12 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Tutorial::class)
+     * @ORM\JoinTable(name="user_bookmarks")
+     */
+    private $bookmarks;
+
     public function __construct()
     {
         $this->enabled = false;
@@ -168,6 +174,7 @@ class User implements UserInterface
         $this->registeredAt = new \DateTime();
         $this->tutorials = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->bookmarks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -487,5 +494,29 @@ class User implements UserInterface
     public function hasRoles(string $roles): bool
     {
         return in_array($roles, $this->roles);
+    }
+
+    /**
+     * @return Collection|Tutorial[]
+     */
+    public function getBookmarks(): Collection
+    {
+        return $this->bookmarks;
+    }
+
+    public function addBookmark(Tutorial $bookmark): self
+    {
+        if (!$this->bookmarks->contains($bookmark)) {
+            $this->bookmarks[] = $bookmark;
+        }
+
+        return $this;
+    }
+
+    public function removeBookmark(Tutorial $bookmark): self
+    {
+        $this->bookmarks->removeElement($bookmark);
+
+        return $this;
     }
 }

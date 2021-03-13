@@ -15,7 +15,7 @@
 		<div class="text-left mt-3 flex justify-between items-center">
 			<div class="flex items-center">
 				<a href="{{ path('show_user', {'username': tutorial.author.username}) }}">
-					<img src="{{ asset('images/avatar.png') }}" alt="alioukahere" class="rounded-full w-12"/>
+					<img src="{{ tutorial.author.avatar is null ? asset('images/avatar.png') : tutorial.author.avatar }}" alt="{{ tutorial.author.fullName }}" class="rounded-full w-12" onerror="this.onerror=null;this.src='{{ asset('images/avatar.png') }}';"/>
 				</a>
 				<div class="ml-2">
 					<span class="block">
@@ -41,10 +41,11 @@
 						<span class="text-sm ml-2 text-gray-700">{{ tutorial.views|number_format }}</span>
 					</span>
 					<span class="items-center mt-1 hidden sm:mt-0 sm:ml-5 sm:flex">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="text-gray-700 h-5 w-5">
-						 	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="text-gray-700 h-5 w-5">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
 						</svg>
-						<span class="text-sm ml-2 text-gray-700">{{ tutorial.readTime }} min.</span>
+						<span class="text-sm ml-2 text-gray-700">{{ tutorial.readTime }}
+							min.</span>
 					</span>
 					<span class="items-center mt-1 hidden sm:mt-0 sm:ml-5 sm:flex">
 						<svg class="text-gray-700 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
@@ -53,10 +54,20 @@
 						<span class="text-sm ml-2 text-gray-700">{{ tutorial.comments|filter(c => c.state == constant('STATE_PUBLISHED', c))|length }}</span>
 					</span>
 					<span class="flex items-center mt-1 sm:mt-0 sm:ml-5">
-						<svg class="text-gray-700 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
-						</svg>
-						<span class="text-sm ml-2 text-gray-700">10</span>
+						{% if app.user %}
+							{% set bookmarkURL = url('bookmark_tutorial', {'uuid': tutorial.uuid}) ~ (tutorial in app.user.bookmarks ? '?delete=1' : '') %}
+							<span class="cursor-pointer bookmark-tutorial" data-href="{{ bookmarkURL }}">
+								<svg class="text-gray-700 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="{{ tutorial in app.user.bookmarks ? '#374151' : 'none' }}" viewbox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+								</svg>
+							</span>
+						{% else %}
+							<a class="cursor-pointer" href="{{ path('app_login') }}">
+								<svg class="text-gray-700 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+								</svg>
+							</a>
+						{% endif %}
 					</span>
 				</div>
 			{% endif %}
@@ -68,7 +79,7 @@
 					<iframe class="h-full w-full absolute top-0 left-0" width="560" height="310" src="https://www.youtube.com/embed/{{ tutorial.videoId }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 			{% else %}
-				<img src="{{ tutorial.pictureURL }}" alt="" class="h-full w-full object-cover shadow-2xl" style="max-height: 600px"/>
+				<img src="{{ tutorial.pictureURL }}" alt="" class="h-full w-full object-cover shadow-2xl" style="max-height: 600px" onerror="this.onerror=null;this.src='{{ asset('images/kaherecode_banner.png') }}';"/>
 			{% endif %}
 		</div>
 

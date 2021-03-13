@@ -8,13 +8,14 @@ use App\Service\Mailer;
 use App\Entity\Tutorial;
 use App\Form\CommentType;
 use App\Form\TutorialType;
-use App\Service\CloudinaryService;
+use App\Service\UploaderInterface;
 use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TutorialController extends AbstractController
@@ -56,6 +57,19 @@ class TutorialController extends AbstractController
         return $this->render(
             'tutorials/tutorials.html.twig',
             ['tutorials' => $tutorials]
+        );
+    }
+
+    /**
+     * @Route("/video-tutorials", name="video_tutorials")
+     */
+    public function videoTutorials(
+        Request $request,
+        TutorialRepository $tutorialRepository
+    ) {
+        return $this->render(
+            'tutorials/tutorials.html.twig',
+            ['tutorials' => $tutorialRepository->findVideoTutorials()]
         );
     }
 
@@ -120,7 +134,7 @@ class TutorialController extends AbstractController
      */
     public function create(
         Request $request,
-        CloudinaryService $uploader
+        UploaderInterface $uploader
     ) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -170,7 +184,7 @@ class TutorialController extends AbstractController
     public function edit(
         Request $request,
         Tutorial $tutorial,
-        CloudinaryService $uploader
+        UploaderInterface $uploader
     ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
@@ -282,7 +296,7 @@ class TutorialController extends AbstractController
     public function deleteTutorial(
         Tutorial $tutorial,
         Security $security,
-        CloudinaryService $uploader
+        UploaderInterface $uploader
     ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
@@ -307,6 +321,35 @@ class TutorialController extends AbstractController
             'edit_tutorial',
             ['uuid' => $tutorial->getUuid()]
         );
+    }
+
+    /**
+     * @Route("/tutorials/{uuid}/bookmark", name="bookmark_tutorial")
+     */
+    public function bookmark(Request $request, Tutorial $tutorial)
+    {
+        $response = new JsonResponse();
+        $user = $this->getUser();
+
+        if (! $user) {
+            $response->setStatusCode(JsonResponse::HTTP_FORBIDDEN);
+            $response->setData(['message' => 'You shoud be authenticated!']);
+
+            return $response;
+        }
+
+        $delete = (int) $request->query->get('delete');
+
+        if ($delete && $delete === 1) {
+            $user->removeBookmark($tutorial);
+        } else {
+            $user->addBookmark($tutorial);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return new JsonResponse();
     }
 
     protected function buildTags(string $tagsString): array

@@ -75,16 +75,16 @@ class TutorialRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-
-    /*
-    public function findOneBySomeField($value): ?Tutorial
+    /**
+     * @return Tutorial Returns video tutorials
+     */
+    public function findVideoTutorials()
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('t.videoLink is not null')
+            ->andWhere('t.isPublished = true')
+            ->orderBy('t.publishedAt', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

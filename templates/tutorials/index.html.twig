@@ -16,9 +16,11 @@
 		</h1>
 		<p class="mt-6 text-gray-900 md:w-4/6 lg:w-2/5 m-auto text-lg">
 			{{ 'Kaherecode is an aspiring community for developers. A place to learn and share about programming.'|trans }}
-			<a href="{{ path('user_register') }}" class="text-blue-600 underline">
-				{{ 'Join us now'|trans }}...
-			</a>
+			{% if not app.user %}
+				<a href="{{ path('user_register') }}" class="text-blue-600 underline">
+					{{ 'Join us now'|trans }}...
+				</a>
+			{% endif %}
 		</p>
 	</div>
 

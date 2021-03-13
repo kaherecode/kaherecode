@@ -29,9 +29,14 @@
 		</ul>
 
 		<ul class="hidden md:flex items-center">
-			<li class="ml-6">
+			<li>
 				<a href="{{ path('tutorials') }}" class="hover:text-white">
 					{{ 'Tutorials'|trans }}
+				</a>
+			</li>
+			<li class="ml-6">
+				<a href="{{ path('video_tutorials') }}" class="hover:text-white">
+					{{ 'Videos'|trans }}
 				</a>
 			</li>
 			<li class="ml-6">
@@ -136,10 +141,13 @@
 	<div class="text-gray-300 py-5 absolute w-full hidden bg-darkerGray md:hidden" id="mobileMenu">
 		<ul class="text-center">
 			<li class="mt-4">
-				<a href="#">{{ 'Tutorials'|trans }}</a>
+				<a href="{{ path('tutorials') }}">{{ 'Tutorials'|trans }}</a>
 			</li>
 			<li class="mt-4">
-				<a href="#">{{ 'Chat'|trans }}</a>
+				<a href="{{ path('video_tutorials') }}">{{ 'Videos'|trans }}</a>
+			</li>
+			<li class="mt-4">
+				<a href="https://discord.gg/qANvrVW" target="_blank">{{ 'Chat'|trans }}</a>
 			</li>
 		</ul>
 
