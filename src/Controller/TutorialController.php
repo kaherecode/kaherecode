@@ -81,7 +81,7 @@ class TutorialController extends AbstractController
 
         return $this->render(
             'tutorials/tutorials.html.twig',
-            ['tutorials' => $tutorials]
+            ['tutorials' => $tutorials, 'videos' => true]
         );
     }
 

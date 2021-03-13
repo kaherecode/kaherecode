@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ 'Tutorial lists'|trans }}
+	{{ videos is defined ? 'Video tutorials'|trans : 'Tutorial lists'|trans }}
 	{{ tag is defined ? ' - ' ~ tag|upper : '' }}
 	|
 	{{ parent() }}
@@ -11,7 +11,7 @@
 	<div class="hero text-center py-20">
 		<div class="container">
 			<h1 class="mt-4 font-bold text-3xl tracking-wide text-gray-900">
-				{{ 'Tutorial lists'|trans }}
+				{{ videos is defined ? 'Video tutorials'|trans : 'Tutorial lists'|trans }}
 				{{ tag is defined ? ' - ' ~ tag|upper : '' }}
 			</h1>
 			<div class="mt-4">
