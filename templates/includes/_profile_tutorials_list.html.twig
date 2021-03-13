@@ -6,7 +6,7 @@
 	{% endif %}
 
 	{% for tutorial in tutorials %}
-		<div class="p-4 border-solid border-b border-gray-400 w-full sm:flex sm:items-start">
+		<div class="p-4 border-solid border-b border-gray-300 w-full sm:flex sm:items-start">
 			{% if tutorial.thumbnailURL %}
 				<div class="w-56 hidden sm:block">
 					<a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}">

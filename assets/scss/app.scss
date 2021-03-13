@@ -215,7 +215,7 @@ form {
   input[type='text'],
   input[type='email'],
   input[type='password'] {
-    @apply border border-gray-400 rounded w-full p-3 outline-none bg-white;
+    @apply border border-gray-300 rounded w-full p-3 outline-none bg-white;
 
     &:disabled {
       @apply opacity-50;
@@ -227,7 +227,7 @@ form {
   }
 
   textarea {
-    @apply border border-gray-400 rounded w-full p-3 outline-none bg-white resize-none;
+    @apply border border-gray-300 rounded w-full p-3 outline-none bg-white resize-none;
 
     &:disabled {
       @apply opacity-50;
@@ -245,11 +245,11 @@ form {
     }
 
     input.video-link {
-      @apply px-4 py-2 rounded-md border-2 border-gray-400;
+      @apply px-4 py-2 rounded-md border-2 border-gray-300;
     }
 
     input.title {
-      @apply border-t-0 border-l-0 border-r-0 bg-gray-200 text-3xl font-semibold border-b-2 border-gray-300 py-2 #{!important};
+      @apply border-t-0 border-l-0 border-r-0 bg-gray-100 text-3xl font-semibold border-b-2 border-gray-300 py-2 #{!important};
     }
   }
 }

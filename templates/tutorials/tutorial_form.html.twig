@@ -20,7 +20,7 @@
 		{% endblock %}
 	</head>
 
-	<body class="bg-gray-200">
+	<body class="bg-gray-100">
 		<div class="px-8 py-4 flex flex-wrap items-center justify-between shadow-lg fixed top-0 left-0 right-0 bg-gray-100" style="z-index: 999">
 			<a href="{{ path("profile") }}">&#8592;
 				{{ 'My Profile'|trans }}</a>
@@ -110,7 +110,7 @@
 				<small class="block text-sm text-red-600">{{ message }}</small>
 			{% endfor %}
 
-			<div class="bg-gray-300 rounded-md">
+			<div class="bg-gray-200 rounded-md">
 				<div class="text-center text-gray-700 relative flex justify-center items-center image-picker article-image-picker">
 					{% if tutorial is not defined or tutorial.pictureURL is null %}
 						<span>{{ 'Select a featured image'|trans }}</span>
@@ -146,7 +146,7 @@
 
 		<div class="mt-8 flex editor" id="editor">
 			{{ form_widget(form.markdownContent, {'attr': {'class': 'py-4 px-8 resize-none outline-none text-lg w-full md:w-1/2'}}) }}
-			<div class="separator w-8 py-4 flex flex-col items-center bg-gray-200">
+			<div class="separator w-8 py-4 flex flex-col items-center bg-gray-100">
 				<span class="cursor-pointer"></span>
 				<span class="cursor-pointer mt-4"></span>
 			</div>

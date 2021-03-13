@@ -80,7 +80,7 @@
 					</div>
 
 					{% for c in comment.responses|filter(co => co.state == constant('STATE_PUBLISHED', co) or co.state == constant('STATE_SUBMITTED', co)) %}
-						<div class="flex items-start py-3 ml-6 pl-6 border-gray-400 border-l">
+						<div class="flex items-start py-3 ml-6 pl-6 border-gray-300 border-l">
 							{% include "includes/_comment.html.twig" with {'comment': c} %}
 						</div>
 					{% endfor %}
