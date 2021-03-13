@@ -333,3 +333,22 @@ form {
   }
 }
 /** ./editor */
+
+/** pagination */
+.pagination {
+  @apply flex justify-center items-center;
+
+  span {
+    @apply py-1 px-3 text-gray-700;
+
+    &.current {
+      @apply bg-darkerGray text-gray-200 rounded-sm shadow-md;
+    }
+
+    &.previous,
+    &.next {
+      display: none;
+    }
+  }
+}
+/** ./pagination */

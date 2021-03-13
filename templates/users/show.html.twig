@@ -30,6 +30,9 @@
 		<div id="tutorials" class="tab-content">
 			<div class="container">
 				{% include 'includes/_tutorials_list.html.twig' %}
+				<div class="mt-4 mb-2">
+					{{ knp_pagination_render(tutorials) }}
+				</div>
 			</div>
 		</div>
 	</div>

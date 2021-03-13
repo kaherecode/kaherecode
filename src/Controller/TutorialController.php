@@ -12,6 +12,7 @@ use App\Service\UploaderInterface;
 use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
 use Symfony\Component\Form\FormInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,11 +48,14 @@ class TutorialController extends AbstractController
      */
     public function tutorials(
         Request $request,
-        TutorialRepository $tutorialRepository
+        TutorialRepository $tutorialRepository,
+        PaginatorInterface $paginator,
+        int $paginatorPerPage
     ) {
-        $tutorials = $tutorialRepository->findBy(
-            ['isPublished' => true],
-            ['publishedAt' => 'DESC']
+        $tutorials = $paginator->paginate(
+            $tutorialRepository->getPublishedTutorialsQueryBuilder(),
+            $request->query->getInt('page', 1),
+            $paginatorPerPage
         );
 
         return $this->render(
@@ -65,11 +69,19 @@ class TutorialController extends AbstractController
      */
     public function videoTutorials(
         Request $request,
-        TutorialRepository $tutorialRepository
+        TutorialRepository $tutorialRepository,
+        PaginatorInterface $paginator,
+        int $paginatorPerPage
     ) {
+        $tutorials = $paginator->paginate(
+            $tutorialRepository->getVideoTutorialsQueryBuilder(),
+            $request->query->getInt('page', 1),
+            $paginatorPerPage
+        );
+
         return $this->render(
             'tutorials/tutorials.html.twig',
-            ['tutorials' => $tutorialRepository->findVideoTutorials()]
+            ['tutorials' => $tutorials]
         );
     }
 
@@ -77,10 +89,17 @@ class TutorialController extends AbstractController
      * @Route("/tag/{label}", name="tag_tutorials")
      */
     public function tutorialsByTag(
+        Request $request,
         Tag $tag,
-        TutorialRepository $tutorialRepository
+        TutorialRepository $tutorialRepository,
+        PaginatorInterface $paginator,
+        int $paginatorPerPage
     ) {
-        $tutorials = $tutorialRepository->findAllPublishedByTag($tag->getLabel());
+        $tutorials = $paginator->paginate(
+            $tutorialRepository->getPublishedByTagQueryBuilder($tag->getLabel()),
+            $request->query->getInt('page', 1),
+            $paginatorPerPage
+        );
 
         return $this->render(
             'tutorials/tutorials.html.twig',

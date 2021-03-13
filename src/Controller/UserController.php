@@ -8,6 +8,7 @@ use App\Form\ProfileType;
 use App\Form\UserRegistrationType;
 use App\Service\CloudinaryService;
 use App\Repository\TutorialRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,11 +19,17 @@ class UserController extends AbstractController
     /**
      * @Route("/@{username}", name="show_user")
      */
-    public function show(User $user, TutorialRepository $tutorialRepository)
-    {
-        $tutorials = $tutorialRepository->findBy(
-            ['author' => $user, 'isPublished' => true],
-            ['publishedAt' => 'DESC']
+    public function show(
+        Request $request,
+        User $user,
+        TutorialRepository $tutorialRepository,
+        PaginatorInterface $paginator,
+        int $paginatorPerPage
+    ) {
+        $tutorials = $paginator->paginate(
+            $tutorialRepository->getPublishedByUserQueryBuilder($user),
+            $request->query->getInt('page', 1),
+            $paginatorPerPage
         );
 
         return $this->render(
