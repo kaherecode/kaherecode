@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white shadow-sm">
+	<div class="container-fluid">
+		<a class="navbar-brand text-dark fw-bold" href="{{ path('admin_dashboard') }}">
+			<img src="{{ asset('images/kaherecode.svg') }}" alt="Kaherecode" width="35" class="d-inline-block align-center">
+			Kaherecode
+		</a>
+		<button class="navbar-toggler border border-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon text-dark"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li
+					class="nav-item border border-end">{# <a class="nav-link active" aria-current="page" href="#">Dashboard</a> #}
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="#">
+						<i class="bi bi-grid"></i>
+						{{ 'Dashboard'|trans }}</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<i class="bi bi-file-earmark-text"></i>
+						{{ 'Tutorials'|trans }}</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<i class="bi bi-people"></i>
+						{{ 'Users'|trans }}</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<i class="bi bi-chat-left-text" style="font-size: 0.9rem"></i>
+						{{ 'Comments'|trans }}</a>
+				</li>
+			</ul>
+			<div class="d-flex">
+				<img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" width="40" height="40" class="rounded-circle">
+				<div class="dropdown">
+					<a class="nav-link dropdown-toggle text-dark" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						{{ app.user.fullName }}
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="profileDropdown">
+						<li>
+							<a class="dropdown-item" href="{{ path('homepage') }}" target="_blank">Homepage</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="{{ path('profile') }}">{{ 'My Profile'|trans }}</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="{{ path('app_logout') }}">{{ 'Log Out'|trans }}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>

@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap');
+
+$lighter-gray: #f3f4f6;
+$text-gray: #9ca3af;
+
+body {
+  font-family: 'Nunito', 'sans-serif';
+  background-color: $lighter-gray;
+}
+
+footer {
+  // position: fixed;
+  // bottom: 2px;
+  // left: 0;
+  // right: 0;
+  color: #6b7280;
+
+  a {
+    color: #6b7280;
+  }
+}
+
+.text-gray {
+  color: $text-gray;
+}
