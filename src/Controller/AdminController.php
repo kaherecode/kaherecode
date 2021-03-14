@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
+use App\Repository\CommentRepository;
+use App\Repository\TutorialRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -15,8 +18,30 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin", name="admin_dashboard")
      */
-    public function index(): Response
-    {
-        return $this->render('admin/index.html.twig');
+    public function index(
+        TutorialRepository $tutorialRepository,
+        UserRepository $userRepository,
+        CommentRepository $commentRepository
+    ): Response {
+        $recentTutorials = $tutorialRepository->findBy(
+            ['isPublished' => true],
+            ['publishedAt' => 'DESC'],
+            10,
+            0
+        );
+
+        return $this->render(
+            'admin/index.html.twig',
+            [
+                'totalPageViews' => $tutorialRepository
+                    ->getTutorialsTotalPageViews(),
+                'totalPublishedTutorials' => $tutorialRepository
+                    ->countPublishedTutorials(),
+                'totalActiveUsers' => $userRepository->countActiveUsers(),
+                'totalPublishedComments' => $commentRepository
+                    ->countPublishedComments(),
+                'tutorials' => $recentTutorials
+            ]
+        );
     }
 }

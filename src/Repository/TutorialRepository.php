@@ -8,12 +8,6 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-/**
- * @method Tutorial|null find($id, $lockMode = null, $lockVersion = null)
- * @method Tutorial|null findOneBy(array $criteria, array $orderBy = null)
- * @method Tutorial[]    findAll()
- * @method Tutorial[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class TutorialRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -84,6 +78,23 @@ class TutorialRepository extends ServiceEntityRepository
             ->orderBy('t.publishedAt', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function getTutorialsTotalPageViews()
+    {
+        return $this->createQueryBuilder('t')
+            ->select('SUM(t.views) as views')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countPublishedTutorials()
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.isPublished = true')
+            ->select('COUNT(t.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     public function getPublishedTutorialsQueryBuilder(): QueryBuilder
