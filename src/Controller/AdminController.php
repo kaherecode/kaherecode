@@ -30,6 +30,27 @@ class AdminController extends AbstractController
             0
         );
 
+        $popularTutorials = $tutorialRepository->findBy(
+            ['isPublished' => true],
+            ['views' => 'DESC'],
+            10,
+            0
+        );
+
+        $recentLogins = $userRepository->findBy(
+            ['enabled' => true],
+            ['lastLogin' => 'DESC'],
+            10,
+            0
+        );
+
+        $recentComments = $commentRepository->findBy(
+            [],
+            ['createdAt' => 'DESC'],
+            10,
+            0
+        );
+
         return $this->render(
             'admin/index.html.twig',
             [
@@ -40,7 +61,10 @@ class AdminController extends AbstractController
                 'totalActiveUsers' => $userRepository->countActiveUsers(),
                 'totalPublishedComments' => $commentRepository
                     ->countPublishedComments(),
-                'tutorials' => $recentTutorials
+                'tutorials' => $recentTutorials,
+                'popularTutorials' => $popularTutorials,
+                'recentLogins' => $recentLogins,
+                'recentComments' => $recentComments
             ]
         );
     }

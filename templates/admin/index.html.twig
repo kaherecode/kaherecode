@@ -7,85 +7,83 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col">
-				<h1 class="fs-3 fw-bold">Dashboard</h1>
-			</div>
+	<div class="p-4">
+		<div class="">
+			<h1 class="font-bold text-xl">Dashboard</h1>
 		</div>
 
-		<div class="row mt-2">
-			<div class="col-sm-6 col-lg-4 col-xl mb-3">
-				<div class="bg-white d-flex justify-content-between align-items-center p-3 shadow-sm">
+		<div class="mt-2 flex flex-wrap -mx-2">
+			<div class="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-3 px-2">
+				<div class="bg-white flex justify-between items-center p-3 shadow-md">
 					<div>
-						<span class="d-block fw-bold fs-3">{{ totalPageViews|format_number }}</span>
-						<small class="d-block text-gray">Total Page Views</small>
+						<span class="block font-bold text-2xl">{{ totalPageViews|format_number }}</span>
+						<small class="block text-gray-500">Total Page Views</small>
 					</div>
 					<div>
-						<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-eye" viewbox="0 0 16 16">
-							<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-							<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-14 h-14">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
 						</svg>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6 col-lg-4 col-xl mb-3">
-				<div class="bg-white d-flex justify-content-between align-items-center p-3 shadow-sm">
+			<div class="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-3 px-2">
+				<div class="bg-white flex justify-between items-center p-3 shadow-md">
 					<div>
-						<span class="d-block fw-bold fs-3">{{ totalPublishedTutorials|format_number }}</span>
-						<small class="d-block text-gray">Published Tutorials</small>
+						<span class="block font-bold text-2xl">{{ totalPublishedTutorials|format_number }}</span>
+						<small class="block text-gray-500">Published Tutorials</small>
 					</div>
 					<div>
-						<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-file-earmark-text" viewbox="0 0 16 16">
-							<path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
-							<path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-14 h-14">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
 						</svg>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6 col-lg-4 col-xl mb-3">
-				<div class="bg-white d-flex justify-content-between align-items-center p-3 shadow-sm">
+			<div class="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-3 px-2">
+				<div class="bg-white flex justify-between items-center p-3 shadow-md">
 					<div>
-						<span class="d-block fw-bold fs-3">{{ totalActiveUsers|format_number }}</span>
-						<small class="d-block text-gray">Active Users</small>
+						<span class="block font-bold text-2xl">{{ totalActiveUsers|format_number }}</span>
+						<small class="block text-gray-500">Active Users</small>
 					</div>
 					<div>
-						<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-people" viewbox="0 0 16 16">
-							<path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-14 h-14">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
 						</svg>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6 col-lg-4 col-xl mb-3">
-				<div class="bg-white d-flex justify-content-between align-items-center p-3 shadow-sm">
+			<div class="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-3 px-2">
+				<div class="bg-white flex justify-between items-center p-3 shadow-md">
 					<div>
-						<span class="d-block fw-bold fs-3">{{ totalPublishedComments|format_number }}</span>
-						<small class="d-block text-gray">Published Comments</small>
+						<span class="block font-bold text-2xl">{{ totalPublishedComments|format_number }}</span>
+						<small class="block text-gray-500">Published Comments</small>
 					</div>
 					<div>
-						<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-chat-left-text" viewbox="0 0 16 16">
-							<path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-							<path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-14 h-14">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
 						</svg>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="col-md-12 col-lg-8 col-xl-9 mb-3">
-				<div class="bg-white p-3 shadow-sm">
-					<h2 class="fs-5 fw-bold mb-3">Recent Tutorials</h2>
-
-					<div class="table-responsive">
-						<table class="table table-hover">
-							<thead class="table-dark">
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Title</th>
-									<th scope="col">Author</th>
-									<th scope="col">Published At</th>
-									<th scope="col" style="width: 100px; text-align: center">Actions</th>
+		<div class="flex -mx-2 flex-wrap">
+			<div class="w-full lg:w-8/12 xl:w-9/12 mb-3 px-2">
+				<div class="bg-white shadow-md">
+					<div class="p-3">
+						<h2 class="text-lg font-bold">Recent Tutorials</h2>
+					</div>
+					<hr>
+					<div class="p-3 overflow-auto" style="height: 500px">
+						<table class="w-full">
+							<thead class="">
+								<tr class="">
+									<th>#</th>
+									<th>Title</th>
+									<th>Author</th>
+									<th>Published At</th>
+									<th style="width: 100px; text-align: center">Actions</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -100,12 +98,16 @@
 											<a href="{{ path('show_user', {'username': tutorial.author.username}) }}" class="text-reset" target="_blank">@{{ tutorial.author.username }}</a>
 										</td>
 										<td>{{ tutorial.publishedAt|format_datetime }}</td>
-										<td class="text-center">
-											<a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}" class="text-reset d-inline-block mr-2" target="_blank">
-												<i class="bi bi-pencil-square"></i>
+										<td class="flex justify-center">
+											<a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}" class="inline-bloc" target="_blank">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+												</svg>
 											</a>
-											<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}" class="text-reset d-inline-block" target="_blank">
-												<i class="bi bi-archive text-danger"></i>
+											<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}" class="inline-bloc" target="_blank">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-red-600">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+												</svg>
 											</a>
 										</td>
 									</tr>
@@ -116,9 +118,93 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-lg-4 col-xl-3 mb-3">
-				<div class="bg-white p-3 shadow-sm">
-					<h2 class="fs-5 fw-bold">Recent Log In</h2>
+
+			<div class="w-full md:w-1/2 lg:w-4/12 xl:w-3/12 mb-3 px-2">
+				<div class="bg-white shadow-md">
+					<div class="p-3">
+						<h2 class="text-lg font-bold">Recent Log In</h2>
+					</div>
+					<hr>
+					<div class="p-3 overflow-auto" style="height: 500px">
+						{% for user in recentLogins %}
+							<div class="flex items-center py-3 border-b">
+								<img src="{{ user.avatar is null ? asset('images/avatar.png') : user.avatar }}" alt="{{ user.fullName }}" class="rounded-full w-12 h-12 object-cover cursor-pointer">
+								<div class="ml-3">
+									<a href="{{ path('show_user', {'username': user.username}) }}" class="font-bold">@{{ user.username }}</a>
+									<small class="block text-gray-400">Logged In at
+										{{ user.lastLogin|format_datetime }}</small>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+
+			<div class="w-full md:w-1/2 lg:w-4/12 xl:w-3/12 mb-3 px-2">
+				<div class="bg-white shadow-md">
+					<div class="p-3">
+						<h2 class="text-lg font-bold">Recent Comments</h2>
+					</div>
+					<hr>
+					<div class="p-3 overflow-auto" style="height: 500px">
+						{% for comment in recentComments %}
+							<a href="{{ path('tutorial_view', {'slug': comment.tutorial.slug}) }}#comments_{{ comment.id }}" class="block py-3 border-b hover:bg-gray-100 px-1" target="_blank">
+								<div class="flex justify-between items-center">
+									<h5 class="mb-1 font-bold">@{{ comment.author.username }}</h5>
+									{% if comment.state == constant('STATE_SUBMITTED', comment) %}
+										<small class="px-1 rounded text-xs bg-yellow-400">submitted</small>
+									{% elseif comment.state == constant('STATE_PUBLISHED', comment) %}
+										<small class="px-1 rounded text-xs bg-green-500 text-gray-200">published</small>
+									{% else %}
+										<small class="px-1 rounded text-xs bg-red-500 text-gray-200">spam</small>
+									{% endif %}
+								</div>
+								<p class="mb-1">{{ (comment.content|striptags|slice(0, 100))|raw }}</p>
+								<small>{{ comment.createdAt|ago }}</small>
+							</a>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+
+			<div class="w-full lg:w-8/12 xl:w-9/12 mb-3 px-2">
+				<div class="bg-white shadow-md">
+					<div class="p-3">
+						<h2 class="text-lg font-bold">Popular Tutorials</h2>
+					</div>
+					<hr>
+					<div class="p-3 overflow-auto" style="height: 500px">
+						<table class="w-full">
+							<thead class="">
+								<tr>
+									<th>#</th>
+									<th>Title</th>
+									<th>Author</th>
+									<th>Published At</th>
+									<th>Views</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% set i = 1 %}
+								{% for tutorial in popularTutorials %}
+									<tr>
+										<th scope="row">{{ i }}</th>
+										<td>
+											<a href="{{ path('tutorial_view', {'slug': tutorial.slug}) }}" class="text-reset" target="_blank">{{ tutorial.title }}</a>
+										</td>
+										<td>
+											<a href="{{ path('show_user', {'username': tutorial.author.username}) }}" class="text-reset" target="_blank">@{{ tutorial.author.username }}</a>
+										</td>
+										<td>{{ tutorial.publishedAt|format_datetime }}</td>
+										<td>
+											{{ tutorial.views|format_number }}
+										</td>
+									</tr>
+									{% set i = i + 1 %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

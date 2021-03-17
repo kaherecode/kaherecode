@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta charset="UTF-8">
@@ -8,30 +8,19 @@
 			{% endblock %}
 		</title>
 
-		<link
-		rel="icon" href="{{ asset('images/favicon.ico') }}">
-
-		{# Bootstrap CSS #}
-		<link
-		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-
-		{# Bootstrap icons #}
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+		<link rel="icon" href="{{ asset('images/favicon.ico') }}">
 
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('admin') }}
 		{% endblock %}
 	</head>
 
-	<body class="" style="padding-top: 6rem; padding-bottom: 5rem">
+	<body class="bg-gray-100 pt-16">
 		{% include 'includes/admin/_header.html.twig' %}
 
 		{% block body %}{% endblock %}
 
 		{% include 'includes/admin/_footer.html.twig' %}
-
-		{# Bootstrap JS #}
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
 		{% block javascripts %}
 			{{ encore_entry_script_tags('admin') }}
