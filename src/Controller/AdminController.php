@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\TagRepository;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
@@ -12,11 +13,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @IsGranted("ROLE_ADMIN")
+ * @Route("/admin")
  */
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="admin_dashboard")
+     * @Route("/", name="admin_dashboard")
      */
     public function index(
         TutorialRepository $tutorialRepository,
@@ -65,6 +67,35 @@ class AdminController extends AbstractController
                 'popularTutorials' => $popularTutorials,
                 'recentLogins' => $recentLogins,
                 'recentComments' => $recentComments
+            ]
+        );
+    }
+
+    /**
+     * @Route("/tutorials", name="admin_tutorials")
+     */
+    public function tutorials(
+        TutorialRepository $tutorialRepository,
+        TagRepository $tagRepository
+    ): Response {
+        $publishedTutorials = $tutorialRepository->findBy(
+            ['isPublished' => true],
+            ['publishedAt' => 'DESC']
+        );
+
+        $drafts = $tutorialRepository->findBy(
+            ['isPublished' => false],
+            ['updatedAt' => 'DESC']
+        );
+
+        $tags = $tagRepository->getTagsOrderByPopularity();
+
+        return $this->render(
+            'admin/tutorials.html.twig',
+            [
+                'publishedTutorials' => $publishedTutorials,
+                'drafts' => $drafts,
+                'tags' => $tags
             ]
         );
     }
