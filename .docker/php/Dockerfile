@@ -6,7 +6,7 @@ RUN apt-get update && \
   apt-get install -y \
   libzip-dev libxslt-dev
 
-RUN docker-php-ext-install zip xsl
+RUN docker-php-ext-install zip xsl intl
 RUN docker-php-ext-enable apcu
 
 WORKDIR /usr/src/app
