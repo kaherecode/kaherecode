@@ -15,14 +15,16 @@
 		{% endblock %}
 	</head>
 
-	<body class="bg-gray-100">
+	<body class="bg-gray-100 search-modal-open">
 		{% include 'includes/_header.html.twig' %}
+
+		{% include 'includes/_search_bar.html.twig' %}
 
 		{% block body %}{% endblock %}
 
 		{% include 'includes/_footer.html.twig' %}
 
-		{% block javascripts %}
+		{% block scripts %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</body>

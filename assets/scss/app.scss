@@ -26,6 +26,10 @@
   font-family: 'Nunito', 'sans-serif';
 }
 
+body.search-modal-open {
+  overflow-y: hidden;
+}
+
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
