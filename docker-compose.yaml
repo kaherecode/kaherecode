@@ -48,5 +48,16 @@ services:
     networks:
       - kaherecode
 
+  node:
+    build:
+      context: .
+      dockerfile: ./.docker/node/Dockerfile
+    command: yarn encore dev --watch
+    working_dir: /usr/src/app
+    volumes:
+      - './:/usr/src/app'
+      - '/usr/src/app/node_modules/'
+    restart: on-failure
+
 networks:
   kaherecode:
