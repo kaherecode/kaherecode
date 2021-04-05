@@ -1,0 +1,10 @@
+filter:
+    app_autocomplete_filter:
+        type: 'edge_ngram'
+        min_gram: 1
+        max_gram: 20
+analyzer:
+    app_autocomplete:
+        type: 'custom'
+        tokenizer: 'standard'
+        filter: [ 'lowercase', 'asciifolding', 'elision', 'app_autocomplete_filter' ]

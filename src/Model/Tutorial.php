@@ -11,7 +11,7 @@ class Tutorial
     protected $slug;
     protected $description;
     protected $publishedAt;
-    protected $tags;
+    protected $tags = [];
     protected $author;
 
     public function getTitle(): ?string
@@ -81,6 +81,15 @@ class Tutorial
 
         if ($isAllTags) {
             $this->tags = $tags;
+        }
+
+        return $this;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!in_array($tag, $this->tags)) {
+            $this->tags[] = $tag;
         }
 
         return $this;

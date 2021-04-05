@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Model\Tag as TagModel;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TutorialRepository;
+use App\Model\Tutorial as TutorialModel;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
@@ -463,5 +465,24 @@ class Tutorial
         $this->readTime = $readTime;
 
         return $this;
+    }
+
+    public function toModel(): TutorialModel
+    {
+        $model = new TutorialModel();
+        $model->setTitle($this->title);
+        $model->setSlug($this->slug);
+        $model->setDescription($this->description);
+        $model->setPublishedAt($this->publishedAt);
+        $model->setAuthor($this->author->getUsername());
+
+        foreach ($this->tags as $tag) {
+            $t = new TagModel();
+            $t->setLabel($tag->getLabel());
+
+            $model->addTag($t);
+        }
+
+        return $model;
     }
 }

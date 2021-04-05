@@ -8,15 +8,22 @@ use App\Service\Mailer;
 use App\Entity\Tutorial;
 use App\Form\CommentType;
 use App\Form\TutorialType;
+use Elastica\Query\MultiMatch;
+use JoliCode\Elastically\Client;
 use App\Service\UploaderInterface;
 use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
+use App\Model\Tutorial as TutorialModel;
 use Symfony\Component\Form\FormInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Messenger\MessageBusInterface;
+use JoliCode\Elastically\Messenger\IndexationRequest;
+use JoliCode\Elastically\Messenger\IndexationRequestHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TutorialController extends AbstractController
@@ -266,8 +273,11 @@ class TutorialController extends AbstractController
     /**
      * @Route("/tutorials/{uuid}/publish", name="publish_tutorial")
      */
-    public function publishTutorial(Tutorial $tutorial, Mailer $mailer)
-    {
+    public function publishTutorial(
+        Tutorial $tutorial,
+        Mailer $mailer,
+        MessageBusInterface $bus
+    ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
         if ($tutorial->getTitle() !== null && $tutorial->getTitle() !== ''
@@ -289,6 +299,11 @@ class TutorialController extends AbstractController
             $em->flush();
 
             $mailer->sendTutorialPublishedMessage($tutorial);
+
+            // index this tutorial in elasticsearch
+            $bus->dispatch(
+                new IndexationRequest(TutorialModel::class, $tutorial->getId())
+            );
 
             return $this->redirectToRoute(
                 'tutorial_view',
@@ -315,7 +330,8 @@ class TutorialController extends AbstractController
     public function deleteTutorial(
         Tutorial $tutorial,
         Security $security,
-        UploaderInterface $uploader
+        UploaderInterface $uploader,
+        MessageBusInterface $bus
     ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
@@ -327,6 +343,14 @@ class TutorialController extends AbstractController
             if ($tutorial->getPictureURL() !== null) {
                 $uploader->delete($tutorial->getPictureURL());
             }
+
+            // remove this document from elasticsearch index
+            $bus->dispatch(
+                new IndexationRequest(
+                    TutorialModel::class,
+                    IndexationRequestHandler::OP_DELETE
+                )
+            );
 
             return $this->redirectToRoute('profile');
         } else {
@@ -369,6 +393,46 @@ class TutorialController extends AbstractController
         $em->flush();
 
         return new JsonResponse();
+    }
+
+    /**
+     * @Route("/search", methods="GET", name="search")
+     */
+    public function search(Request $request, Client $client): Response
+    {
+        $query = $request->query->get('q', '');
+
+        if (!$request->isXmlHttpRequest()) {
+            return $this->render(
+                'tutorials/search.html.twig',
+                ['query' => $query]
+            );
+        }
+
+        $searchQuery = new MultiMatch();
+        $searchQuery->setFields([
+            'title^5',
+            'title.autocomplete',
+            'author',
+            'tags.label'
+        ]);
+        $searchQuery->setQuery($query);
+        $searchQuery->setType(MultiMatch::TYPE_MOST_FIELDS);
+
+        $tutorials = $client->getIndex('tutorial')->search($searchQuery);
+
+        $results = [];
+        foreach ($tutorials as $tutorial) {
+            $results[] = [
+                'title' => htmlspecialchars($tutorial->getTitle(), \ENT_COMPAT | \ENT_HTML5),
+                'slug' => htmlspecialchars($tutorial->getSlug(), \ENT_COMPAT | \ENT_HTML5),
+                'description' => htmlspecialchars($tutorial->getDescription(), \ENT_COMPAT | \ENT_HTML5),
+                'publishedAt' => $tutorial->getPublishedAt(),
+                'author' => htmlspecialchars($tutorial->getAuthor()->getUsername(), \ENT_COMPAT | \ENT_HTML5),
+            ];
+        }
+
+        return $this->json($results);
     }
 
     protected function buildTags(string $tagsString): array

@@ -35,3 +35,21 @@ services:
         tags:
             - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Tutorial' }
             - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Tutorial' }
+
+    JoliCode\Elastically\Transport\HttpClientTransport: ~
+    JoliCode\Elastically\Messenger\IndexationRequestHandler: ~
+    JoliCode\Elastically\Client:
+        arguments:
+            $config:
+                host: '%env(ELASTICSEARCH_HOST)%'
+                port: '%env(ELASTICSEARCH_PORT)%'
+                transport: '@JoliCode\Elastically\Transport\HttpClientTransport'
+                elastically_mappings_directory: '%kernel.project_dir%/config/elasticsearch'
+                elastically_index_class_mapping:
+                    tutorial: App\Model\Tutorial
+                elastically_serializer: '@serializer'
+                elastically_bulk_size: 100
+            $logger: '@logger'
+
+    JoliCode\Elastically\Messenger\DocumentExchangerInterface:
+        alias: App\Elasticsearch\DocumentExchanger
