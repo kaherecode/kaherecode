@@ -14,6 +14,7 @@ use App\Service\UploaderInterface;
 use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
 use App\Model\Tutorial as TutorialModel;
+use function Symfony\Component\String\u;
 use Symfony\Component\Form\FormInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use JoliCode\Elastically\Messenger\IndexationRequest;
 use JoliCode\Elastically\Messenger\IndexationRequestHandler;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TutorialController extends AbstractController
@@ -396,13 +398,14 @@ class TutorialController extends AbstractController
     }
 
     /**
-     * @Route("/search", methods="GET", name="search")
+     * @Route("/search", methods="GET", name="kaherecode_search")
      */
     public function search(Request $request, Client $client): Response
     {
-        $query = $request->query->get('q', '');
+        $query = u($request->query->get('q', ''))->trim();
 
-        if (!$request->isXmlHttpRequest()) {
+        // if the client did not ask for a JSON response
+        if (!in_array('application/json', $request->getAcceptableContentTypes())) {
             return $this->render(
                 'tutorials/search.html.twig',
                 ['query' => $query]
@@ -423,12 +426,29 @@ class TutorialController extends AbstractController
 
         $results = [];
         foreach ($tutorials as $tutorial) {
+            $tutorial = $tutorial->getModel();
+
             $results[] = [
-                'title' => htmlspecialchars($tutorial->getTitle(), \ENT_COMPAT | \ENT_HTML5),
-                'slug' => htmlspecialchars($tutorial->getSlug(), \ENT_COMPAT | \ENT_HTML5),
-                'description' => htmlspecialchars($tutorial->getDescription(), \ENT_COMPAT | \ENT_HTML5),
-                'publishedAt' => $tutorial->getPublishedAt(),
-                'author' => htmlspecialchars($tutorial->getAuthor()->getUsername(), \ENT_COMPAT | \ENT_HTML5),
+                'title' => htmlspecialchars(
+                    $tutorial->getTitle(),
+                    \ENT_COMPAT | \ENT_HTML5
+                ),
+                'url' => htmlspecialchars(
+                    $this->generateUrl(
+                        'tutorial_view',
+                        ['slug' => $tutorial->getSlug()],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    )
+                ),
+                'description' => htmlspecialchars(
+                    $tutorial->getDescription(),
+                    \ENT_COMPAT | \ENT_HTML5
+                ),
+                'publishedAt' => $tutorial->getPublishedAt()->format('d/m/Y'),
+                'author' => htmlspecialchars(
+                    $tutorial->getAuthor(),
+                    \ENT_COMPAT | \ENT_HTML5
+                ),
             ];
         }
 
