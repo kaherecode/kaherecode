@@ -8,17 +8,30 @@ use App\Service\Mailer;
 use App\Entity\Tutorial;
 use App\Form\CommentType;
 use App\Form\TutorialType;
-use App\Service\CloudinaryService;
+use Elastica\Query\MultiMatch;
+use JoliCode\Elastically\Client;
+use App\Service\UploaderInterface;
 use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
+use App\Model\Tutorial as TutorialModel;
+use function Symfony\Component\String\u;
 use Symfony\Component\Form\FormInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Messenger\MessageBusInterface;
+use JoliCode\Elastically\Messenger\IndexationRequest;
+use JoliCode\Elastically\Messenger\IndexationRequestHandler;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TutorialController extends AbstractController
 {
+    private const WORD_PER_MIN = 250;
+
     /**
      * @Route("/", name="homepage")
      */
@@ -44,11 +57,14 @@ class TutorialController extends AbstractController
      */
     public function tutorials(
         Request $request,
-        TutorialRepository $tutorialRepository
+        TutorialRepository $tutorialRepository,
+        PaginatorInterface $paginator,
+        int $paginatorPerPage
     ) {
-        $tutorials = $tutorialRepository->findBy(
-            ['isPublished' => true],
-            ['publishedAt' => 'DESC']
+        $tutorials = $paginator->paginate(
+            $tutorialRepository->getPublishedTutorialsQueryBuilder(),
+            $request->query->getInt('page', 1),
+            $paginatorPerPage
         );
 
         return $this->render(
@@ -58,13 +74,41 @@ class TutorialController extends AbstractController
     }
 
     /**
+     * @Route("/video-tutorials", name="video_tutorials")
+     */
+    public function videoTutorials(
+        Request $request,
+        TutorialRepository $tutorialRepository,
+        PaginatorInterface $paginator,
+        int $paginatorPerPage
+    ) {
+        $tutorials = $paginator->paginate(
+            $tutorialRepository->getVideoTutorialsQueryBuilder(),
+            $request->query->getInt('page', 1),
+            $paginatorPerPage
+        );
+
+        return $this->render(
+            'tutorials/tutorials.html.twig',
+            ['tutorials' => $tutorials, 'videos' => true]
+        );
+    }
+
+    /**
      * @Route("/tag/{label}", name="tag_tutorials")
      */
     public function tutorialsByTag(
+        Request $request,
         Tag $tag,
-        TutorialRepository $tutorialRepository
+        TutorialRepository $tutorialRepository,
+        PaginatorInterface $paginator,
+        int $paginatorPerPage
     ) {
-        $tutorials = $tutorialRepository->findAllPublishedByTag($tag->getLabel());
+        $tutorials = $paginator->paginate(
+            $tutorialRepository->getPublishedByTagQueryBuilder($tag->getLabel()),
+            $request->query->getInt('page', 1),
+            $paginatorPerPage
+        );
 
         return $this->render(
             'tutorials/tutorials.html.twig',
@@ -84,8 +128,11 @@ class TutorialController extends AbstractController
         CommentRepository $commentRepository
     ) {
         $relatedTutorials = [];
-        $relatedTutorials[] = $tutorialRepository
+        $userLastPublishedTutorial = $tutorialRepository
             ->getUserLastPublishedTutorial($tutorial);
+        if ($userLastPublishedTutorial) {
+            $relatedTutorials[] = $userLastPublishedTutorial;
+        }
         $relatedTutorials = array_unique(
             array_merge(
                 $relatedTutorials,
@@ -115,7 +162,7 @@ class TutorialController extends AbstractController
      */
     public function create(
         Request $request,
-        CloudinaryService $uploader
+        UploaderInterface $uploader
     ) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -165,7 +212,7 @@ class TutorialController extends AbstractController
     public function edit(
         Request $request,
         Tutorial $tutorial,
-        CloudinaryService $uploader
+        UploaderInterface $uploader
     ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
@@ -228,8 +275,11 @@ class TutorialController extends AbstractController
     /**
      * @Route("/tutorials/{uuid}/publish", name="publish_tutorial")
      */
-    public function publishTutorial(Tutorial $tutorial, Mailer $mailer)
-    {
+    public function publishTutorial(
+        Tutorial $tutorial,
+        Mailer $mailer,
+        MessageBusInterface $bus
+    ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
         if ($tutorial->getTitle() !== null && $tutorial->getTitle() !== ''
@@ -240,12 +290,22 @@ class TutorialController extends AbstractController
             && $tutorial->getDescription() !== ''
             && count($tutorial->getTags()->toArray()) > 0
         ) {
+            // calculate read time
+            $wordCount = str_word_count(strip_tags($tutorial->getContent()));
+            $minutes = (int) ceil($wordCount / self::WORD_PER_MIN);
+            $tutorial->setReadTime($minutes);
+
             $tutorial->setIsPublished(true);
             $tutorial->setPublishedAt(new \DateTime);
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
             $mailer->sendTutorialPublishedMessage($tutorial);
+
+            // index this tutorial in elasticsearch
+            $bus->dispatch(
+                new IndexationRequest(TutorialModel::class, $tutorial->getId())
+            );
 
             return $this->redirectToRoute(
                 'tutorial_view',
@@ -272,7 +332,8 @@ class TutorialController extends AbstractController
     public function deleteTutorial(
         Tutorial $tutorial,
         Security $security,
-        CloudinaryService $uploader
+        UploaderInterface $uploader,
+        MessageBusInterface $bus
     ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
@@ -284,6 +345,14 @@ class TutorialController extends AbstractController
             if ($tutorial->getPictureURL() !== null) {
                 $uploader->delete($tutorial->getPictureURL());
             }
+
+            // remove this document from elasticsearch index
+            $bus->dispatch(
+                new IndexationRequest(
+                    TutorialModel::class,
+                    IndexationRequestHandler::OP_DELETE
+                )
+            );
 
             return $this->redirectToRoute('profile');
         } else {
@@ -297,6 +366,93 @@ class TutorialController extends AbstractController
             'edit_tutorial',
             ['uuid' => $tutorial->getUuid()]
         );
+    }
+
+    /**
+     * @Route("/tutorials/{uuid}/bookmark", name="bookmark_tutorial")
+     */
+    public function bookmark(Request $request, Tutorial $tutorial)
+    {
+        $response = new JsonResponse();
+        $user = $this->getUser();
+
+        if (! $user) {
+            $response->setStatusCode(JsonResponse::HTTP_FORBIDDEN);
+            $response->setData(['message' => 'You shoud be authenticated!']);
+
+            return $response;
+        }
+
+        $delete = (int) $request->query->get('delete');
+
+        if ($delete && $delete === 1) {
+            $user->removeBookmark($tutorial);
+        } else {
+            $user->addBookmark($tutorial);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return new JsonResponse();
+    }
+
+    /**
+     * @Route("/search", methods="GET", name="kaherecode_search")
+     */
+    public function search(Request $request, Client $client): Response
+    {
+        $query = u($request->query->get('q', ''))->trim();
+
+        // if the client did not ask for a JSON response
+        if (!in_array('application/json', $request->getAcceptableContentTypes())) {
+            return $this->render(
+                'tutorials/search.html.twig',
+                ['query' => $query]
+            );
+        }
+
+        $searchQuery = new MultiMatch();
+        $searchQuery->setFields([
+            'title^5',
+            'title.autocomplete',
+            'author',
+            'tags.label'
+        ]);
+        $searchQuery->setQuery($query);
+        $searchQuery->setType(MultiMatch::TYPE_MOST_FIELDS);
+
+        $tutorials = $client->getIndex('tutorial')->search($searchQuery);
+
+        $results = [];
+        foreach ($tutorials as $tutorial) {
+            $tutorial = $tutorial->getModel();
+
+            $results[] = [
+                'title' => htmlspecialchars(
+                    $tutorial->getTitle(),
+                    \ENT_COMPAT | \ENT_HTML5
+                ),
+                'url' => htmlspecialchars(
+                    $this->generateUrl(
+                        'tutorial_view',
+                        ['slug' => $tutorial->getSlug()],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    )
+                ),
+                'description' => htmlspecialchars(
+                    $tutorial->getDescription(),
+                    \ENT_COMPAT | \ENT_HTML5
+                ),
+                'publishedAt' => $tutorial->getPublishedAt()->format('d/m/Y'),
+                'author' => htmlspecialchars(
+                    $tutorial->getAuthor(),
+                    \ENT_COMPAT | \ENT_HTML5
+                ),
+            ];
+        }
+
+        return $this->json($results);
     }
 
     protected function buildTags(string $tagsString): array

@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Tutorial;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -25,8 +27,7 @@ class TutorialRepository extends ServiceEntityRepository
     public function findAllPublishedByTag(string $label)
     {
         return $this->createQueryBuilder('t')
-            ->where('t.isPublished = :isPublished')
-            ->setParameter('isPublished', true)
+            ->where('t.isPublished = true')
             ->orderBy('t.publishedAt', 'DESC')
             ->innerJoin('t.tags', 'c')
             ->andWhere('c.label = :tag')
@@ -75,16 +76,47 @@ class TutorialRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-
-    /*
-    public function findOneBySomeField($value): ?Tutorial
+    public function findVideoTutorials()
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('t.videoLink is not null')
+            ->andWhere('t.isPublished = true')
+            ->orderBy('t.publishedAt', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
+    public function getPublishedTutorialsQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.isPublished = true')
+            ->orderBy('t.publishedAt', 'DESC');
+    }
+
+    public function getVideoTutorialsQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.videoLink is not null')
+            ->andWhere('t.isPublished = true')
+            ->orderBy('t.publishedAt', 'DESC');
+    }
+
+    public function getPublishedByTagQueryBuilder(string $label): QueryBuilder
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.isPublished = true')
+            ->orderBy('t.publishedAt', 'DESC')
+            ->innerJoin('t.tags', 'c')
+            ->andWhere('c.label = :tag')
+            ->setParameter('tag', $label);
+    }
+
+    public function getPublishedByUserQueryBuilder(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.isPublished = true')
+            ->andWhere('t.author = :author')
+            ->setParameter('author', $user)
+            ->orderBy('t.publishedAt', 'DESC');
+    }
 }

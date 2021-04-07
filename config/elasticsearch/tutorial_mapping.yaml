@@ -1,0 +1,36 @@
+settings:
+    number_of_replicas: 0
+    number_of_shards: 1
+    refresh_interval: 60s
+mappings:
+    dynamic: false
+    properties:
+        title:
+            type: text
+            analyzer: english
+            fields:
+                autocomplete:
+                    type: text
+                    analyzer: app_autocomplete
+                    search_analyzer: standard
+
+        author:
+            type: text
+            analyzer: english
+            fields:
+                autocomplete:
+                    type: text
+                    analyzer: app_autocomplete
+                    search_analyzer: standard
+
+        tags:
+            type: object
+            properties:
+                label:
+                    type: text
+                    analyzer: english
+                    fields:
+                        autocomplete:
+                            type: text
+                            analyzer: app_autocomplete
+                            search_analyzer: standard

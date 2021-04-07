@@ -12,4 +12,5 @@ framework:
         routing:
             # Route your messages to the transports
             'Symfony\Component\Mailer\Messenger\SendEmailMessage': async
+            'JoliCode\Elastically\Messenger\IndexationRequest':  async
             'App\Message\CommentMessage': async

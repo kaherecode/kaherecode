@@ -23,8 +23,7 @@
 
 		<div id="bookmarks" class="tab-content">
 			<div class="container">
-				<span class="block text-center p-4">{{ 'This feature will be added very soon'|trans }}
-					&#128521!</span>
+				{% include 'includes/_tutorials_list.html.twig' with {'tutorials': user.bookmarks} %}
 			</div>
 		</div>
 
