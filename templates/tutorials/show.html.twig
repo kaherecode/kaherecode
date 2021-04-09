@@ -14,7 +14,7 @@
 
 	<div class="container bg-lightGray p-4 xl:px-20">
 		<hr>
-		<h3 class="mt-5 text-xl font-bold">{{ 'Share this tutorial'|trans }}</h3>
+		<h3 class="mt-5 text-xl font-bold">{{ 'share_tutorial'|trans }}</h3>
 		<ul class="mt-3 flex items-center justify-start">
 			<li class="">
 				<a href="" class="inline-block text-center p-3 rounded-full" style="background-color: #1ea1f2">
@@ -34,7 +34,7 @@
 
 		<hr class="mt-5">
 
-		<h3 class="mt-5 text-xl font-bold">{{ 'Thanks to'|trans }}</h3>
+		<h3 class="mt-5 text-xl font-bold">{{ 'thanks_to'|trans }}</h3>
 
 		<div class="mt-5 sm:flex">
 			<img src="{{ tutorial.author.avatar is null ? asset('images/avatar.png') : tutorial.author.avatar }}" alt="{{ tutorial.author.fullName }}" class="w-40 h-40 object-cover shadow-xl" onerror="this.onerror=null;this.src='{{ asset('images/avatar.png') }}';"/>
@@ -53,7 +53,7 @@
 
 	<div class="container py-5">
 		<h3 class="font-bold text-gray-900 text-xl">
-			{{ 'Keep reading'|trans }}
+			{{ 'keep_reading'|trans }}
 		</h3>
 
 		{% include 'includes/_tutorials_list.html.twig' with {'tutorials': relatedTutorials} %}
@@ -62,14 +62,14 @@
 	<div class="bg-lightGray py-5">
 		<div class="container">
 			<h3 class="font-bold text-gray-900 text-xl" id="comments">
-				{{ 'Discussion'|trans }}
+				{{ 'discussion'|trans }}
 			</h3>
 			<p class="mt-2">
 				{% if is_granted('ROLE_USER') %}
-					<span class="cursor-pointer text-blue-600 hover:underline open-comment-form">{{ 'Contribute to the discussion'|trans }}.</span>
+					<span class="cursor-pointer text-blue-600 hover:underline open-comment-form">{{ 'contribute_discussion'|trans }}</span>
 				{% else %}
-					{{ 'You must be logged in to participate to the discussion'|trans }}.
-					<a href="{{ path('app_login') }}?target={{ app.request.uri }}#comments" class="text-blue-600 underline">{{ 'Log In'|trans }}</a>.
+					{{ 'login_to_comment'|trans }}.
+					<a href="{{ path('app_login') }}?target={{ app.request.uri }}#comments" class="text-blue-600 underline">{{ 'user.login'|trans }}</a>.
 				{% endif %}
 			</p>
 
@@ -91,7 +91,7 @@
 
 	<div class="comment-form-overlay hidden" id="commentForm">
 		<div class="comment-form p-8 hidden">
-			<h4 class="font-bold text-xl">{{ 'Contribute to the discussion'|trans }}</h4>
+			<h4 class="font-bold text-xl">{{ 'contribute_discussion'|trans }}</h4>
 			<hr class="mt-2">
 			{{ form_start(form, {'attr': {'action': path('add_comment', {'uuid': tutorial.uuid})}}) }}
 			{{ form_widget(form.markdownContent, {'attr': {'class': 'border-none', 'rows': 7, 'placeholder': 'Markdown content...'}}) }}
@@ -104,12 +104,16 @@
 						<path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
 						<path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
 					</svg>
-					{{ 'Preview'|trans }}
+					{{ 'preview'|trans }}
 				</span>
 			</p>
 			<p class="mt-6 space-x-3">
-				<button type="submit" class="btn">{{ 'Post'|trans }}</button>
-				<span class="text-blue-600 underline cursor-pointer" id="closeCommentForm">{{ 'Cancel'|trans }}</span>
+				<button type="submit" class="btn">
+					{{ 'action.validate'|trans }}
+				</button>
+				<span class="text-blue-600 underline cursor-pointer" id="closeCommentForm">
+					{{ 'action.cancel'|trans }}
+				</span>
 			</p>
 			{{ form_end(form) }}
 		</div>

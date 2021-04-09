@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ 'Practical tutorials to learn to code'|trans }}
+	{{ 'site.title'|trans }}
 	|
 	{{ parent() }}
 {% endblock %}
@@ -12,13 +12,13 @@
 			Learn. Code. Share.
 		</h2>
 		<h1 class="text-xl font-semibold text-gray-900 md:w-4/6 m-auto">
-			{{ 'Learn to program with hands-on tutorials written by developers.'|trans }}
+			{{ 'side.description'|trans }}
 		</h1>
 		<p class="mt-6 text-gray-900 md:w-4/6 lg:w-2/5 m-auto text-lg">
-			{{ 'Kaherecode is an aspiring community for developers. A place to learn and share about programming.'|trans }}
+			{{ 'site.bio'|trans }}
 			{% if not app.user %}
 				<a href="{{ path('user_register') }}" class="text-blue-600 underline">
-					{{ 'Join us now'|trans }}...
+					{{ 'join_us'|trans }}...
 				</a>
 			{% endif %}
 		</p>
@@ -27,11 +27,11 @@
 	<div class="container">
 		<div class="mt-5 flex items-center justify-between">
 			<h2 class="font-bold text-gray-900 text-2xl">
-				{{ 'Recents tutorials'|trans }}
+				{{ 'title.recent_tutorials'|trans }}
 			</h2>
 			<span>
 				<a href="{{ path('tutorials') }}" class="underline text-blue-500">
-					{{ 'View more'|trans }}...
+					{{ 'view_more'|trans }}...
 				</a>
 			</span>
 		</div>
@@ -41,7 +41,7 @@
 
 	<div class="sm:mt-3 text-center py-12 bg-darkGray" style="background-color: #0f0f0f; background: linear-gradient(333deg, #0f0f0f 17%, #3c3b3c 80%);">
 		<div class="container">
-			<h2 class="font-bold text-gray-100 text-2xl">{{ 'What do you want to learn today?'|trans }}</h2>
+			<h2 class="font-bold text-gray-100 text-2xl">{{ 'what_you_want_to_learn'|trans }}</h2>
 
 			<div class="mt-6 flex flex-wrap space-x-6 lg:space-x-8 items-center justify-center">
 				<a href="{{ path('tag_tutorials', {'label': 'javascript'}) }}" class="bg-white p-2 rounded-md my-3">
@@ -88,7 +88,7 @@
 			</h2>
 			<span>
 				<a href="{{ path('tag_tutorials', {'label': 'javascript'}) }}" class="underline text-blue-500">
-					{{ 'View more'|trans }}...
+					{{ 'view_more'|trans }}...
 				</a>
 			</span>
 		</div>

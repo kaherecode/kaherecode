@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="95j_VSN" resname="title.video_tutorials">
+        <source>title.video_tutorials</source>
+        <target>Tutoriel Vidéos</target>
+      </trans-unit>
+      <trans-unit id="U0WsZZZ" resname="title.tutorials_list">
+        <source>title.tutorials_list</source>
+        <target>Liste des Tutoriels</target>
+      </trans-unit>
+      <trans-unit id="JBkykGe" resname="search">
+        <source>search</source>
+        <target>Rechercher</target>
+      </trans-unit>
+      <trans-unit id="2koI_2Q" resname="site.title">
+        <source>site.title</source>
+        <target>Des tutoriels pratiques pour apprendre à coder</target>
+      </trans-unit>
+      <trans-unit id="1N8ufWS" resname="side.description">
+        <source>side.description</source>
+        <target>Apprends à programmer avec des tutoriels pratiques écrit pas des développeurs.</target>
+      </trans-unit>
+      <trans-unit id="ko9SwEu" resname="site.bio">
+        <source>site.bio</source>
+        <target>Kaherecode est une communauté en herbe pour les développeurs. Un endroit pour apprendre et partager autour de la programmation informatique.</target>
+      </trans-unit>
+      <trans-unit id="7CzQ_ME" resname="join_us">
+        <source>join_us</source>
+        <target>Rejoins-nous maintenant</target>
+      </trans-unit>
+      <trans-unit id="MT5WtMJ" resname="title.recent_tutorials">
+        <source>title.recent_tutorials</source>
+        <target>Tutoriels récents</target>
+      </trans-unit>
+      <trans-unit id="D3ZwxCd" resname="view_more">
+        <source>view_more</source>
+        <target>Voir plus</target>
+      </trans-unit>
+      <trans-unit id="vwHrGxw" resname="what_you_want_to_learn">
+        <source>what_you_want_to_learn</source>
+        <target>Que veux-tu apprendre aujourd'hui?</target>
+      </trans-unit>
+      <trans-unit id="8ljMPUn" resname="share_tutorial">
+        <source>share_tutorial</source>
+        <target>Partage ce tutoriel</target>
+      </trans-unit>
+      <trans-unit id="nS9Q765" resname="thanks_to">
+        <source>thanks_to</source>
+        <target>Merci à</target>
+      </trans-unit>
+      <trans-unit id="DYTQawp" resname="keep_reading">
+        <source>keep_reading</source>
+        <target>Continue de lire</target>
+      </trans-unit>
+      <trans-unit id="PMYQJA7" resname="discussion">
+        <source>discussion</source>
+        <target>Discussion</target>
+      </trans-unit>
+      <trans-unit id="qelOJSD" resname="contribute_discussion">
+        <source>contribute_discussion</source>
+        <target>Participe à la discussion</target>
+      </trans-unit>
+      <trans-unit id="p83Bzps" resname="login_to_comment">
+        <source>login_to_comment</source>
+        <target>Tu dois être connecté pour participer à la discussion</target>
+      </trans-unit>
+      <trans-unit id="rruB2OR" resname="user.login">
+        <source>user.login</source>
+        <target>Me connecter</target>
+      </trans-unit>
+      <trans-unit id="WXXPG7p" resname="preview">
+        <source>preview</source>
+        <target>Preview</target>
+      </trans-unit>
+      <trans-unit id="qQSQ0H." resname="action.validate">
+        <source>action.validate</source>
+        <target>Valider</target>
+      </trans-unit>
+      <trans-unit id="Qj1ElaL" resname="action.cancel">
+        <source>action.cancel</source>
+        <target>Annuler</target>
+      </trans-unit>
+      <trans-unit id="RxjSreo" resname="title.update_tutorial">
+        <source>title.update_tutorial</source>
+        <target>Modifier le tutoriel</target>
+      </trans-unit>
+      <trans-unit id="YOwa3iG" resname="title.create_tutorial">
+        <source>title.create_tutorial</source>
+        <target>Écrire un nouveau tutoriel</target>
+      </trans-unit>
+      <trans-unit id="62ufF9d" resname="title.my_profile">
+        <source>title.my_profile</source>
+        <target>Mon profil</target>
+      </trans-unit>
+      <trans-unit id="16I5ZXW" resname="writing_rules">
+        <source>writing_rules</source>
+        <target>Règles d'écritures</target>
+      </trans-unit>
+      <trans-unit id="HLtdhYw" resname="action.save">
+        <source>action.save</source>
+        <target>Enregistrer</target>
+      </trans-unit>
+      <trans-unit id="gA6_Wy_" resname="action.publish">
+        <source>action.publish</source>
+        <target>Publier</target>
+      </trans-unit>
+      <trans-unit id="QAKeVOR" resname="select_featured_image">
+        <source>select_featured_image</source>
+        <target>Sélectionne une image à la une</target>
+      </trans-unit>
+      <trans-unit id="_DJqXB8" resname="label.youtube_link">
+        <source>label.youtube_link</source>
+        <target>Lien Youtube de la vidéo</target>
+      </trans-unit>
+      <trans-unit id="fX4S0z." resname="label.tutorial_title">
+        <source>label.tutorial_title</source>
+        <target>Comment créer une app géniale</target>
+      </trans-unit>
+      <trans-unit id="vqgJDuK" resname="label.tutorial_description">
+        <source>label.tutorial_description</source>
+        <target>Donne une courte description de ton tutoriel</target>
+      </trans-unit>
+      <trans-unit id="x56YalS" resname="label.source_code">
+        <source>label.source_code</source>
+        <target>Lien du code source</target>
+      </trans-unit>
+      <trans-unit id="eNDsCpR" resname="label.demo">
+        <source>label.demo</source>
+        <target>Lien de la démo</target>
+      </trans-unit>
+      <trans-unit id="HMz2.FZ" resname="see_all_results">
+        <source>see_all_results</source>
+        <target>Voir tout les résultats</target>
+      </trans-unit>
+      <trans-unit id="zIZQ3sg" resname="no_results">
+        <source>no_results</source>
+        <target>Aucune donnée n'a été trouvée!</target>
+      </trans-unit>
+      <trans-unit id="rhSyin5" resname="title.tutorials">
+        <source>title.tutorials</source>
+        <target>Tutoriels</target>
+      </trans-unit>
+      <trans-unit id="1VrI1.b" resname="title.videos">
+        <source>title.videos</source>
+        <target>Vidéos</target>
+      </trans-unit>
+      <trans-unit id="p1end8X" resname="title.chat">
+        <source>title.chat</source>
+        <target>Chat Discord</target>
+      </trans-unit>
+      <trans-unit id="yIrrrgL" resname="user.signup">
+        <source>user.signup</source>
+        <target>M'inscrire</target>
+      </trans-unit>
+      <trans-unit id="yaoHoQI" resname="title.update_my_profile">
+        <source>title.update_my_profile</source>
+        <target>Modifier mon profil</target>
+      </trans-unit>
+      <trans-unit id="gsArOfJ" resname="title.new_tutorial">
+        <source>title.new_tutorial</source>
+        <target>Nouveau tutoriel</target>
+      </trans-unit>
+      <trans-unit id="nKw3m9R" resname="title.admin">
+        <source>title.admin</source>
+        <target>Admin.</target>
+      </trans-unit>
+      <trans-unit id="okzpfQC" resname="user.logout">
+        <source>user.logout</source>
+        <target>Me déconnecter</target>
+      </trans-unit>
+      <trans-unit id="XYrDykO" resname="tutorials">
+        <source>tutorials</source>
+        <target>Tutoriels</target>
+      </trans-unit>
+      <trans-unit id="WRdKsRE" resname="page_views">
+        <source>page_views</source>
+        <target>Pages vues</target>
+      </trans-unit>
+      <trans-unit id="Y2SFhol" resname="author">
+        <source>author</source>
+        <target>auteur</target>
+      </trans-unit>
+      <trans-unit id="yosi0Nu" resname="team">
+        <source>team</source>
+        <target>équipe</target>
+      </trans-unit>
+      <trans-unit id="V4Kxhof" resname="reply">
+        <source>reply</source>
+        <target>Répondre</target>
+      </trans-unit>
+      <trans-unit id="YZdZVQP" resname="delete">
+        <source>delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="7z2Zuk5" resname="no_data">
+        <source>no_data</source>
+        <target>Aucune donnée à afficher!</target>
+      </trans-unit>
+      <trans-unit id="bu1sddm" resname="published_at">
+        <source>published_at</source>
+        <target>Publier le</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at">
+        <source>created_at</source>
+        <target>Créer le</target>
+      </trans-unit>
+      <trans-unit id="IPHM4iP" resname="updated_at">
+        <source>updated_at</source>
+        <target>Modifier le</target>
+      </trans-unit>
+      <trans-unit id="HQdxBb5" resname="title.write">
+        <source>title.write</source>
+        <target>Écrire</target>
+      </trans-unit>
+      <trans-unit id="ELHkIED" resname="title.contact">
+        <source>title.contact</source>
+        <target>Contact</target>
+      </trans-unit>
+      <trans-unit id="jGWf6Ms" resname="rights">
+        <source>rights</source>
+        <target>Tous Droits Réservés.</target>
+      </trans-unit>
+      <trans-unit id="E5.MUNb" resname="developed_by">
+        <source>developed_by</source>
+        <target>Développé et maintenue par</target>
+      </trans-unit>
+      <trans-unit id="wwvtHmm" resname="title.confirm_account">
+        <source>title.confirm_account</source>
+        <target>Confirme ton adresse email</target>
+      </trans-unit>
+      <trans-unit id="6_UsfK." resname="user.account_validated">
+        <source>user.account_validated</source>
+        <target>Bienvenue {username}! Ton compte à été valider avec succès.</target>
+      </trans-unit>
+      <trans-unit id="wEzE2Gh" resname="user.no_confirmation">
+        <source>user.no_confirmation</source>
+        <target>Tu n'as fais aucune demande pour changer ton mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="y3BsX0Q" resname="navigate_to_homepage">
+        <source>navigate_to_homepage</source>
+        <target>Retourne à la page d'accueil</target>
+      </trans-unit>
+      <trans-unit id="9lbD3Vs" resname="label.full_name">
+        <source>label.full_name</source>
+        <target>Prénom et Nom</target>
+      </trans-unit>
+      <trans-unit id="D2N6_cP" resname="label.email">
+        <source>label.email</source>
+        <target>Adresse Email</target>
+      </trans-unit>
+      <trans-unit id="LDhDPrF" resname="label.username">
+        <source>label.username</source>
+        <target>Nom d'Utilisateur</target>
+      </trans-unit>
+      <trans-unit id="9pvowqn" resname="label.password">
+        <source>label.password</source>
+        <target>Mot de Passe</target>
+      </trans-unit>
+      <trans-unit id="HpTgzBu" resname="have_account">
+        <source>have_account</source>
+        <target>J'ai déjà un compte</target>
+      </trans-unit>
+      <trans-unit id="WpqsmD7" resname="action.signup">
+        <source>action.signup</source>
+        <target>M'inscrire</target>
+      </trans-unit>
+      <trans-unit id="jKqSbAI" resname="title.courses">
+        <source>title.courses</source>
+        <target>Cours</target>
+      </trans-unit>
+      <trans-unit id="F6y3qmK" resname="coming_soon">
+        <source>coming_soon</source>
+        <target>Cette fonctionnalité sera ajouter très bientôt</target>
+      </trans-unit>
+      <trans-unit id="baOuHaw" resname="select_profile_picture">
+        <source>select_profile_picture</source>
+        <target>Sélectionne une photo de profil</target>
+      </trans-unit>
+      <trans-unit id="Qh5tWja" resname="user.deactivate_account">
+        <source>user.deactivate_account</source>
+        <target>Désactiver mon compte</target>
+      </trans-unit>
+      <trans-unit id="v035Fo4" resname="label.github">
+        <source>label.github</source>
+        <target>Github</target>
+      </trans-unit>
+      <trans-unit id="Wqs_6VH" resname="label.twitter">
+        <source>label.twitter</source>
+        <target>Twitter</target>
+      </trans-unit>
+      <trans-unit id="Z_wgHj6" resname="label.linkedin">
+        <source>label.linkedin</source>
+        <target>Linkedin</target>
+      </trans-unit>
+      <trans-unit id="Vv9dmNx" resname="label.website">
+        <source>label.website</source>
+        <target>Site Web</target>
+      </trans-unit>
+      <trans-unit id="yXBK5nT" resname="label.bio">
+        <source>label.bio</source>
+        <target>Bio</target>
+      </trans-unit>
+      <trans-unit id="OuhRC28" resname="label.actual_password">
+        <source>label.actual_password</source>
+        <target>Mot de Passe Actuel</target>
+      </trans-unit>
+      <trans-unit id="HtyJ.d5" resname="change_password">
+        <source>change_password</source>
+        <target>Modifier mon mot de passe</target>
+      </trans-unit>
+      <trans-unit id="mRv6AVU" resname="My Profile">
+        <source>My Profile</source>
+        <target>Mon Profil</target>
+      </trans-unit>
+      <trans-unit id="ZxRUlZ5" resname="title.my_tutorials">
+        <source>title.my_tutorials</source>
+        <target>Mes tutoriels</target>
+      </trans-unit>
+      <trans-unit id="yaOPKvF" resname="title.bookmarks">
+        <source>title.bookmarks</source>
+        <target>Bookmarks</target>
+      </trans-unit>
+      <trans-unit id="BKKtwWr" resname="title.drafts">
+        <source>title.drafts</source>
+        <target>Brouillons</target>
+      </trans-unit>
+      <trans-unit id="rZtOYZR" resname="title.published">
+        <source>title.published</source>
+        <target>Publiés</target>
+      </trans-unit>
+      <trans-unit id="rrU0GR8" resname="title.change_password">
+        <source>title.change_password</source>
+        <target>Modifier mot de passe</target>
+      </trans-unit>
+      <trans-unit id="lLexdKV" resname="email_to_renew_password">
+        <source>email_to_renew_password</source>
+        <target>Entre ton adresse email, nous t'enverrons un lien pour modifier ton mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="gUdiiD7" resname="logged_in">
+        <source>logged_in</source>
+        <target>Tu es connecté en tant que</target>
+      </trans-unit>
+      <trans-unit id="p3vzlCk" resname="no_account">
+        <source>no_account</source>
+        <target>Je n'ai pas de compte</target>
+      </trans-unit>
+      <trans-unit id="iiWFLaI" resname="label.new_password">
+        <source>label.new_password</source>
+        <target>Nouveau Mot de Passe</target>
+      </trans-unit>
+      <trans-unit id="ugwhXgU" resname="label.confirm_password">
+        <source>label.confirm_password</source>
+        <target>Confirmer Mot de Passe</target>
+      </trans-unit>
+      <trans-unit id="9MJolny" resname="no_password_request">
+        <source>no_password_request</source>
+        <target>Tu n'as fais aucune demande pour changer ton mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="bHw61WS" resname="user.logged_in">
+        <source>user.logged_in</source>
+        <target>Tu es connecté en tant que</target>
+      </trans-unit>
+      <trans-unit id="B0loISu" resname="label.remember_me">
+        <source>label.remember_me</source>
+        <target>Se souvenir de moi</target>
+      </trans-unit>
+      <trans-unit id="y45Kzfu" resname="forgot_password">
+        <source>forgot_password</source>
+        <target>Mot de passe oublié</target>
+      </trans-unit>
+      <trans-unit id="uJxPe9E" resname="action.login">
+        <source>action.login</source>
+        <target>Me connecter</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

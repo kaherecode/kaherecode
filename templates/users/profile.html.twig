@@ -14,10 +14,10 @@
 	<div class="mt-5 tabs" id="profileTabs">
 		<ul class="tab-list">
 			<li class="tab-item active" data-target="tutorials">
-				{{ 'My tutorials'|trans }}
+				{{ 'title.my_tutorials'|trans }}
 			</li>
 			<li class="tab-item" data-target="bookmarks">
-				Bookmarks
+				{{ 'title.bookmarks'|trans }}
 			</li>
 		</ul>
 
@@ -32,11 +32,11 @@
 				<div class="mt-5 tabs min-tabs" id="tutorialsTabs">
 					<ul class="tab-list">
 						<li class="tab-item active" data-target="drafts">
-							{{ 'Drafts'|trans }}
+							{{ 'title.drafts'|trans }}
 							({{ user.tutorials|filter(t => not t.isPublished)|length }})
 						</li>
 						<li class="tab-item" data-target="published">
-							{{ 'Published'|trans }}
+							{{ 'title.published'|trans }}
 							({{ user.tutorials|filter(t => t.isPublished)|length }})
 						</li>
 					</ul>
