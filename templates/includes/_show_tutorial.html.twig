@@ -15,7 +15,7 @@
 		<div class="text-left mt-3 flex justify-between items-center">
 			<div class="flex items-center">
 				<a href="{{ path('show_user', {'username': tutorial.author.username}) }}">
-					<img src="{{ tutorial.author.avatar is null ? asset('images/avatar.png') : tutorial.author.avatar }}" alt="{{ tutorial.author.fullName }}" class="rounded-full w-12" onerror="this.onerror=null;this.src='{{ asset('images/avatar.png') }}';"/>
+					<img src="{{ tutorial.author.avatar is null ? asset('images/avatar.png') : tutorial.author.avatar }}" alt="{{ tutorial.author.fullName }}" class="w-12 h-12 object-cover rounded-full" onerror="this.onerror=null;this.src='{{ asset('images/avatar.png') }}';"/>
 				</a>
 				<div class="ml-2">
 					<span class="block">
