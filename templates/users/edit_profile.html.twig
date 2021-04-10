@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ 'Practical tutorials to learn to code'|trans }}
+	{{ 'title.update_my_profile'|trans }}
 	|
 	{{ parent() }}
 {% endblock %}
@@ -9,92 +9,120 @@
 {% block body %}
 	<div class="hero text-center px-4 pt-12 pb-20">
 		<h1 class="font-bold text-3xl tracking-wide text-gray-900">
-			{{ 'Update your Profile'|trans }}
+			{{ 'title.update_my_profile'|trans }}
 		</h1>
 	</div>
 
-	<div class="">
-		<div class="">
-			{{ form_start(form, {'attr': {'class': 'container py-4 sm:flex'}}) }}
+	<div>
+		{{ form_start(form, {'attr': {'class': 'container py-4 sm:flex'}}) }}
 			<div class="text-center sm:px-2 sm:w-1/2 md:w-1/3">
 				<div class="text-center bg-gray-300 text-gray-700 relative flex justify-center items-center rounded-full mx-auto text-sm image-picker avatar-image-picker">
 					{% if app.user.avatar is null %}
-						<span>{{ 'Select a profile picture'|trans }}</span>
+						<span>{{ 'select_profile_picture'|trans }}</span>
 					{% else %}
 						<img src="{{ app.user.avatar }}" alt='' class='object-cover w-full h-full rounded-full'/>
 					{% endif %}
+
 					{{ form_widget(form.avatar, {'attr': {'class': 'w-full absolute outline-none', 'accept': 'image/*'}}) }}
 				</div>
+
 				<div class="mt-6">
-					<a href="" class="btn btn-danger">{{ 'Deactivate my account'|trans }}</a>
+					<a href="" class="btn btn-danger">
+						{{ 'user.deactivate_account'|trans }}
+					</a>
 				</div>
 			</div>
+
 			<hr class="mt-8 sm:hidden"/>
+
 			<div class="mt-4 sm:mt-0 sm:px-2 sm:w-1/2 md:w-2/3">
 				<div class="form-group">
-					{% for error in app.flashes('error') %}
-						<span class="block mt-4 text-red-600 text-sm">{{ error }}</span>
+					{% for message in app.flashes('error') %}
+						<span class="block mt-4 text-red-600 text-sm">
+							{{ message }}
+						</span>
 					{% endfor %}
 
-					{% for error in app.flashes('success') %}
-						<span class="block mt-4 text-green-600 text-sm">{{ error }}</span>
+					{% for message in app.flashes('success') %}
+						<span class="block mt-4 text-green-600 text-sm">
+							{{ message }}
+						</span>
 					{% endfor %}
 				</div>
 
 				<div class="form-group">
-					{{ form_widget(form.email, {'attr': {'placeholder': 'Email address'|trans}}) }}
-					<small class="block text-sm text-red-600">{{ form_errors(form.email) }}</small>
+					{{ form_widget(form.email, {'attr': {'placeholder': 'label.email'|trans}}) }}
+					<small class="block text-sm text-red-600">
+						{{ form_errors(form.email) }}
+					</small>
 				</div>
 
 				<div class="form-group">
-					{{ form_widget(form.username, {'attr': {'placeholder': 'Username'|trans}}) }}
-					<small class="block text-sm text-red-600">{{ form_errors(form.username) }}</small>
+					{{ form_widget(form.username, {'attr': {'placeholder': 'label.username'|trans}}) }}
+					<small class="block text-sm text-red-600">
+						{{ form_errors(form.username) }}
+					</small>
 				</div>
 
 				<div class="form-group">
-					{{ form_widget(form.fullName, {'attr': {'placeholder': 'Full Name'|trans}}) }}
-					<small class="block text-sm text-red-600">{{ form_errors(form.fullName) }}</small>
+					{{ form_widget(form.fullName, {'attr': {'placeholder': 'label.full_name'|trans}}) }}
+					<small class="block text-sm text-red-600">
+						{{ form_errors(form.fullName) }}
+					</small>
 				</div>
 
 				<div class="md:flex md:space-x-3">
 					<div class="form-group md:w-1/2">
-						{{ form_widget(form.github, {'attr': {'placeholder': 'Github username (kaherecode)'}}) }}
-						<small class="block text-sm text-red-600">{{ form_errors(form.github) }}</small>
+						{{ form_widget(form.github, {'attr': {'placeholder': 'label.github'|trans}}) }}
+						<small class="block text-sm text-red-600">
+							{{ form_errors(form.github) }}
+						</small>
 					</div>
 					<div class="form-group md:w-1/2">
-						{{ form_widget(form.twitter, {'attr': {'placeholder': 'Twitter username (kaherecode)'}}) }}
-						<small class="block text-sm text-red-600">{{ form_errors(form.twitter) }}</small>
+						{{ form_widget(form.twitter, {'attr': {'placeholder': 'label.twitter'|trans}}) }}
+						<small class="block text-sm text-red-600">
+							{{ form_errors(form.twitter) }}
+						</small>
 					</div>
 				</div>
 
 				<div class="md:flex md:space-x-3">
 					<div class="form-group md:w-1/2">
-						{{ form_widget(form.linkedin, {'attr': {'placeholder': 'Linkedin username (kaherecode)'}}) }}
-						<small class="block text-sm text-red-600">{{ form_errors(form.linkedin) }}</small>
+						{{ form_widget(form.linkedin, {'attr': {'placeholder': 'label.linkedin'|trans}}) }}
+						<small class="block text-sm text-red-600">
+							{{ form_errors(form.linkedin) }}
+						</small>
 					</div>
 
 					<div class="form-group md:w-1/2">
-						{{ form_widget(form.website, {'attr': {'placeholder': 'Website (https://www.kaherecode.com)'}}) }}
-						<small class="block text-sm text-red-600">{{ form_errors(form.website) }}</small>
+						{{ form_widget(form.website, {'attr': {'placeholder': 'label.website'|trans}}) }}
+						<small class="block text-sm text-red-600">
+							{{ form_errors(form.website) }}
+						</small>
 					</div>
 				</div>
 
 				<div class="form-group">
-					{{ form_widget(form.bio, {'attr': {'placeholder': 'Bio', 'rows': 5}}) }}
-					<small class="block text-sm text-red-600">{{ form_errors(form.bio) }}</small>
+					{{ form_widget(form.bio, {'attr': {'placeholder': 'label.bio'|trans, 'rows': 5}}) }}
+					<small class="block text-sm text-red-600">
+						{{ form_errors(form.bio) }}
+					</small>
 				</div>
 
 				<div class="form-group">
-					{{ form_widget(form.currentPassword, {'attr': {'placeholder': 'Actual password'|trans}}) }}
-					<small class="block text-sm text-red-600">{{ form_errors(form.currentPassword) }}</small>
-					<a href="#" class="block text-sm text-blue-500 underline mt-2">{{ 'Change my password'|trans }}</a>
+					{{ form_widget(form.currentPassword, {'attr': {'placeholder': 'label.actual_password'|trans}}) }}
+					<small class="block text-sm text-red-600">
+						{{ form_errors(form.currentPassword) }}
+					</small>
+					<a href="{{ path('password_reset_request') }}" class="block text-sm text-blue-500 underline mt-2">
+						{{ 'change_password'|trans }}
+					</a>
 				</div>
 
 				<div class="form-group">
-					<input type="submit" class="btn" id="editProfile" value="{{ 'Validate'|trans }}"/>
+					<input type="submit" class="btn" id="editProfile" value="{{ 'action.validate'|trans }}"/>
 				</div>
 			</div>
-			{{ form_end(form) }}
-		</div>
+		{{ form_end(form) }}
 	</div>
 {% endblock %}

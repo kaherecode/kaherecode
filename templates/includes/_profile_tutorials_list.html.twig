@@ -1,7 +1,7 @@
 <div class="-mx-4">
 	{% if tutorials|length == 0 %}
 		<p class="p-4">
-			{{ 'There is no data.'|trans }}
+			{{ 'no_data'|trans }}
 		</p>
 	{% endif %}
 
@@ -17,19 +17,24 @@
 
 			<div class="{{ tutorial.thumbnailURL ? 'sm:ml-2' : '' }}">
 				<h2 class="font-bold text-lg tracking-wide">
-					<a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}">{{ tutorial.title }}</a>
+					<a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}">
+						{{ tutorial.title }}
+					</a>
 				</h2>
 				<div class="mt-2">
 					{% if tutorial.isPublished %}
-						<span class="text-gray-700 block">{{ 'Published at'|trans }}:
-							{{ tutorial.publishedAt|format_datetime() }}</span>
+						<span class="text-gray-700 block">{{ 'published_at'|trans }}:
+							{{ tutorial.publishedAt|format_datetime() }}
+						</span>
 					{% else %}
-						<span class="text-gray-700 block">{{ 'Created at'|trans }}:
-							{{ tutorial.createdAt|format_datetime() }}</span>
+						<span class="text-gray-700 block">{{ 'created_at'|trans }}:
+							{{ tutorial.createdAt|format_datetime() }}
+						</span>
 					{% endif %}
 					{% if tutorial.updatedAt %}
-						<span class="text-gray-700 block">{{ 'Updated at'|trans }}:
-							{{ tutorial.updatedAt|format_datetime() }}</span>
+						<span class="text-gray-700 block">{{ 'updated_at'|trans }}:
+							{{ tutorial.updatedAt|format_datetime() }}
+						</span>
 					{% endif %}
 					{% if tutorial.isPublished %}
 						<span class='flex items-center'>

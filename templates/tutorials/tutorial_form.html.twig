@@ -5,10 +5,10 @@
 		<meta charset="UTF-8">
 		<title>
 			{% if tutorial is defined %}
-				{{ 'Update tutorial'|trans }}
+				{{ 'title.update_tutorial'|trans }}
 				{{ tutorial.title }}
 			{% else %}
-				{{ 'Write a new tutorial'|trans }}
+				{{ 'title.create_tutorial'|trans }}
 			{% endif %}
 			| Kaherecode
 		</title>
@@ -23,7 +23,7 @@
 	<body class="bg-gray-100">
 		<div class="px-8 py-4 flex flex-wrap items-center justify-between shadow-lg fixed top-0 left-0 right-0 bg-gray-100" style="z-index: 999">
 			<a href="{{ path("profile") }}">&#8592;
-				{{ 'My Profile'|trans }}</a>
+				{{ 'title.my_profile'|trans }}</a>
 			<ul class="flex flex-wrap items-center">
 				<li>
 					<a href="" class="flex items-center">
@@ -31,7 +31,7 @@
 							<circle cx="12" cy="12" r="3"/>
 							<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
 						</svg>
-						<span class="hidden ml-1 md:block">{{ 'Writing rules'|trans }}</span>
+						<span class="hidden ml-1 md:block">{{ 'writing_rules'|trans }}</span>
 					</a>
 				</li>
 				<li class="ml-4 md:ml-6">
@@ -51,7 +51,7 @@
 							</svg>
 						</span>
 						<span class="hidden ml-1 text-gray-200 md:block">
-							{{ 'Save'|trans }}
+							{{ 'action.save'|trans }}
 						</span>
 					</button>
 				</li>
@@ -74,7 +74,7 @@
 										<line x1="12" y1="3" x2="12" y2="15"/>
 									</svg>
 								</span>
-								<span class="ml-1 text-gray-200 hidden md:block">{{ 'Publish'|trans }}</span>
+								<span class="ml-1 text-gray-200 hidden md:block">{{ 'action.publish'|trans }}</span>
 							</a>
 						</li>
 					{% endif %}
@@ -113,7 +113,7 @@
 			<div class="bg-gray-200 rounded-md">
 				<div class="text-center text-gray-700 relative flex justify-center items-center image-picker article-image-picker">
 					{% if tutorial is not defined or tutorial.pictureURL is null %}
-						<span>{{ 'Select a featured image'|trans }}</span>
+						<span>{{ 'select_featured_image'|trans }}</span>
 					{% else %}
 						<img src="{{ tutorial.pictureURL }}" alt="" class="object-cover object-center w-full h-full"/>
 					{% endif %}
@@ -121,16 +121,16 @@
 				</div>
 
 				<div class="p-3">
-					{{ form_widget(form.videoLink, {'attr': {'class': 'video-link', 'placeholder': 'Youtube video link'|trans}}) }}
+					{{ form_widget(form.videoLink, {'attr': {'class': 'video-link', 'placeholder': 'label.youtube_link'|trans}}) }}
 				</div>
 			</div>
 
 			<div class="mt-4">
-				{{ form_widget(form.title, {'attr': {'class': 'title', 'placeholder': 'How to create a great app'|trans}}) }}
+				{{ form_widget(form.title, {'attr': {'class': 'title', 'placeholder': 'label.tutorial_title'|trans}}) }}
 			</div>
 
 			<div class="mt-4">
-				{{ form_widget(form.description, {'attr': {'rows': 5, 'placeholder': 'Give a short description of your tutorial'|trans}}) }}
+				{{ form_widget(form.description, {'attr': {'rows': 5, 'placeholder': 'label.tutorial_description'|trans}}) }}
 			</div>
 
 			<div class="mt-4 flex">
@@ -139,8 +139,8 @@
 				{% else %}
 					{{ form_widget(form.tags, {'attr': {'class': 'w-1/3', 'placeholder': 'Tags: php, symfony, rest'}}) }}
 				{% endif %}
-				{{ form_widget(form.sourceCodeLink, {'attr': {'class': 'w-1/3', 'placeholder': 'Link to source code'|trans}}) }}
-				{{ form_widget(form.demoLink, {'attr': {'class': 'w-1/3', 'placeholder': 'Link to demo'|trans}}) }}
+				{{ form_widget(form.sourceCodeLink, {'attr': {'class': 'w-1/3', 'placeholder': 'label.source_code'|trans}}) }}
+				{{ form_widget(form.demoLink, {'attr': {'class': 'w-1/3', 'placeholder': 'label.demo'|trans}}) }}
 			</div>
 		</div>
 

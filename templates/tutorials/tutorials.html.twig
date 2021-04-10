@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ videos is defined ? 'Video tutorials'|trans : 'Tutorial lists'|trans }}
+	{{ videos is defined ? 'title.video_tutorials'|trans : 'title.tutorials_list'|trans }}
 	{{ tag is defined ? ' - ' ~ tag|upper : '' }}
 	|
 	{{ parent() }}
@@ -11,11 +11,11 @@
 	<div class="hero text-center py-20">
 		<div class="container">
 			<h1 class="mt-4 font-bold text-3xl tracking-wide text-gray-900">
-				{{ videos is defined ? 'Video tutorials'|trans : 'Tutorial lists'|trans }}
+				{{ videos is defined ? 'title.video_tutorials'|trans : 'title.tutorials_list'|trans }}
 				{{ tag is defined ? ' - ' ~ tag|upper : '' }}
 			</h1>
 			<div class="mt-4">
-				<input type="search" class="rounded w-full p-3 outline-none bg-white" placeholder="Rechercher..." style="max-width: 700px;">
+				<input type="search" class="rounded w-full p-3 outline-none bg-white" placeholder="{{ 'search'|trans }}..." style="max-width: 700px;">
 			</div>
 		</div>
 	</div>
