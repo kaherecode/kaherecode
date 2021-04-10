@@ -11,6 +11,7 @@ use App\Repository\TutorialRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -44,7 +45,8 @@ class UserController extends AbstractController
     public function register(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
-        Mailer $mailer
+        Mailer $mailer,
+        TranslatorInterface $translator
     ) {
         $user = new User();
         $form = $this->createForm(UserRegistrationType::class, $user);
@@ -67,7 +69,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Thanks for registering. Check your mail for confirmation.'
+                $translator->trans("notifications.check_email_for_confirmation")
             );
         }
 
@@ -93,7 +95,8 @@ class UserController extends AbstractController
     public function editProfile(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
-        CloudinaryService $uploader
+        CloudinaryService $uploader,
+        TranslatorInterface $translator
     ) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -110,7 +113,7 @@ class UserController extends AbstractController
             ) {
                 $this->addFlash(
                     'error',
-                    'Your password is not correct, try again!'
+                    $translator->trans("notifications.wrong_password")
                 );
 
                 return $this->render(
@@ -136,7 +139,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Your profile have been successfully updated!'
+                $translator->trans("notifications.profile_updated")
             );
         }
 
@@ -174,7 +177,8 @@ class UserController extends AbstractController
      */
     public function passwordResetRequest(
         Request $request,
-        Mailer $mailer
+        Mailer $mailer,
+        TranslatorInterface $translator
     ) {
         if ($request->isMethod(Request::METHOD_POST)) {
             $em = $this->getDoctrine()->getManager();
@@ -182,7 +186,10 @@ class UserController extends AbstractController
                 ->findOneByEmail($request->get('email'));
 
             if (!$user) {
-                $this->addFlash('error', 'This email address is not registered.');
+                $this->addFlash(
+                    'error',
+                    $translator->trans("notifications.not_registered_email")
+                );
 
                 return $this->render('users/password_reset_request.html.twig');
             }
@@ -197,7 +204,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'A mail have been sent to you, check it to update your password.'
+                $translator->trans("notifications.check_email_for_password")
             );
         }
 
@@ -210,6 +217,7 @@ class UserController extends AbstractController
     public function resetPassword(
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
+        TranslatorInterface $translator,
         $token
     ) {
         $em = $this->getDoctrine()->getManager();
@@ -220,7 +228,10 @@ class UserController extends AbstractController
             $password = $request->get('password');
 
             if ($password !== $request->get('confirmPassword')) {
-                $this->addFlash('error', 'Passwords are not the same.');
+                $this->addFlash(
+                    'error',
+                    $translator->trans("notifications.different_password")
+                );
 
                 return $this->render(
                     'users/reset_password.html.twig',
@@ -236,7 +247,7 @@ class UserController extends AbstractController
             ) {
                 $this->addFlash(
                     'error',
-                    'Password is not valid. Sould be 8 or more characters. Should contains at least 1 special chars, 1 digit and 1 uppercace letter.'
+                    $translator->trans("notifications.not_valid_password")
                 );
 
                 return $this->render(
@@ -257,7 +268,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Your password have been updated successfully. You can now log in!'
+                $translator->trans("notifications.successfully_updated_password")
             );
 
             return $this->redirectToRoute('app_login');

@@ -373,6 +373,46 @@
         <source>action.login</source>
         <target>Log In</target>
       </trans-unit>
+      <trans-unit id="0xSJVgH" resname="notifications.uncomplete_publish_tutorial">
+        <source>notifications.uncomplete_publish_tutorial</source>
+        <target>An error happened publishing the tutorial. Check that those fields have been filled: Picture, Title, Description, Tags, and Content. Then make sure to save the tutorial first before hitting the publish button.</target>
+      </trans-unit>
+      <trans-unit id="qWE7BGw" resname="notifications.dont_delete_tutorial_archive">
+        <source>notifications.dont_delete_tutorial_archive</source>
+        <target>You can't delete a published tutorial, however you can archive it.</target>
+      </trans-unit>
+      <trans-unit id="iSMaFGd" resname="notifications.check_email_for_confirmation">
+        <source>notifications.check_email_for_confirmation</source>
+        <target>Thanks for registering! Check your mail for confirmation.</target>
+      </trans-unit>
+      <trans-unit id="nkUcyTg" resname="notifications.wrong_password">
+        <source>notifications.wrong_password</source>
+        <target>Your password is not correct, try again!</target>
+      </trans-unit>
+      <trans-unit id="_x.8S1e" resname="notifications.profile_updated">
+        <source>notifications.profile_updated</source>
+        <target>Your profile have been successfully updated!</target>
+      </trans-unit>
+      <trans-unit id=".P4snAY" resname="notifications.not_registered_email">
+        <source>notifications.not_registered_email</source>
+        <target>This email address is not registered.</target>
+      </trans-unit>
+      <trans-unit id="ws2RGBj" resname="notifications.check_email_for_password">
+        <source>notifications.check_email_for_password</source>
+        <target>A mail have been sent to the specified email address, check it to update your password.</target>
+      </trans-unit>
+      <trans-unit id="6lL3uT4" resname="notifications.different_password">
+        <source>notifications.different_password</source>
+        <target>Passwords are not the same.</target>
+      </trans-unit>
+      <trans-unit id="6obkXHI" resname="notifications.not_valid_password">
+        <source>notifications.not_valid_password</source>
+        <target>Password is not valid. Should be 8 or more characters. Should contains at least 1 special chars, 1 digit and 1 uppercace letter.</target>
+      </trans-unit>
+      <trans-unit id="EOYNTE0" resname="notifications.successfully_updated_password">
+        <source>notifications.successfully_updated_password</source>
+        <target>Your password have been successfully updated. You can now log in!</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

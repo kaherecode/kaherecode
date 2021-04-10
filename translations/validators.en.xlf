@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="user.password.assertion">
+        <source>user.password.assertion</source>
+        <target>Password is not valid. Should be 8 or more characters. Should contains at least 1 special chars, 1 digit and 1 uppercace letter.</target>
+      </trans-unit>
+      <trans-unit id="user.name.assertion">
+        <source>user.name.assertion</source>
+        <target>Name is not valid, should start with a letter.</target>
+      </trans-unit>
+      <trans-unit id="user.username.assertion">
+        <source>user.username.assertion</source>
+        <target>Username is not valid, should only contains alphanumeric (a-z0-9) or underscore (_) and less than 15 chars.</target>
+      </trans-unit>
+      <trans-unit id="user.github.assertion">
+        <source>user.github.assertion</source>
+        <target>Your Github username is not valid. Enter your username only.</target>
+      </trans-unit>
+      <trans-unit id="user.twitter.assertion">
+        <source>user.twitter.assertion</source>
+        <target>Your Twitter username is not valid. Enter your username only.</target>
+      </trans-unit>
+      <trans-unit id="user.linkedin.assertion">
+        <source>user.linkedin.assertion</source>
+        <target>Your Linkedin username is not valid. Enter your username only.</target>
+      </trans-unit>
+      <trans-unit id="user.website.assertion">
+        <source>user.website.assertion</source>
+        <target>Your website url is not valid.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

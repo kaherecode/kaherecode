@@ -10,9 +10,9 @@ use App\Form\CommentType;
 use App\Form\TutorialType;
 use Elastica\Query\MultiMatch;
 use JoliCode\Elastically\Client;
-use App\Service\FileUploaderInterface;
 use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
+use App\Service\FileUploaderInterface;
 use App\Model\Tutorial as TutorialModel;
 use function Symfony\Component\String\u;
 use Symfony\Component\Form\FormInterface;
@@ -24,6 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use JoliCode\Elastically\Messenger\IndexationRequest;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use JoliCode\Elastically\Messenger\IndexationRequestHandler;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -282,7 +283,8 @@ class TutorialController extends AbstractController
     public function publishTutorial(
         Tutorial $tutorial,
         Mailer $mailer,
-        MessageBusInterface $bus
+        MessageBusInterface $bus,
+        TranslatorInterface $translator
     ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
@@ -319,9 +321,7 @@ class TutorialController extends AbstractController
 
         $this->addFlash(
             'error',
-            'An error happened publishing the tutorial. Check that those fields
-             have been filled: Picture, Title, Description, Tags, and Content.
-             Then make sure to save the tutorial first before hitting the publish button.'
+            $translator->trans('notifications.uncomplete_publish_tutorial')
         );
 
         return $this->redirectToRoute(
@@ -337,7 +337,8 @@ class TutorialController extends AbstractController
         Tutorial $tutorial,
         Security $security,
         FileUploaderInterface $uploader,
-        MessageBusInterface $bus
+        MessageBusInterface $bus,
+        TranslatorInterface $translator
     ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
@@ -362,7 +363,7 @@ class TutorialController extends AbstractController
         } else {
             $this->addFlash(
                 'error',
-                "You can't delete a published tutorial, however you can archive it."
+                $translator->trans("notifications.dont_delete_tutorial_archive")
             );
         }
 

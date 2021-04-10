@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -353,7 +353,7 @@
         <source>label.confirm_password</source>
         <target>Confirmer Mot de Passe</target>
       </trans-unit>
-      <trans-unit id="9MJolny" resname="no_password_request">
+      <trans-unit id="jaFXy1y" resname="no_password_request">
         <source>no_password_request</source>
         <target>Tu n'as fais aucune demande pour changer ton mot de passe.</target>
       </trans-unit>
@@ -372,6 +372,46 @@
       <trans-unit id="uJxPe9E" resname="action.login">
         <source>action.login</source>
         <target>Me connecter</target>
+      </trans-unit>
+      <trans-unit id="0xSJVgH" resname="notifications.uncomplete_publish_tutorial">
+        <source>notifications.uncomplete_publish_tutorial</source>
+        <target>Une erreur est survenu lors de la publication du tutoriel. Vérifie que tout ses champs sont renseignés: Image à la une, Titre, Description, Tags et Contenu. Enregistre ensuite le tutoriel avant de le publier.</target>
+      </trans-unit>
+      <trans-unit id="qWE7BGw" resname="notifications.dont_delete_tutorial_archive">
+        <source>notifications.dont_delete_tutorial_archive</source>
+        <target>Tu ne peux pas supprimer un tutoriel déjà publié. Tu peux néammoins l'archiver.</target>
+      </trans-unit>
+      <trans-unit id="iSMaFGd" resname="notifications.check_email_for_confirmation">
+        <source>notifications.check_email_for_confirmation</source>
+        <target>Merci pour ton inscription! Regarde ta boite mail pour confirmation.</target>
+      </trans-unit>
+      <trans-unit id="nkUcyTg" resname="notifications.wrong_password">
+        <source>notifications.wrong_password</source>
+        <target>Ton password est incorrect, réessaie!</target>
+      </trans-unit>
+      <trans-unit id="_x.8S1e" resname="notifications.profile_updated">
+        <source>notifications.profile_updated</source>
+        <target>Ton profil a été mis à jous avec succès!</target>
+      </trans-unit>
+      <trans-unit id=".P4snAY" resname="notifications.not_registered_email">
+        <source>notifications.not_registered_email</source>
+        <target>Cette adresse email n'est pas inscrite.</target>
+      </trans-unit>
+      <trans-unit id="ws2RGBj" resname="notifications.check_email_for_password">
+        <source>notifications.check_email_for_password</source>
+        <target>Un mail a été envoyé à l'adresse email spécifié, ouvre le pour changer ton mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="6lL3uT4" resname="notifications.different_password">
+        <source>notifications.different_password</source>
+        <target>Les mots de passe ne sont pas identiques.</target>
+      </trans-unit>
+      <trans-unit id="6obkXHI" resname="notifications.not_valid_password">
+        <source>notifications.not_valid_password</source>
+        <target>Ce mot de passe n'est pas valide. Le mot de passe doit contenir au moins 8 caractères, dont un caractère spéciale, un chiffre et une majuscule.</target>
+      </trans-unit>
+      <trans-unit id="EOYNTE0" resname="notifications.successfully_updated_password">
+        <source>notifications.successfully_updated_password</source>
+        <target>Ton mot de passe a été modifier avec succès. Tu peux maintenant te connecter!</target>
       </trans-unit>
     </body>
   </file>

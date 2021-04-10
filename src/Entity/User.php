@@ -44,7 +44,7 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/",
-     *     message="Password is not valid. Sould be 8 or more characters. Should contains at least 1 special chars, 1 digit and 1 uppercace letter."
+     *     message="user.password.assertion"
      * )
      */
     private $password;
@@ -55,7 +55,7 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^[a-zA-Z]/",
-     *     message="Name is not valid, should start with a letter."
+     *     message="user.name.assertion"
      * )
      */
     private $fullName;
@@ -66,7 +66,7 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern="/^[a-z\d_]{2,15}$/",
-     *     message="Username is not valid, should only contains alphanumeric (a-z0-9) or underscore (_) and less than 15 chars."
+     *     message="user.username.assertion"
      * )
      */
     private $username;
@@ -86,7 +86,7 @@ class User implements UserInterface
      *
      * @Assert\Regex(
      *     pattern="/^[a-z\d_]{2,15}$/",
-     *     message="Your Github username is not valid."
+     *     message="user.github.assertion"
      * )
      */
     private $github;
@@ -96,7 +96,7 @@ class User implements UserInterface
      *
      * @Assert\Regex(
      *     pattern="/^[a-z\d_]{2,15}$/",
-     *     message="Your Twitter username is not valid."
+     *     message="user.twitter.assertion"
      * )
      */
     private $twitter;
@@ -106,7 +106,7 @@ class User implements UserInterface
      *
      * @Assert\Regex(
      *     pattern="/^[a-z\d_]{2,15}$/",
-     *     message="Your Linkedin username is not valid."
+     *     message="user.linkedin.assertion"
      * )
      */
     private $linkedin;
@@ -116,7 +116,7 @@ class User implements UserInterface
      *
      * @Assert\Regex(
      *     pattern="/^((http|https):\/\/)?([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i",
-     *     message="Your website url is not valid."
+     *     message="user.website.assertion"
      * )
      */
     private $website;
