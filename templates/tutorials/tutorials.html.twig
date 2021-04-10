@@ -14,9 +14,9 @@
 				{{ videos is defined ? 'title.video_tutorials'|trans : 'title.tutorials_list'|trans }}
 				{{ tag is defined ? ' - ' ~ tag|upper : '' }}
 			</h1>
-			<div class="mt-4">
-				<input type="search" class="rounded w-full p-3 outline-none bg-white" placeholder="{{ 'search'|trans }}..." style="max-width: 700px;">
-			</div>
+			<form class="mt-4" action="{{ path('kaherecode_search') }}">
+                <input type="search" name="q" class="rounded w-full p-3 outline-none bg-white" placeholder="{{ 'search'|trans }}..." style="max-width: 700px;">
+            </form>
 		</div>
 	</div>
 	<div class="container">

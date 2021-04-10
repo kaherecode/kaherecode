@@ -1,1 +1,38 @@
-{{ query }}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Recherche - {{ query }}
+    |
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="hero text-center py-20">
+        <div class="container">
+            <h1 class="mt-4 font-bold text-3xl tracking-wide text-gray-900">
+                {{ 'search'|trans }} - {{ query }}
+            </h1>
+            <p class="text-gray-900">
+                {{ results|length }} {{ 'results'|trans }}
+            </p>
+            <form class="mt-4" action="{{ path('kaherecode_search') }}">
+                <input type="search" name="q" class="rounded w-full p-3 outline-none bg-white" placeholder="{{ 'search'|trans }}..." style="max-width: 700px;">
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        {% if results|length == 0 %}
+            <p class="text-center text-lg py-4">{{ 'no_results'|trans }}</p>
+        {% else %}
+            {% for result in results %}
+                <a href="{{ result.url }}" class="block py-3 border-b hover:bg-gray-100 px-2">
+                    <h2 class="font-semibold text-xl">{{ result.title }}</h2>
+                    <small class="text-gray-600">{{ result.publishedAt }}</small>
+                    <p class="mt-1">
+                        {{ result.description }}
+                    </p>
+                </a>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

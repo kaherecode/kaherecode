@@ -409,14 +409,6 @@ class TutorialController extends AbstractController
     {
         $query = u($request->query->get('q', ''))->trim();
 
-        // if the client did not ask for a JSON response
-        if (!in_array('application/json', $request->getAcceptableContentTypes())) {
-            return $this->render(
-                'tutorials/search.html.twig',
-                ['query' => $query]
-            );
-        }
-
         $searchQuery = new MultiMatch();
         $searchQuery->setFields([
             'title^5',
@@ -455,6 +447,14 @@ class TutorialController extends AbstractController
                     \ENT_COMPAT | \ENT_HTML5
                 ),
             ];
+        }
+
+        // if the client did not ask for a JSON response
+        if (!in_array('application/json', $request->getAcceptableContentTypes())) {
+            return $this->render(
+                'tutorials/search.html.twig',
+                ['query' => $query, 'results' => $results]
+            );
         }
 
         return $this->json($results);

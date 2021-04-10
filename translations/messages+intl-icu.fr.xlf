@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -412,6 +412,10 @@
       <trans-unit id="EOYNTE0" resname="notifications.successfully_updated_password">
         <source>notifications.successfully_updated_password</source>
         <target>Ton mot de passe a été modifier avec succès. Tu peux maintenant te connecter!</target>
+      </trans-unit>
+      <trans-unit id="wJkUK8M" resname="results">
+        <source>results</source>
+        <target>Résultats</target>
       </trans-unit>
     </body>
   </file>
