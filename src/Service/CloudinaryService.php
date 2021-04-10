@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  *
  */
-class CloudinaryService implements UploaderInterface
+class CloudinaryService implements FileUploaderInterface
 {
     const UPLOAD_FOLDER = 'kaherecode/tutorials/';
     const IMAGE_FORMAT = 'webp';

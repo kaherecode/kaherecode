@@ -45,6 +45,7 @@ services:
     restart: on-failure
     env_file:
       - .env.local
+    user: 1000:1000
     networks:
       - kaherecode
 

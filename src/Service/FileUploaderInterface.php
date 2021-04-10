@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  *
  */
-interface UploaderInterface
+interface FileUploaderInterface
 {
     /**
      * Upload a file

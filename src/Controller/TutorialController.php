@@ -10,7 +10,7 @@ use App\Form\CommentType;
 use App\Form\TutorialType;
 use Elastica\Query\MultiMatch;
 use JoliCode\Elastically\Client;
-use App\Service\UploaderInterface;
+use App\Service\FileUploaderInterface;
 use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
 use App\Model\Tutorial as TutorialModel;
@@ -162,7 +162,7 @@ class TutorialController extends AbstractController
      */
     public function create(
         Request $request,
-        UploaderInterface $uploader
+        FileUploaderInterface $uploader
     ) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -176,9 +176,11 @@ class TutorialController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $tutorial->setTags(
-                $this->buildTags($form->get('tags')->getData())
-            );
+            if ($form->get('tags')->getData()) {
+                $tutorial->setTags(
+                    $this->buildTags($form->get('tags')->getData())
+                );
+            }
 
             $picture = $form->get("picture")->getData();
             if ($picture) {
@@ -212,7 +214,7 @@ class TutorialController extends AbstractController
     public function edit(
         Request $request,
         Tutorial $tutorial,
-        UploaderInterface $uploader
+        FileUploaderInterface $uploader
     ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);
 
@@ -230,9 +232,11 @@ class TutorialController extends AbstractController
                 $tutorial->removeTag($tag);
             }
 
-            $tutorial->setTags(
-                $this->buildTags($form->get('tags')->getData())
-            );
+            if ($form->get('tags')->getData()) {
+                $tutorial->setTags(
+                    $this->buildTags($form->get('tags')->getData())
+                );
+            }
 
             $picture = $form->get("picture")->getData();
             if ($picture) {
@@ -332,7 +336,7 @@ class TutorialController extends AbstractController
     public function deleteTutorial(
         Tutorial $tutorial,
         Security $security,
-        UploaderInterface $uploader,
+        FileUploaderInterface $uploader,
         MessageBusInterface $bus
     ) {
         $this->denyAccessUnlessGranted('edit', $tutorial);

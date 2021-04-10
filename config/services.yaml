@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    picture_uploads: '%kernel.project_dir%/public/uploads'
+    uploads_directory: 'uploads' # the base path is the public directory
 
 services:
     # default configuration for services in *this* file
@@ -35,6 +35,14 @@ services:
         tags:
             - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Tutorial' }
             - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Tutorial' }
+
+    App\Service\FileUploaderInterface:
+        alias: App\Service\CloudinaryService
+
+    App\Service\UploadFileOnDiskService:
+        arguments:
+            $publicDir: '%kernel.project_dir%/public'
+            $targetDirectory: '%uploads_directory%'
 
     JoliCode\Elastically\Transport\HttpClientTransport: ~
     JoliCode\Elastically\Messenger\IndexationRequestHandler: ~
