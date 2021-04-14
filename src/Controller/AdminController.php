@@ -99,4 +99,28 @@ class AdminController extends AbstractController
             ]
         );
     }
+
+    /**
+     * @Route("/users", name="admin_users")
+     */
+    public function users(UserRepository $userRepository): Response
+    {
+        $users = $userRepository->findAll();
+        $authors = [];
+        $recentLogins = $userRepository->findBy(
+            ['enabled' => true],
+            ['lastLogin' => 'DESC'],
+            10,
+            0
+        );
+
+        return $this->render(
+            'admin/users.html.twig',
+            [
+                'users' => $users,
+                'authors' => $authors,
+                'recentLogins' => $recentLogins
+            ]
+        );
+    }
 }

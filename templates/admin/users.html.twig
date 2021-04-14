@@ -1,0 +1,130 @@
+{% extends 'admin_layout.html.twig' %}
+
+{% block title %}
+    {{ 'Dashboard'|trans }}
+    |
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="p-4">
+        <div class="">
+            <h1 class="font-bold text-xl">Users</h1>
+        </div>
+
+        <div class="flex -mx-2 flex-wrap">
+            <div class="w-full lg:w-8/12 xl:w-9/12 mb-3 px-2">
+                <div class="bg-white shadow-md">
+                    <div class="p-3">
+                        <h2 class="text-lg font-bold">Authors</h2>
+                    </div>
+                    <hr>
+                    <div class="p-3 overflow-auto" style="height: 500px">
+                        <table class="w-full">
+                            <thead class="">
+                                <tr class="">
+                                    <th>#</th>
+                                    <th>Full Name</th>
+                                    <th>Username</th>
+                                    <th>Email Address</th>
+                                    <th>Registered at</th>
+                                    <th>Nb Tutorials</th>
+                                    <th>Nb Views</th>
+                                    <th style="width: 100px; text-align: center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/2 lg:w-4/12 xl:w-3/12 mb-3 px-2">
+                <div class="bg-white shadow-md">
+                    <div class="p-3">
+                        <h2 class="text-lg font-bold">Popular Authors</h2>
+                    </div>
+                    <hr>
+                    <div class="p-3 overflow-auto" style="height: 500px">
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/2 lg:w-4/12 xl:w-3/12 mb-3 px-2">
+                <div class="bg-white shadow-md">
+                    <div class="p-3">
+                        <h2 class="text-lg font-bold">Recent Log In</h2>
+                    </div>
+                    <hr>
+                    <div class="p-3 overflow-auto" style="height: 500px">
+                        {% for user in recentLogins %}
+                            <div class="flex items-center py-3 border-b">
+                                <img src="{{ user.avatar is null ? asset('images/avatar.png') : user.avatar }}" alt="{{ user.fullName }}" class="rounded-full w-12 h-12 object-cover">
+                                <div class="ml-3">
+                                    <a href="{{ path('show_user', {'username': user.username}) }}" class="font-bold" target="_blank">@{{ user.username }}</a>
+                                    <small class="block text-gray-400">Logged In at
+                                        {{ user.lastLogin|format_datetime }}</small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-8/12 xl:w-9/12 mb-3 px-2">
+                <div class="bg-white shadow-md">
+                    <div class="p-3">
+                        <h2 class="text-lg font-bold">All Users</h2>
+                    </div>
+                    <hr>
+                    <div class="p-3 overflow-auto" style="height: 500px">
+                        <table class="w-full">
+                            <thead class="">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Full Name</th>
+                                    <th>Username</th>
+                                    <th>Email Address</th>
+                                    <th>Registered at</th>
+                                    <th style="width: 100px; text-align: center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set i = 1 %}
+                                {% for user in users %}
+                                    <tr>
+                                        <th scope="row">{{ i }}</th>
+                                        <td>
+                                            <a href="{{ path('show_user', {'username': user.username}) }}" class="text-reset" target="_blank">{{ user.fullName }}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ path('show_user', {'username': user.username}) }}" class="text-reset" target="_blank">@{{ user.username }}</a>
+                                        </td>
+                                        <td>
+                                            <a href="mailto:{{ user.email }}" class="text-blue-600 underline" target="_blank">{{ user.email }}</a>
+                                        </td>
+                                        <td>{{ user.registeredAt|format_datetime }}</td>
+                                        <td class="flex justify-center">
+                                            <a href="" class="inline-bloc" target="_blank">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="" class="inline-bloc" target="_blank">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-red-600">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+                                                </svg>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% set i = i + 1 %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
