@@ -1,0 +1,32 @@
+{% set route = app.request.attributes.get('_route') %}
+
+<nav class="px-3 py-2 fixed top-0 left-0 right-0 bg-white shadow-md flex items-center justify-between">
+	<a class="flex items-center font-bold text-xl" href="{{ path('admin_dashboard') }}">
+		<img src="{{ asset('images/kaherecode.svg') }}" alt="Kaherecode" class="w-12 h-12 cursor-pointer mr-1">
+		Kaherecode
+	</a>
+
+	<ul class="hidden sm:flex space-x-4">
+		<li class=""></li>
+		<li class="">
+			<a class="{{ route == 'admin_dashboard' ? '' : 'text-gray-600 hover:text-black' }}" href="{{ path('admin_dashboard') }}">
+				{{ 'Dashboard'|trans }}</a>
+		</li>
+		<li class="">
+			<a class="{{ route == 'admin_tutorials' ? '' : 'text-gray-600 hover:text-black' }}" href="{{ path('admin_tutorials') }}">
+				{{ 'Tutorials'|trans }}</a>
+		</li>
+		<li class="">
+			<a class="{{ route == 'admin_users' ? '' : 'text-gray-600 hover:text-black' }}" href="#">
+				{{ 'Users'|trans }}</a>
+		</li>
+		<li class="">
+			<a class="{{ route == 'admin_comments' ? '' : 'text-gray-600 hover:text-black' }}" href="#">
+				{{ 'Comments'|trans }}</a>
+		</li>
+	</ul>
+
+	<div class="">
+		<img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" class="rounded-full w-12 h-12 object-cover cursor-pointer">
+	</div>
+</nav>

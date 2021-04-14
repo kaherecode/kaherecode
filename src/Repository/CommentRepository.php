@@ -7,12 +7,6 @@ use App\Entity\Tutorial;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-/**
- * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
- * @method Comment|null findOneBy(array $criteria, array $orderBy = null)
- * @method Comment[]    findAll()
- * @method Comment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class CommentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -49,5 +43,15 @@ class CommentRepository extends ServiceEntityRepository
             ->setParameter('date', new \DateTime("-{$days} days"))
             ->getQuery()
             ->getResult();
+    }
+
+    public function countPublishedComments()
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.state = :state')
+            ->setParameter('state', Comment::STATE_PUBLISHED)
+            ->select('COUNT(c.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

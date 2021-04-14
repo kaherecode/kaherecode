@@ -1,0 +1,142 @@
+{% extends 'admin_layout.html.twig' %}
+
+{% block title %}
+	{{ 'Tutorials'|trans }}
+	|
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="p-4">
+		<div class="">
+			<h1 class="font-bold text-xl">Tutorials</h1>
+		</div>
+
+		<div class="flex -mx-2 flex-wrap">
+			<div class="w-full lg:w-8/12 xl:w-9/12 mb-3 px-2">
+				<div class="bg-white shadow-md">
+					<div class="p-3">
+						<h2 class="text-lg font-bold">Published Tutorials</h2>
+					</div>
+					<hr>
+					<div class="p-3 overflow-auto" style="height: 500px">
+						<table class="w-full">
+							<thead class="">
+								<tr class="">
+									<th>#</th>
+									<th>Title</th>
+									<th>Author</th>
+									<th>Views</th>
+									<th>Published At</th>
+									<th style="width: 100px; text-align: center">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% set i = 1 %}
+								{% for tutorial in publishedTutorials %}
+									<tr>
+										<th scope="row">{{ i }}</th>
+										<td>
+											<a href="{{ path('tutorial_view', {'slug': tutorial.slug}) }}" class="text-reset" target="_blank">{{ tutorial.title }}</a>
+										</td>
+										<td>
+											<a href="{{ path('show_user', {'username': tutorial.author.username}) }}" class="text-reset" target="_blank">@{{ tutorial.author.username }}</a>
+										</td>
+										<td>{{ tutorial.views|format_number }}</td>
+										<td>{{ tutorial.publishedAt|format_datetime }}</td>
+										<td class="flex justify-center">
+											<a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}" class="inline-bloc" target="_blank">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+												</svg>
+											</a>
+											<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}" class="inline-bloc" target="_blank">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-red-600">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+												</svg>
+											</a>
+										</td>
+									</tr>
+									{% set i = i + 1 %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="w-full md:w-1/2 lg:w-4/12 xl:w-3/12 mb-3 px-2">
+				<div class="bg-white shadow-md">
+					<div class="p-3">
+						<h2 class="text-lg font-bold">Tags</h2>
+					</div>
+					<hr>
+					<div class="p-3 overflow-auto" style="height: 500px">
+						{% for tag in tags %}
+							<div class="flex items-center justify-between py-3 border-b">
+								<div class="flex items-center">
+									<a class="inline-block w-9 h-9 text-center leading-9 rounded-full bg-gray-800 text-gray-200 uppercase font-bold text-sm" href="{{ path('tag_tutorials', {'label': tag[0].label}) }}" target="_blank">{{ tag[0].label|slice(0, 2) }}</a>
+									<a href="{{ path('tag_tutorials', {'label': tag[0].label}) }}" class="ml-3" target="_blank">#{{ tag[0].label }}</a>
+								</div>
+								<span class="block text-gray-400 justify-self-end">
+									{{ tag.numberOfTutorials }}
+									tutorials</span>
+								{# <a href="">delete</a> #}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+
+			<div class="w-full lg:w-8/12 xl:w-9/12 mb-3 px-2">
+				<div class="bg-white shadow-md">
+					<div class="p-3">
+						<h2 class="text-lg font-bold">Drafts</h2>
+					</div>
+					<hr>
+					<div class="p-3 overflow-auto" style="height: 500px">
+						<table class="w-full">
+							<thead class="">
+								<tr>
+									<th>#</th>
+									<th>Title</th>
+									<th>Author</th>
+									<th>Updated At</th>
+									<th style="width: 100px; text-align: center">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% set i = 1 %}
+								{% for tutorial in drafts %}
+									<tr>
+										<th scope="row">{{ i }}</th>
+										<td>
+											<a href="{{ path('tutorial_view', {'slug': tutorial.slug}) }}" class="text-reset" target="_blank">{{ tutorial.title }}</a>
+										</td>
+										<td>
+											<a href="{{ path('show_user', {'username': tutorial.author.username}) }}" class="text-reset" target="_blank">@{{ tutorial.author.username }}</a>
+										</td>
+										<td>{{ tutorial.publishedAt|format_datetime }}</td>
+										<td class="flex justify-center">
+											<a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}" class="inline-bloc" target="_blank">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+												</svg>
+											</a>
+											<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}" class="inline-bloc" target="_blank">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-red-600">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+												</svg>
+											</a>
+										</td>
+									</tr>
+									{% set i = i + 1 %}
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

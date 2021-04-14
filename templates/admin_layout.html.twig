@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Kaherecode Admin.
+			{% endblock %}
+		</title>
+
+		<link rel="icon" href="{{ asset('images/favicon.ico') }}">
+
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('admin') }}
+		{% endblock %}
+	</head>
+
+	<body class="bg-gray-100 pt-16">
+		{% include 'includes/admin/_header.html.twig' %}
+
+		{% block body %}{% endblock %}
+
+		{% include 'includes/admin/_footer.html.twig' %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('admin') }}
+		{% endblock %}
+	</body>
+</html>
