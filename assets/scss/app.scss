@@ -26,6 +26,10 @@
   font-family: 'Nunito', 'sans-serif';
 }
 
+body {
+  transition: background-color 0.1s;
+}
+
 body.search-modal-open {
   overflow-y: hidden;
 }
@@ -172,6 +176,7 @@ article {
     font-size: 0.92rem;
     font-family: 'Fira Code', monospace;
     overflow-wrap: break-word !important;
+    @apply dark:text-gray-700;
   }
 
   pre > code .token {
@@ -205,6 +210,7 @@ article {
       border-bottom: 1px solid #dadada;
 
       .tab-item {
+        @apply dark:text-gray-300;
         &.active {
           box-shadow: inset 0 -1px 0 #1a202c;
         }

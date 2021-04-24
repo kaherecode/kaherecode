@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta charset="UTF-8">
@@ -20,14 +20,14 @@
 		{% endblock %}
 	</head>
 
-	<body class="bg-gray-100">
-		<div class="px-8 py-4 flex flex-wrap items-center justify-between shadow-lg fixed top-0 left-0 right-0 bg-gray-100" style="z-index: 999">
+	<body class="bg-gray-100 dark:bg-gray-900">
+		<div class="px-8 py-4 flex flex-wrap items-center justify-between shadow-lg fixed top-0 left-0 right-0 bg-gray-100 dark:bg-gray-900 dark:text-gray-300" style="z-index: 999">
 			<a href="{{ path("profile") }}">&#8592;
 				{{ 'title.my_profile'|trans }}</a>
 			<ul class="flex flex-wrap items-center">
 				<li>
 					<a href="" class="flex items-center">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings text-gray-900 w-4 h-4">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings text-gray-900 w-4 h-4 dark:text-gray-300">
 							<circle cx="12" cy="12" r="3"/>
 							<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
 						</svg>
@@ -37,7 +37,7 @@
 				<li class="ml-4 md:ml-6">
 					<button type="submit" form="tutorialForm" href="" class="flex items-center justify-center md:bg-gray-800 md:py-1 md:w-32">
 						<span class="md:hidden">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save text-gray-900 w-4 h-4">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save text-gray-900 w-4 h-4 dark:text-gray-300">
 								<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
 								<polyline points="17 21 17 13 7 13 7 21"/>
 								<polyline points="7 3 7 8 15 8"/>
@@ -81,7 +81,7 @@
 					{% if not tutorial.isPublished or is_granted('ROLE_ADMIN') %}
 						<li class="ml-4 md:ml-6">
 							<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-gray-900 w-4 h-4">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-gray-900 w-4 h-4 dark:text-gray-300">
 									<polyline points="3 6 5 6 21 6"/>
 									<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
 									<line x1="10" y1="11" x2="10" y2="17"/>
@@ -93,7 +93,7 @@
 
 					<li class="ml-4 md:ml-6">
 						<a href="{{ path('preview_tutorial', {'uuid': tutorial.uuid}) }}" target="_blank">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link text-gray-900 w-4 h-4">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link text-gray-900 w-4 h-4 dark:text-gray-300">
 								<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
 								<polyline points="15 3 21 3 21 9"/>
 								<line x1="10" y1="14" x2="21" y2="3"/>
@@ -110,8 +110,8 @@
 				<small class="block text-sm text-red-600">{{ message }}</small>
 			{% endfor %}
 
-			<div class="bg-gray-200 rounded-md">
-				<div class="text-center text-gray-700 relative flex justify-center items-center image-picker article-image-picker">
+			<div class="bg-gray-200 rounded-md dark:bg-gray-600">
+				<div class="text-center text-gray-700 relative flex justify-center items-center image-picker article-image-picker dark:text-gray-300">
 					{% if tutorial is not defined or tutorial.pictureURL is null %}
 						<span>{{ 'select_featured_image'|trans }}</span>
 					{% else %}
@@ -145,12 +145,12 @@
 		</div>
 
 		<div class="mt-8 flex editor" id="editor">
-			{{ form_widget(form.markdownContent, {'attr': {'class': 'py-4 px-8 resize-none outline-none text-lg w-full md:w-1/2'}}) }}
+			{{ form_widget(form.markdownContent, {'attr': {'class': 'py-4 px-8 resize-none outline-none text-lg w-full md:w-1/2 bg-gray-800 text-gray-300'}}) }}
 			<div class="separator w-8 py-4 flex flex-col items-center bg-gray-100">
 				<span class="cursor-pointer"></span>
 				<span class="cursor-pointer mt-4"></span>
 			</div>
-			<article class="bg-white overflow-auto py-4 px-8 text-lg hidden md:block md:w-1/2" id="output"></article>
+			<article class="bg-white overflow-auto py-4 px-8 text-lg hidden md:block md:w-1/2 dark:bg-gray-800 dark:text-gray-300" id="output"></article>
 			<input type="hidden" name="htmlContent" id="htmlContent">
 		</div>
 		{{ form_end(form) }}

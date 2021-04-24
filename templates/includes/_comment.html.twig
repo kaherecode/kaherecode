@@ -1,7 +1,7 @@
 <img src="{{ comment.author.avatar is null ? asset('images/avatar.png') : comment.author.avatar }}" alt="{{ comment.author.fullName }}" class="w-12 h-12 object-cover rounded-full">
 <div class="ml-3 w-full" id="comments_{{ comment.id }}">
 	<span class="block text-gray-600">
-		<a href="{{ path('show_user', {'username': comment.author.username}) }}" class="font-bold text-gray-900 hover:underline">
+		<a href="{{ path('show_user', {'username': comment.author.username}) }}" class="font-bold text-gray-900 hover:underline dark:text-gray-300">
 			@{{ comment.author.username }}
 		</a>
 		{% if comment.author == comment.tutorial.author %}
@@ -14,12 +14,12 @@
 			</small>
 		{% endif %}
 		&#8226;
-		<span class="text-xs">
+		<span class="text-xs dark:text-gray-400">
 			{{ comment.createdAt|ago }}
 		</span>
 	</span>
 
-	<div class="mt-1 w-full">
+	<div class="mt-1 w-full dark:text-gray-300">
 		{{ comment.content|raw }}
 	</div>
 

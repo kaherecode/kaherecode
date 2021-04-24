@@ -25,9 +25,9 @@
             <p class="text-center text-lg py-4">{{ 'no_results'|trans }}</p>
         {% else %}
             {% for result in results %}
-                <a href="{{ result.url }}" class="block py-3 border-b hover:bg-gray-100 px-2">
+                <a href="{{ result.url }}" class="block py-3 border-b hover:bg-gray-100 px-2 dark:text-gray-300 dark:hover:bg-transparent dark:border-gray-800">
                     <h2 class="font-semibold text-xl">{{ result.title }}</h2>
-                    <small class="text-gray-600">{{ result.publishedAt }}</small>
+                    <small class="text-gray-600 dark:text-gray-400">{{ result.publishedAt }}</small>
                     <p class="mt-1">
                         {{ result.description }}
                     </p>

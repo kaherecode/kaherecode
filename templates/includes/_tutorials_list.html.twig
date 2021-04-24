@@ -9,9 +9,9 @@
 						</a>
 						<div class="ml-3">
 							<span class="block">
-								<a href="{{ path('show_user', {'username': tutorial.author.username}) }}" class="font-bold text-gray-800 text-lg">@{{ tutorial.author.username }}</a>
+								<a href="{{ path('show_user', {'username': tutorial.author.username}) }}" class="font-bold text-gray-800 text-lg dark:text-gray-300">@{{ tutorial.author.username }}</a>
 							</span>
-							<span class="text-gray-700 text-sm">
+							<span class="text-gray-700 text-sm dark:text-gray-400">
 								{{ tutorial.publishedAt|format_date() }}
 							</span>
 						</div>
@@ -19,13 +19,13 @@
 					{% if app.user %}
 						{% set bookmarkURL = url('bookmark_tutorial', {'uuid': tutorial.uuid}) ~ (tutorial in app.user.bookmarks ? '?delete=1' : '') %}
 						<span class="cursor-pointer bookmark-tutorial" data-href="{{ bookmarkURL }}">
-							<svg class="text-gray-700 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="{{ tutorial in app.user.bookmarks ? '#374151' : 'none' }}" viewbox="0 0 24 24" stroke="currentColor">
+							<svg class="text-gray-700 h-6 w-6 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="{{ tutorial in app.user.bookmarks ? '#374151' : 'none' }}" viewbox="0 0 24 24" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
 							</svg>
 						</span>
 					{% else %}
 						<a class="cursor-pointer" href="{{ path('app_login') }}">
-							<svg class="text-gray-700 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+							<svg class="text-gray-700 h-6 w-6 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
 							</svg>
 						</a>
@@ -42,26 +42,26 @@
 				</div>
 
 				<a href="{{ path('tutorial_view', {'slug': tutorial.slug}) }}">
-					<h2 class="mt-3 font-bold text-lg tracking-wide">
+					<h2 class="mt-3 font-bold text-lg tracking-wide dark:text-gray-300">
 						{{ tutorial.title|length > 55 ? tutorial.title|slice(0, 55) ~ '...' : tutorial.title }}
 					</h2>
 				</a>
 
 				<div class="mt-3 flex items-center justify-between">
 					<span class="flex items-center">
-						<svg class="text-gray-700 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+						<svg class="text-gray-700 h-5 w-5 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
 						</svg>
-						<span class="text-sm ml-2 text-gray-700">
+						<span class="text-sm ml-2 text-gray-700 dark:text-gray-400">
 							{{ tutorial.views|number_format }}
 						</span>
 					</span>
 					<span class="flex items-center">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="text-gray-700 h-5 w-5">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="text-gray-700 h-5 w-5 dark:text-gray-400">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
 						</svg>
-						<span class="text-sm ml-2 text-gray-700">
+						<span class="text-sm ml-2 text-gray-700 dark:text-gray-400">
 							{{ tutorial.readTime }} min.
 						</span>
 					</span>

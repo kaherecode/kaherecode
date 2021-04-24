@@ -1,12 +1,12 @@
 <div class="-mx-4">
 	{% if tutorials|length == 0 %}
-		<p class="p-4">
+		<p class="p-4 dark:text-gray-300">
 			{{ 'no_data'|trans }}
 		</p>
 	{% endif %}
 
 	{% for tutorial in tutorials %}
-		<div class="p-4 border-solid border-b border-gray-300 w-full sm:flex sm:items-start">
+		<div class="p-4 border-solid border-b border-gray-300 w-full sm:flex sm:items-start dark:border-gray-600">
 			{% if tutorial.thumbnailURL %}
 				<div class="w-56 hidden sm:block">
 					<a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}">
@@ -16,33 +16,33 @@
 			{% endif %}
 
 			<div class="{{ tutorial.thumbnailURL ? 'sm:ml-2' : '' }}">
-				<h2 class="font-bold text-lg tracking-wide">
+				<h2 class="font-bold text-lg tracking-wide dark:text-gray-300">
 					<a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}">
 						{{ tutorial.title }}
 					</a>
 				</h2>
 				<div class="mt-2">
 					{% if tutorial.isPublished %}
-						<span class="text-gray-700 block">{{ 'published_at'|trans }}:
+						<span class="text-gray-700 block dark:text-gray-400">{{ 'published_at'|trans }}:
 							{{ tutorial.publishedAt|format_datetime() }}
 						</span>
 					{% else %}
-						<span class="text-gray-700 block">{{ 'created_at'|trans }}:
+						<span class="text-gray-700 block dark:text-gray-400">{{ 'created_at'|trans }}:
 							{{ tutorial.createdAt|format_datetime() }}
 						</span>
 					{% endif %}
 					{% if tutorial.updatedAt %}
-						<span class="text-gray-700 block">{{ 'updated_at'|trans }}:
+						<span class="text-gray-700 block dark:text-gray-400">{{ 'updated_at'|trans }}:
 							{{ tutorial.updatedAt|format_datetime() }}
 						</span>
 					{% endif %}
 					{% if tutorial.isPublished %}
 						<span class='flex items-center'>
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-700 h-4 w-4">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye text-gray-700 h-4 w-4 dark:text-gray-400">
 								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
 								<circle cx="12" cy="12" r="3"/>
 							</svg>
-							<span class='ml-2 text-gray-700'>2,000</span>
+							<span class='ml-2 text-gray-700 dark:text-gray-400'>2,000</span>
 						</span>
 					{% endif %}
 				</div>
