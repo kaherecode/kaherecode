@@ -36,6 +36,7 @@
         "symfony/property-access": "5.2.*",
         "symfony/property-info": "5.2.*",
         "symfony/security-bundle": "5.2.*",
+        "symfony/sendgrid-mailer": "5.2.*",
         "symfony/serializer": "5.2.*",
         "symfony/string": "5.2.*",
         "symfony/translation": "5.2.*",
