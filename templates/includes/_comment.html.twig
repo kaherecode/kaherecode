@@ -42,9 +42,9 @@
 			{% endif %}
 		</span>
 	{% else %}
-		<small class="text-gray-700">
+		<small class="text-gray-700 dark:text-gray-400">
 			{{ 'login_to_comment'|trans }}.
-			<a href="{{ path('app_login') }}?target={{ app.request.uri }}#comments" class="text-blue-600 underline">{{ 'user.login'|trans }}</a>.
+			<a href="{{ path('app_login') }}?target={{ app.request.uri }}#comments" class="text-blue-600 underline dark:text-gray-400">{{ 'user.login'|trans }}</a>.
 		</small>
 	{% endif %}
 </div>

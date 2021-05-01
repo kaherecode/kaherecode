@@ -64,12 +64,12 @@
 			<h3 class="font-bold text-gray-900 text-xl dark:text-gray-300" id="comments">
 				{{ 'discussion'|trans }}
 			</h3>
-			<p class="mt-2">
+			<p class="mt-2 dark:text-gray-300">
 				{% if is_granted('ROLE_USER') %}
 					<span class="cursor-pointer text-blue-600 hover:underline open-comment-form">{{ 'contribute_discussion'|trans }}</span>
 				{% else %}
 					{{ 'login_to_comment'|trans }}.
-					<a href="{{ path('app_login') }}?target={{ app.request.uri }}#comments" class="text-blue-600 underline">{{ 'user.login'|trans }}</a>.
+					<a href="{{ path('app_login') }}?target={{ app.request.uri }}#comments" class="text-blue-600 underline dark:text-gray-300">{{ 'user.login'|trans }}</a>.
 				{% endif %}
 			</p>
 
