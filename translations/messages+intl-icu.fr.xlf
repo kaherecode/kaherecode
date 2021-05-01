@@ -413,6 +413,10 @@
         <source>notifications.successfully_updated_password</source>
         <target>Ton mot de passe a été modifier avec succès. Tu peux maintenant te connecter!</target>
       </trans-unit>
+      <trans-unit id="notifications.recaptcha">
+        <source>notifications.recaptcha</source>
+        <target>Boomer! Es-tu un robot?</target>
+      </trans-unit>
       <trans-unit id="wJkUK8M" resname="results">
         <source>results</source>
         <target>Résultats</target>

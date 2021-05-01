@@ -62,9 +62,22 @@
 					</a>
 				</div>
 				<div class="form-group">
+					<div class="g-recaptcha" data-sitekey="6Lez1sEaAAAAAAps6lOUWKT7HpyHb11ReAW37s_V"></div>
+					{% for message in app.flashes('recaptcha') %}
+						<small class="block text-sm text-red-600">
+							{{ message }}
+						</small>
+					{% endfor %}
+				</div>
+				<div class="form-group">
 					<input type="submit" id="signup" class="btn dark:bg-gray-200 dark:text-gray-900" value="{{ 'action.signup'|trans }}">
 				</div>
 			{{ form_end(form) }}
 		</div>
 	</div>
+{% endblock %}
+
+{% block scripts %}
+	{{ parent() }}
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}

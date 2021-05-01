@@ -417,6 +417,10 @@
         <source>results</source>
         <target>Results</target>
       </trans-unit>
+      <trans-unit id="notifications.recaptcha">
+        <source>notifications.recaptcha</source>
+        <target>Boomer! Are you a robot?</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
