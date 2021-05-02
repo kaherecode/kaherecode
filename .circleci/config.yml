@@ -10,12 +10,10 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_PASSWORD:
 
-      - image: mysql:8.0
-        restart: on-failure
-        command: ['--default-authentication-plugin=mysql_native_password']
+      - image: circleci/mysql:5.7
         environment:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: kaherecode_test
+          # MYSQL_ROOT_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
 
     steps:
       - checkout
