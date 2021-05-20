@@ -59,7 +59,7 @@ class UserController extends AbstractController
                 // encode user password
                 $user->setPassword(
                     $passwordEncoder
-                    ->encodePassword($user, $user->getPassword())
+                        ->encodePassword($user, $user->getPassword())
                 );
                 $user->setConfirmationToken(sha1(uniqid()));
 
