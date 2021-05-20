@@ -1,4 +1,10 @@
 <div class="-mx-4 flex flex-wrap items-start justify-start">
+	{% if tutorials|length == 0 %}
+		<p class="p-4 dark:text-gray-300">
+			{{ 'no_data'|trans }}
+		</p>
+	{% endif %}
+
 	{% for tutorial in tutorials|filter(t => t.isPublished) %}
 		<div class="w-full md:mt-4 md:w-1/2 lg:w-1/3 xl:w-1/4">
 			<div class="p-4 border-solid border-b border-gray-300 md:border-none">
