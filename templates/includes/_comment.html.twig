@@ -35,7 +35,7 @@
 			</span>
 			{% if app.user == comment.author or is_granted('ROLE_ADMIN') %}
 				<span class="ml-2">
-					<a href="{{ path('delete_comment', {'id': comment.id}) }}" class="text-blue-600 hover:underline">
+					<a href="{{ path('delete_comment', {'id': comment.id}) }}" onclick="return confirm('{{ 'confirm.delete_comment'|trans }}')" class="text-blue-600 hover:underline">
 						{{ 'delete'|trans }}
 					</a>
 				</span>

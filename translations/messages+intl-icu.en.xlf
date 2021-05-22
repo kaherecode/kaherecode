@@ -425,6 +425,10 @@
         <source>confirm.delete_tutorial</source>
         <target>Are you sure you want to delete this tutorial? This action is irreversible.</target>
       </trans-unit>
+      <trans-unit id="confirm.delete_comment">
+        <source>confirm.delete_comment</source>
+        <target>Are you sure you want to delete this comment? This action is irreversible.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
