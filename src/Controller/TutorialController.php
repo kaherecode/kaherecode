@@ -41,7 +41,7 @@ class TutorialController extends AbstractController
         $tutorials = $tutorialRepository->findBy(
             ['isPublished' => true],
             ['publishedAt' => 'DESC'],
-            10,
+            12,
             0
         );
 
