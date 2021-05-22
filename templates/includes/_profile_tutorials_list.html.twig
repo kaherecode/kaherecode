@@ -8,7 +8,7 @@
 	{% for tutorial in tutorials %}
 		<div class="p-4 border-solid border-b border-gray-300 w-full sm:flex sm:items-start dark:border-gray-600">
 			{% if tutorial.thumbnailURL %}
-				<div class="w-56 hidden sm:block">
+				<div class="w-56 h-28 hidden sm:block">
 					<a href="{{ path('edit_tutorial', {'uuid': tutorial.uuid}) }}">
 						<img src="{{ tutorial.thumbnailURL }}" alt="" class="h-full w-full object-cover"/>
 					</a>
