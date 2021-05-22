@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.http_error_403'|trans }}
+    |
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="container py-20 text-center dark:text-gray-200">
+        <h1 class="font-extrabold text-9xl">{{ status_code }}</h1>
+        <h2 class="font-bold text-2xl">{{ 'title.http_error_403'|trans }}</h2>
+        <p class="mt-4 text-lg">
+            {{ 'http_error_403.message'|trans({'%url%': path('homepage')})|raw }}
+        </p>
+    </div>
+{% endblock %}
