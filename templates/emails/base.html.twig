@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <a href="{{ url('homepage') }}">
-            <img src="{{ absolute_url(asset('images/kaherecode_200.png')) }}" alt="Kaherecode" title="Kaherecode">
+            <img src="{{ email.image('@images/kaherecode_200.png') }}" alt="Kaherecode" title="Kaherecode">
         </a>
         <h1>{{ email.subject }}</h1>
         <p>Hello {{ email.toName }}!</p>
