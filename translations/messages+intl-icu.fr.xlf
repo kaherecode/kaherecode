@@ -421,6 +421,10 @@
         <source>results</source>
         <target>Résultats</target>
       </trans-unit>
+      <trans-unit id="confirm.delete_tutorial">
+        <source>confirm.delete_tutorial</source>
+        <target>Es-tu sûr de vouloir supprimer ce tutoriel? La suppression est irréversible.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
