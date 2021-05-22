@@ -194,6 +194,7 @@ class TutorialController extends AbstractController
 
             $tutorial->setAuthor($this->getUser());
             $tutorial->setContent($request->get("htmlContent"));
+            $tutorial->setUpdatedAt(new \DateTime());
             $em->persist($tutorial);
             $em->flush();
 

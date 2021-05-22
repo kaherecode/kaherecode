@@ -42,11 +42,11 @@
 					</ul>
 
 					<div id="drafts" class="tab-content">
-						{% include 'includes/_profile_tutorials_list.html.twig' with {'tutorials': user.tutorials|filter(t => not t.isPublished)} %}
+						{% include 'includes/_profile_tutorials_list.html.twig' with {'tutorials': user.tutorials|filter(t => not t.isPublished)|sort((t1, t2) => t1.updatedAt < t2.updatedAt)} %}
 					</div>
 
 					<div id="published" class="tab-content">
-						{% include 'includes/_profile_tutorials_list.html.twig' with {'tutorials': user.tutorials|filter(t => t.isPublished)} %}
+						{% include 'includes/_profile_tutorials_list.html.twig' with {'tutorials': user.tutorials|filter(t => t.isPublished)|sort((t1, t2) => t1.publishedAt < t2.publishedAt)} %}
 					</div>
 				</div>
 			</div>
