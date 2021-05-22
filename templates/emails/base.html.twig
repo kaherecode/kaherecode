@@ -10,7 +10,9 @@
 
 <body>
     <div class="container">
-        <img src="{{ absolute_url(asset('images/kaherecode.png')) }}" alt="Kaherecode">
+        <a href="{{ url('homepage') }}">
+            <img src="{{ absolute_url(asset('images/kaherecode_200.png')) }}" alt="Kaherecode" title="Kaherecode">
+        </a>
         <h1>{{ email.subject }}</h1>
         <p>Hello {{ email.toName }}!</p>
 
