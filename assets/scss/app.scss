@@ -134,9 +134,9 @@ article {
   }
 
   blockquote {
+    @apply text-gray-400;
     padding: 0.1rem 0 0.1rem 2rem;
     border-left: 4px solid #d4b672;
-    color: #4a5568;
     font-size: 1.3rem;
 
     p {
