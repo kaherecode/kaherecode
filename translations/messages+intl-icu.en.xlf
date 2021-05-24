@@ -453,6 +453,54 @@
         <source>http_error_403.message</source>
         <target><![CDATA[Look, you are not good enough to visit this page, go <a href="{url}" class="underline text-blue-500">back home</a>!]]></target>
       </trans-unit>
+
+      <!-- email closings -->
+      <trans-unit id="email_closing.champion">
+        <source>email_closing.champion</source>
+        <target>You're a champion</target>
+      </trans-unit>
+      <trans-unit id="email_closing.thank_you">
+        <source>email_closing.thank_you</source>
+        <target>I thank you</target>
+      </trans-unit>
+      <trans-unit id="email_closing.be_well">
+        <source>email_closing.be_well</source>
+        <target>Be well</target>
+      </trans-unit>
+      <trans-unit id="email_closing.good_day">
+        <source>email_closing.good_day</source>
+        <target>Have a great day</target>
+      </trans-unit>
+      <trans-unit id="email_closing.excellent">
+        <source>email_closing.excellent</source>
+        <target>You're excellent</target>
+      </trans-unit>
+      <trans-unit id="email_closing.glad">
+        <source>email_closing.glad</source>
+        <target>I'm glad you're here</target>
+      </trans-unit>
+      <trans-unit id="email_closing.make_it_day">
+        <source>email_closing.make_it_day</source>
+        <target>Make it a stellar day</target>
+      </trans-unit>
+      <trans-unit id="email_closing.take_care">
+        <source>email_closing.take_care</source>
+        <target>Take care</target>
+      </trans-unit>
+      <trans-unit id="email_closing.stay_awesome">
+        <source>email_closing.stay_awesome</source>
+        <target>Stay awesome</target>
+      </trans-unit>
+      <trans-unit id="email_closing.rock_star">
+        <source>email_closing.rock_star</source>
+        <target>You're a rock star</target>
+      </trans-unit>
+
+      <!-- emails -->
+      <trans-unit id="email.closing">
+        <source>http_error_403.message</source>
+        <target><![CDATA[Écoute, tu n'es pas aussi cool pour être ici, retourne à la <a href="{url}" class="underline text-blue-500">page d'accueil</a>!]]></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

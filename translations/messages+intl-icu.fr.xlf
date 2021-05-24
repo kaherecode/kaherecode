@@ -453,6 +453,54 @@
         <source>http_error_403.message</source>
         <target><![CDATA[Écoute, tu n'es pas aussi cool pour être ici, retourne à la <a href="{url}" class="underline text-blue-500">page d'accueil</a>!]]></target>
       </trans-unit>
+
+      <!-- email closings -->
+      <trans-unit id="email_closing.champion">
+        <source>email_closing.champion</source>
+        <target>T'es un(e) champion(e)</target>
+      </trans-unit>
+      <trans-unit id="email_closing.thank_you">
+        <source>email_closing.thank_you</source>
+        <target>Je te remercie</target>
+      </trans-unit>
+      <trans-unit id="email_closing.be_well">
+        <source>email_closing.be_well</source>
+        <target>Porte toi bien</target>
+      </trans-unit>
+      <trans-unit id="email_closing.good_day">
+        <source>email_closing.good_day</source>
+        <target>Passe une très bonne journée</target>
+      </trans-unit>
+      <trans-unit id="email_closing.excellent">
+        <source>email_closing.excellent</source>
+        <target>T'es excellent(e)</target>
+      </trans-unit>
+      <trans-unit id="email_closing.glad">
+        <source>email_closing.glad</source>
+        <target>Je suis content que tu sois là</target>
+      </trans-unit>
+      <trans-unit id="email_closing.make_it_day">
+        <source>email_closing.make_it_day</source>
+        <target>Fais-en une excellente journée</target>
+      </trans-unit>
+      <trans-unit id="email_closing.take_care">
+        <source>email_closing.take_care</source>
+        <target>Prends soin de toi</target>
+      </trans-unit>
+      <trans-unit id="email_closing.stay_awesome">
+        <source>email_closing.stay_awesome</source>
+        <target>Reste génial(e)</target>
+      </trans-unit>
+      <trans-unit id="email_closing.rock_star">
+        <source>email_closing.rock_star</source>
+        <target>T'es une rock star</target>
+      </trans-unit>
+
+      <!-- emails -->
+      <trans-unit id="email.closing">
+        <source>http_error_403.message</source>
+        <target><![CDATA[Écoute, tu n'es pas aussi cool pour être ici, retourne à la <a href="{url}" class="underline text-blue-500">page d'accueil</a>!]]></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
