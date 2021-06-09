@@ -9,6 +9,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\NotificationEmail;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Mailer
 {
@@ -17,16 +18,32 @@ class Mailer
      */
     protected $mailer;
 
-    public function __construct(MailerInterface $mailer)
-    {
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    public function __construct(
+        MailerInterface $mailer,
+        TranslatorInterface $translator
+    ) {
         $this->mailer = $mailer;
+        $this->translator = $translator;
     }
 
     public function sendSignUpMessage(User $user)
     {
         $email = (new TemplatedEmail())
             ->to(new Address($user->getEmail(), $user->getFullName()))
-            ->subject("Bienvenue sur Kaherecode {$user->getFullName()}!")
+            ->subject(
+                htmlspecialchars(
+                    $this->translator->trans(
+                        "email.signup_title",
+                        ['fullName' => $user->getFullName()]
+                    ),
+                    \ENT_COMPAT | \ENT_HTML5
+                )
+            )
             ->htmlTemplate('emails/signup.html.twig')
             ->context(['user' => $user]);
 
@@ -37,7 +54,7 @@ class Mailer
     {
         $email = (new TemplatedEmail())
             ->to(new Address($user->getEmail(), $user->getFullName()))
-            ->subject("Modifie ton mot de passe sur Kaherecode")
+            ->subject($this->translator->trans("email.update_password_title"))
             ->htmlTemplate('emails/password_reset.html.twig')
             ->context(['user' => $user]);
 
@@ -48,7 +65,7 @@ class Mailer
     {
         $email = (new NotificationEmail())
             ->to($_ENV['FROM_EMAIL'])
-            ->subject("A new tutorial have been published!")
+            ->subject($this->translator->trans("email.new_tutorial_title"))
             ->htmlTemplate('emails/new_tutorial_notification.html.twig')
             ->context(['tutorial' => $tutorial]);
 
@@ -59,7 +76,7 @@ class Mailer
     {
         $email = (new NotificationEmail())
             ->to($_ENV['FROM_EMAIL'])
-            ->subject("A new comment have just been submitted!")
+            ->subject($this->translator->trans('email.new_comment_support_title'))
             ->htmlTemplate('emails/new_comment_support_notification.html.twig')
             ->context(['comment' => $comment]);
 
@@ -75,7 +92,7 @@ class Mailer
                     $comment->getTutorial()->getAuthor()->getFullName()
                 )
             )
-            ->subject("A new comment have just been submitted to your tutorial!")
+            ->subject($this->translator->trans("email.new_comment_author_title"))
             ->htmlTemplate('emails/new_comment_support_notification.html.twig')
             ->context(['comment' => $comment]);
 
@@ -129,7 +146,7 @@ class Mailer
             ->addBcc(
                 ...$addresses
             )
-            ->subject("A response to your comment have just been submitted!")
+            ->subject($this->translator->trans("email.new_comment_response_title"))
             ->htmlTemplate('emails/new_comment_support_notification.html.twig')
             ->context(['comment' => $comment]);
 

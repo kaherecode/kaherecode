@@ -177,6 +177,18 @@
         <source>tutorials</source>
         <target>Tutoriels</target>
       </trans-unit>
+      <trans-unit id="tutorial">
+        <source>tutorial</source>
+        <target>Tutoriel</target>
+      </trans-unit>
+      <trans-unit id="extract">
+        <source>extract</source>
+        <target>Extrait</target>
+      </trans-unit>
+      <trans-unit id="submitted_at">
+        <source>submitted_at</source>
+        <target>Soumis le</target>
+      </trans-unit>
       <trans-unit id="WRdKsRE" resname="page_views">
         <source>page_views</source>
         <target>Pages vues</target>
@@ -268,6 +280,10 @@
       <trans-unit id="WpqsmD7" resname="action.signup">
         <source>action.signup</source>
         <target>M'inscrire</target>
+      </trans-unit>
+      <trans-unit id="action.validate_email">
+        <source>action.validate_email</source>
+        <target>Valider mon mail</target>
       </trans-unit>
       <trans-unit id="jKqSbAI" resname="title.courses">
         <source>title.courses</source>
@@ -429,6 +445,10 @@
         <source>confirm.delete_comment</source>
         <target>Es-tu sûr de vouloir supprimer ce commentaire? La suppression est irréversible.</target>
       </trans-unit>
+      <trans-unit id="action.take_a_look">
+        <source>action.take_a_look</source>
+        <target>Afficher</target>
+      </trans-unit>
       <trans-unit id="title.http_error">
         <source>title.http_error</source>
         <target>UH OH! Une erreur est survenue.</target>
@@ -497,9 +517,45 @@
       </trans-unit>
 
       <!-- emails -->
-      <trans-unit id="email.closing">
-        <source>http_error_403.message</source>
-        <target><![CDATA[Écoute, tu n'es pas aussi cool pour être ici, retourne à la <a href="{url}" class="underline text-blue-500">page d'accueil</a>!]]></target>
+      <trans-unit id="email.new_comment_support_title">
+        <source>email.new_comment_support_title</source>
+        <target>Un nouveau commentaire vient d'être soumis!</target>
+      </trans-unit>
+      <trans-unit id="email.new_comment_author_title">
+        <source>email.new_comment_author_title</source>
+        <target>Un nouveau commentaire vient d'être soumis à ton tutoriel!</target>
+      </trans-unit>
+      <trans-unit id="email.new_comment_response_title">
+        <source>email.new_comment_response_title</source>
+        <target>Une réponse à ton commentaire vient d'être soumise!</target>
+      </trans-unit>
+      <trans-unit id="email.new_comment_support">
+        <source>email.new_comment_support</source>
+        <target><![CDATA[Un nouveau commentaire vient juste d'être soumis par {fullName} - <a href="{url}">@{username}</a>.]]></target>
+      </trans-unit>
+      <trans-unit id="email.new_tutorial_title">
+        <source>email.new_tutorial_title</source>
+        <target>Un nouveau tutoriel a été publier!</target>
+      </trans-unit>
+      <trans-unit id="email.new_tutorial_support">
+        <source>email.new_tutorial_support</source>
+        <target><![CDATA[Un nouveau tutoriel avec le titre <strong>{title}</strong> vient d'être publier par {fullName} - <a href="{url}">@{username}</a>.]]></target>
+      </trans-unit>
+      <trans-unit id="email.update_password_title">
+        <source>email.update_password_title</source>
+        <target>Modifie ton mot de passe sur Kaherecode</target>
+      </trans-unit>
+      <trans-unit id="email.update_password">
+        <source>email.update_password</source>
+        <target><![CDATA[<p>Clique sur le lien ci-dessous pour créer un nouveau mot de passe pour ton compte. Ce lien expire dans 24 heures.</p><p>Si tu n'as pas demander à modifier ton mot de passe, tu peux ignorer ce mail.</p>]]></target>
+      </trans-unit>
+      <trans-unit id="email.signup_title">
+        <source>email.signup_title</source>
+        <target><![CDATA[Bienvenue sur Kaherecode {fullName}!]]></target>
+      </trans-unit>
+      <trans-unit id="email.signup">
+        <source>email.signup</source>
+        <target><![CDATA[<p>Bienvenue sur Kaherecode, c'est vraiment un plaisir de t'avoir avec nous! Pour terminer ton inscription, clique sur le lien ci-dessous.</p>]]></target>
       </trans-unit>
     </body>
   </file>

@@ -177,6 +177,18 @@
         <source>tutorials</source>
         <target>Tutorials</target>
       </trans-unit>
+      <trans-unit id="tutorial">
+        <source>tutorial</source>
+        <target>Tutorial</target>
+      </trans-unit>
+      <trans-unit id="extract">
+        <source>extract</source>
+        <target>Extract</target>
+      </trans-unit>
+      <trans-unit id="submitted_at">
+        <source>submitted_at</source>
+        <target>Submitted at</target>
+      </trans-unit>
       <trans-unit id="WRdKsRE" resname="page_views">
         <source>page_views</source>
         <target>Page views</target>
@@ -268,6 +280,10 @@
       <trans-unit id="WpqsmD7" resname="action.signup">
         <source>action.signup</source>
         <target>Register</target>
+      </trans-unit>
+      <trans-unit id="action.validate_email">
+        <source>action.validate_email</source>
+        <target>Validate my mail</target>
       </trans-unit>
       <trans-unit id="jKqSbAI" resname="title.courses">
         <source>title.courses</source>
@@ -429,6 +445,10 @@
         <source>confirm.delete_comment</source>
         <target>Are you sure you want to delete this comment? This action is irreversible.</target>
       </trans-unit>
+      <trans-unit id="action.take_a_look">
+        <source>action.take_a_look</source>
+        <target>Take a look</target>
+      </trans-unit>
       <trans-unit id="title.http_error">
         <source>title.http_error</source>
         <target>UH OH! An error happened.</target>
@@ -497,9 +517,45 @@
       </trans-unit>
 
       <!-- emails -->
-      <trans-unit id="email.closing">
-        <source>http_error_403.message</source>
-        <target><![CDATA[Écoute, tu n'es pas aussi cool pour être ici, retourne à la <a href="{url}" class="underline text-blue-500">page d'accueil</a>!]]></target>
+      <trans-unit id="email.new_comment_support_title">
+        <source>email.new_comment_support_title</source>
+        <target>A new comment have just been submitted!</target>
+      </trans-unit>
+      <trans-unit id="email.new_comment_author_title">
+        <source>email.new_comment_author_title</source>
+        <target>A new comment have just been submitted to your tutorial!</target>
+      </trans-unit>
+      <trans-unit id="email.new_comment_response_title">
+        <source>email.new_comment_response_title</source>
+        <target>A response to your comment have just been submitted!</target>
+      </trans-unit>
+      <trans-unit id="email.new_comment_support">
+        <source>email.new_comment_support</source>
+        <target><![CDATA[A new comment have just been submitted by {fullName} - <a href="{url}">@{username}</a>.]]></target>
+      </trans-unit>
+      <trans-unit id="email.new_tutorial_title">
+        <source>email.new_tutorial_title</source>
+        <target>A new tutorial have been published!</target>
+      </trans-unit>
+      <trans-unit id="email.new_tutorial_support">
+        <source>email.new_tutorial_support</source>
+        <target><![CDATA[A new tutorial with the title <strong>{title}</strong> have just been published by {fullName} - <a href="{url}">@{username}</a>.]]></target>
+      </trans-unit>
+      <trans-unit id="email.update_password_title">
+        <source>email.update_password_title</source>
+        <target>Update your password on Kaherecode</target>
+      </trans-unit>
+      <trans-unit id="email.update_password">
+        <source>email.update_password</source>
+        <target><![CDATA[<p>Click on the link below to create a new password for your account. This link expires in 24 hours.</p><p>If you did not asked for an update, just ignore this mail.</p>]]></target>
+      </trans-unit>
+      <trans-unit id="email.signup_title">
+        <source>email.signup_title</source>
+        <target><![CDATA[Welcome to Kaherecode {fullName}!]]></target>
+      </trans-unit>
+      <trans-unit id="email.signup">
+        <source>email.signup</source>
+        <target><![CDATA[<p>Welcome to Kaherecode, it is a real pleasure to have you with us! To finish your signup, click on the link below.</p>]]></target>
       </trans-unit>
     </body>
   </file>

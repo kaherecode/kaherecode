@@ -2,15 +2,19 @@
 
 {% block content %}
 <p>
-    A new comment have just been submitted by {{ comment.author.fullName }} - <a href="{{ url('show_user', {'username': comment.author.username}) }}">@{{ comment.author.username }}</a>.
+    {{ 'email.new_comment_support'|trans({
+        '%fullName%': comment.author.fullName,
+        '%url%': url('show_user', {'username': comment.author.username}),
+        '%username%': comment.author.username
+    })|raw }}
 </p>
 
 <p>
-    <strong>Tutorial</strong>: {{ comment.tutorial.title }} <br>
-    <strong>Extract</strong>: {{ (comment.content|striptags|slice(0, 100))|raw }} <br>
-    <strong>Submitted at</strong>: {{ comment.createdAt|format_datetime() }} <br>
+    <strong>{{ 'tutorial'|trans }}</strong>: {{ comment.tutorial.title }} <br>
+    <strong>{{ 'extract'|trans }}</strong>: {{ (comment.content|striptags|slice(0, 100))|raw }} <br>
+    <strong>{{ 'submitted_at'|trans }}</strong>: {{ comment.createdAt|format_datetime() }} <br>
 </p>
 <p>
-    <a href="{{ url('tutorial_view', {'slug': comment.tutorial.slug}) }}#comments" class="btn">take a look</a>
+    <a href="{{ url('tutorial_view', {'slug': comment.tutorial.slug}) }}#comments" class="btn">{{ 'action.take_a_look'|trans }}</a>
 </p>
 {% endblock %}

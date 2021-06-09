@@ -2,16 +2,20 @@
 
 {% block content %}
 <p>
-    A new tutorial with the title <strong>{{ tutorial.title }}</strong> have just been published
-    by {{ tutorial.author.fullName }} - <a href="{{ url('show_user', {'username': tutorial.author.username}) }}">@{{ tutorial.author.username }}</a>.
+    {{ 'email.new_tutorial_support'|trans({
+        '%title%': tutorial.title,
+        '%fullName%': tutorial.author.fullName,
+        '%url%': url('show_user', {'username': tutorial.author.username}),
+        '%username%': tutorial.author.username
+    })|raw }}
 </p>
 
 <p>
 <strong>Description</strong>: {{ tutorial.description }} <br>
 <strong>Categories</strong>: {{ tutorial.tags|join(', ') }} <br>
-<strong>Published at</strong>: {{ tutorial.publishedAt|format_date() }} <br>
+<strong>{{ 'published_at'|trans }}</strong>: {{ tutorial.publishedAt|format_date() }} <br>
 </p>
 <p>
-    <a href="{{ url('tutorial_view', {'slug': tutorial.slug}) }}" class="btn">take a look</a>
+    <a href="{{ url('tutorial_view', {'slug': tutorial.slug}) }}" class="btn">{{ 'action.take_a_look'|trans }}</a>
 </p>
 {% endblock %}

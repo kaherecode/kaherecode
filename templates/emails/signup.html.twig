@@ -1,10 +1,8 @@
 {% extends 'emails/base.html.twig' %}
 
 {% block content %}
-<p>
-    Bienvenue sur Kaherecode, c'est vraiment un plaisir de t'avoir avec nous!
-    Pour terminer ton inscription, clique sur le lien ci-dessous.
-</p>
+{{ 'email.signup'|trans|raw }}
+
 <p>
     <a href="{{ url('account_confirmation', {'token': user.confirmationToken}) }}" class="btn">valider mon mail</a>
 </p>
