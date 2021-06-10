@@ -102,7 +102,7 @@ class Tutorial
      * @ORM\ManyToMany(
      *     targetEntity=Tag::class,
      *     inversedBy="tutorials",
-     *     cascade="persist"
+     *     cascade={"persist"}
      * )
      */
     private $tags;
