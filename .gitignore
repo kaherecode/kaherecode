@@ -27,3 +27,5 @@ yarn-error.log
 ###> docker files ###
 .docker/mysql/
 ###< docker files ###
+
+.vscode/

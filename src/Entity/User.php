@@ -177,6 +177,11 @@ class User implements UserInterface
         $this->bookmarks = new ArrayCollection();
     }
 
+    public function getUserIdentifier()
+    {
+        return $this->getEmail();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

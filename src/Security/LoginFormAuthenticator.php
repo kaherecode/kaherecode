@@ -5,22 +5,31 @@ namespace App\Security;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 
-class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
+class LoginFormAuthenticator extends AbstractAuthenticator
 {
     use TargetPathTrait;
 
@@ -50,7 +59,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordHasherInterface $passwordEncoder
     ) {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
@@ -58,10 +67,61 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function supports(Request $request)
+    public function supports(Request $request): ?bool
     {
         return self::LOGIN_ROUTE === $request->attributes->get('_route')
             && $request->isMethod('POST');
+    }
+
+    public function authenticate(Request $request): PassportInterface
+    {
+        $credentials = $this->getCredentials($request);
+        $user = $this->getUser($credentials);
+
+        return new Passport(
+            new UserBadge($user->getEmail()),
+            new PasswordCredentials($credentials['password']),
+            [
+                new RememberMeBadge(),
+                new CsrfTokenBadge('authenticate', $credentials['csrf_token'])
+            ]
+        );
+    }
+
+    public function onAuthenticationSuccess(
+        Request $request,
+        TokenInterface $token,
+        string $firewallName
+    ): ?Response {
+        /** @var User */
+        $user = $token->getUser();
+        $user->setLastLogin(new \DateTime());
+        $this->entityManager->flush();
+
+        if ($targetPath = $this->getTargetPath(
+            $request->getSession(),
+            $firewallName
+        )) {
+            return new RedirectResponse($targetPath);
+        }
+
+        if ($request->query->get('target')) {
+            return new RedirectResponse($request->query->get('target'));
+        }
+
+        return new RedirectResponse($this->urlGenerator->generate('homepage'));
+    }
+
+    public function onAuthenticationFailure(
+        Request $request,
+        AuthenticationException $exception
+    ): ?Response {
+        $session = new Session(new NativeSessionStorage(), new AttributeBag());
+        $session->set(Security::AUTHENTICATION_ERROR, $exception);
+
+        return new RedirectResponse(
+            $this->urlGenerator->generate(self::LOGIN_ROUTE)
+        );
     }
 
     public function getCredentials(Request $request)
@@ -71,6 +131,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
+
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $credentials['email']
@@ -79,7 +140,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         return $credentials;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials): ?User
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
@@ -100,57 +161,16 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
         if (!$user->getEnabled()) {
             throw new CustomUserMessageAuthenticationException(
-                'Please activate your account before you log in. Check your emails for confirmation.'
+                'You should activate your account before you log in.'
             );
         }
 
         if ($user->getArchived()) {
             throw new CustomUserMessageAuthenticationException(
-                'Your account have been deactivated.'
+                'Account is disabled.'
             );
         }
 
         return $user;
-    }
-
-    public function checkCredentials($credentials, UserInterface $user)
-    {
-        return $this
-            ->passwordEncoder
-            ->isPasswordValid($user, $credentials['password']);
-    }
-
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     */
-    public function getPassword($credentials): ?string
-    {
-        return $credentials['password'];
-    }
-
-    public function onAuthenticationSuccess(
-        Request $request,
-        TokenInterface $token,
-        string $providerKey
-    ) {
-        // set the lastLogin value
-        $user = $token->getUser();
-        $user->setLastLogin(new \DateTime());
-        $this->entityManager->flush();
-
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }
-
-        if ($request->query->get('target')) {
-            return new RedirectResponse($request->query->get('target'));
-        }
-
-        return new RedirectResponse($this->urlGenerator->generate('homepage'));
-    }
-
-    protected function getLoginUrl()
-    {
-        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }
