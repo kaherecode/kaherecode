@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
@@ -44,7 +44,7 @@ class UserController extends AbstractController
      */
     public function register(
         Request $request,
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordEncoder,
         Mailer $mailer,
         TranslatorInterface $translator
     ) {
@@ -52,14 +52,14 @@ class UserController extends AbstractController
         $form = $this->createForm(UserRegistrationType::class, $user);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()&& $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($this->captchaverify($request->get('g-recaptcha-response'))) {
                 $em = $this->getDoctrine()->getManager();
 
                 // encode user password
                 $user->setPassword(
                     $passwordEncoder
-                        ->encodePassword($user, $user->getPassword())
+                        ->hashPassword($user, $user->getPassword())
                 );
                 $user->setConfirmationToken(sha1(uniqid()));
 
@@ -70,12 +70,12 @@ class UserController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    $translator->trans("notifications.check_email_for_confirmation")
+                    $translator->trans('notifications.check_email_for_confirmation')
                 );
             } else {
                 $this->addFlash(
                     'recaptcha',
-                    $translator->trans("notifications.recaptcha")
+                    $translator->trans('notifications.recaptcha')
                 );
             }
         }
@@ -101,7 +101,7 @@ class UserController extends AbstractController
      */
     public function editProfile(
         Request $request,
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordEncoder,
         CloudinaryService $uploader,
         TranslatorInterface $translator
     ) {
@@ -120,7 +120,7 @@ class UserController extends AbstractController
             ) {
                 $this->addFlash(
                     'error',
-                    $translator->trans("notifications.wrong_password")
+                    $translator->trans('notifications.wrong_password')
                 );
 
                 return $this->render(
@@ -129,7 +129,7 @@ class UserController extends AbstractController
                 );
             }
 
-            $avatar = $form->get("avatar")->getData();
+            $avatar = $form->get('avatar')->getData();
             if ($avatar) {
                 if ($user->getAvatar() !== null) {
                     $uploader->delete($user->getAvatar());
@@ -146,7 +146,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $translator->trans("notifications.profile_updated")
+                $translator->trans('notifications.profile_updated')
             );
         }
 
@@ -195,7 +195,7 @@ class UserController extends AbstractController
             if (!$user) {
                 $this->addFlash(
                     'error',
-                    $translator->trans("notifications.not_registered_email")
+                    $translator->trans('notifications.not_registered_email')
                 );
 
                 return $this->render('users/password_reset_request.html.twig');
@@ -211,7 +211,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $translator->trans("notifications.check_email_for_password")
+                $translator->trans('notifications.check_email_for_password')
             );
         }
 
@@ -223,7 +223,7 @@ class UserController extends AbstractController
      */
     public function resetPassword(
         Request $request,
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordEncoder,
         TranslatorInterface $translator,
         $token
     ) {
@@ -237,7 +237,7 @@ class UserController extends AbstractController
             if ($password !== $request->get('confirmPassword')) {
                 $this->addFlash(
                     'error',
-                    $translator->trans("notifications.different_password")
+                    $translator->trans('notifications.different_password')
                 );
 
                 return $this->render(
@@ -254,7 +254,7 @@ class UserController extends AbstractController
             ) {
                 $this->addFlash(
                     'error',
-                    $translator->trans("notifications.not_valid_password")
+                    $translator->trans('notifications.not_valid_password')
                 );
 
                 return $this->render(
@@ -266,7 +266,7 @@ class UserController extends AbstractController
             // encode user password
             $user->setPassword(
                 $passwordEncoder
-                    ->encodePassword($user, $password)
+                    ->hashPassword($user, $password)
             );
             $user->setConfirmationToken(null);
             $user->setPasswordRequestedAt(null);
@@ -275,7 +275,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $translator->trans("notifications.successfully_updated_password")
+                $translator->trans('notifications.successfully_updated_password')
             );
 
             return $this->redirectToRoute('app_login');
@@ -286,7 +286,7 @@ class UserController extends AbstractController
 
     protected function captchaverify($recaptcha)
     {
-        $url = "https://www.google.com/recaptcha/api/siteverify";
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -295,7 +295,7 @@ class UserController extends AbstractController
         curl_setopt(
             $ch,
             CURLOPT_POSTFIELDS,
-            ["secret" => $_ENV['RECAPTCHA_SECRET'], "response" => $recaptcha]
+            ['secret' => $_ENV['RECAPTCHA_SECRET'], 'response' => $recaptcha]
         );
         $response = curl_exec($ch);
         curl_close($ch);

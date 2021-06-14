@@ -11,7 +11,7 @@ class SecurityControllerTest extends WebTestCase
     public function testLogin()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $crawler = $client->request('GET', '/login');
 
@@ -29,7 +29,7 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginWithWrongCredentials()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $client->catchExceptions(false);
         $client->followRedirects();
@@ -49,7 +49,7 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginWithNotConfirmedAccount()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $client->catchExceptions(false);
         $client->followRedirects();
@@ -80,7 +80,7 @@ class SecurityControllerTest extends WebTestCase
     public function testLoginWithArchivedAccount()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $client->catchExceptions(false);
         $client->followRedirects();
@@ -96,12 +96,12 @@ class SecurityControllerTest extends WebTestCase
             ]
         );
 
-        $userRepository = static::$container->get(UserRepository::class);
+        $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('orion@mail.com');
         $user->setEnabled(true);
         $user->setArchived(true);
 
-        $em = static::$container->get('doctrine.orm.default_entity_manager');
+        $em = static::getContainer()->get('doctrine.orm.default_entity_manager');
         $em->flush();
 
         $crawler = $client->request('GET', '/login');
