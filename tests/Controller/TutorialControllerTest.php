@@ -26,13 +26,14 @@ class TutorialControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
 
-        $this->translator = self::$container->get('translator');
-        $this->entityManager = self::$container->get('doctrine')->getManager();
+        $this->translator = self::getContainer()->get('translator');
+        $this->entityManager = self::getContainer()
+            ->get('doctrine')->getManager();
     }
 
     public function testIndex()
     {
-        $crawler = $this->client->request('GET', '/');
+        $this->client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h2', 'Learn. Code. Share.');
@@ -48,12 +49,12 @@ class TutorialControllerTest extends WebTestCase
 
     public function testTutorials()
     {
-        $crawler = $this->client->request('GET', '/tutorials');
+        $this->client->request('GET', '/tutorials');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains(
             'h1',
-            $this->translator->trans('Tutorial lists')
+            $this->translator->trans('title.tutorials_list')
         );
         $this->assertStringContainsString(
             'Symfony and API Platform tutorial',
@@ -67,19 +68,19 @@ class TutorialControllerTest extends WebTestCase
 
     public function testTutorialsByTag()
     {
-        $crawler = $this->client->request('GET', '/tag/php');
+        $this->client->request('GET', '/tag/php');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains(
             'h1',
-            $this->translator->trans('Tutorial lists - PHP')
+            "{$this->translator->trans('title.tutorials_list')} - PHP"
         );
         $this->assertStringContainsString(
             'Symfony and API Platform tutorial',
             $this->client->getResponse()->getContent()
         );
         $this->assertStringNotContainsString(
-            'Introdution to Javascript',
+            'Introduction to Javascript',
             $this->client->getResponse()->getContent()
         );
     }
@@ -90,7 +91,7 @@ class TutorialControllerTest extends WebTestCase
             ->getRepository(Tutorial::class)
             ->findOneBy(['title' => 'Symfony and API Platform tutorial']);
 
-        $crawler = $this->client->request(
+        $this->client->request(
             'GET',
             '/tutorial/' . $tutorial->getSlug()
         );
@@ -117,7 +118,7 @@ class TutorialControllerTest extends WebTestCase
             ->getRepository(Tutorial::class)
             ->findOneBy(['title' => 'Javascript non published']);
 
-        $crawler = $this->client->request(
+        $this->client->request(
             'GET',
             "/tutorials/{$tutorial->getUuid()}/delete"
         );
@@ -136,11 +137,11 @@ class TutorialControllerTest extends WebTestCase
 
         $this->client->loginUser($user);
 
-        $crawler = $this->client->request(
+        $this->client->request(
             'GET',
             "/tutorials/{$tutorial->getUuid()}/delete"
         );
 
-        $this->assertResponseRedirects('/login');
+        $this->assertResponseRedirects();
     }
 }

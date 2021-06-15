@@ -50,7 +50,7 @@ class TutorialFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($tutorial2);
 
         $tutorial3 = new Tutorial();
-        $tutorial3->setTitle('Introdution to Javascript');
+        $tutorial3->setTitle('Introduction to Javascript');
         $tutorial3->setCreatedAt(new \DateTime);
         $tutorial3->setContent('Looooonnnnnnnnggggg content');
         $tutorial3->setDescription('description');
