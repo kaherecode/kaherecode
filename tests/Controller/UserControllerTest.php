@@ -11,7 +11,7 @@ class UserControllerTest extends WebTestCase
     public function testRegister()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $crawler = $client->request('GET', '/register');
         $client->submitForm(
@@ -25,13 +25,16 @@ class UserControllerTest extends WebTestCase
         );
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('small', $translator->trans('Thanks for registering.'));
+        $this->assertSelectorTextContains(
+            'small',
+            $translator->trans('notifications.check_email_for_confirmation')
+        );
     }
 
     public function testUserAccountConfirmation()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $crawler = $client->request('GET', '/register');
         $client->submitForm(
@@ -45,24 +48,27 @@ class UserControllerTest extends WebTestCase
         );
         $this->assertResponseIsSuccessful();
 
-        $userRepository = static::$container->get(UserRepository::class);
+        $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('orion@mail.com');
         $client->request(
             'GET',
-            '/register/confirmation/' .$user->getConfirmationToken()
+            '/register/confirmation/' . $user->getConfirmationToken()
         );
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains(
             'h1',
-            $translator->trans('account_validated', ['username' => 'orion'])
+            $translator->trans(
+                'user.account_validated',
+                ['username' => 'orion']
+            )
         );
     }
 
     public function testRegisterDuplicateEmail()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $crawler = $client->request('GET', '/register');
         $client->submitForm(
@@ -96,7 +102,7 @@ class UserControllerTest extends WebTestCase
     public function testRegisterDuplicateUsername()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $crawler = $client->request('GET', '/register');
         $client->submitForm(
@@ -122,7 +128,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            $translator->trans('This value is already used'),
+            $translator->trans('This value is already used.'),
             $client->getResponse()->getContent()
         );
     }
@@ -131,6 +137,7 @@ class UserControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/profile');
+        $client->followRedirect();
 
         $this->assertResponseRedirects('/login');
     }
@@ -138,7 +145,7 @@ class UserControllerTest extends WebTestCase
     public function testProfile()
     {
         $client = static::createClient();
-        $userRepository = static::$container->get(UserRepository::class);
+        $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('kaherecode@mail.com');
         $client->loginUser($user);
 
@@ -147,10 +154,11 @@ class UserControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Mamadou Aliou Diallo');
     }
 
-    public function testEdittProfileWithNoLogin()
+    public function testEditProfileWithNoLogin()
     {
         $client = static::createClient();
         $client->request('GET', '/profile/edit');
+        $client->followRedirect();
 
         $this->assertResponseRedirects('/login');
     }
@@ -158,15 +166,18 @@ class UserControllerTest extends WebTestCase
     public function testEditProfileWithWrongPassword()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
-        $userRepository = static::$container->get(UserRepository::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
+        $userRepository = static::getContainer()->get(UserRepository::class);
 
         $user = $userRepository->findOneByEmail('kaherecode@mail.com');
         $client->loginUser($user);
 
         $client->request('GET', '/profile/edit');
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', $translator->trans('Update your Profile'));
+        $this->assertSelectorTextContains(
+            'h1',
+            $translator->trans('title.update_my_profile')
+        );
 
         $client->submitForm(
             'editProfile',
@@ -180,7 +191,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            $translator->trans('Your password is not correct, try again'),
+            $translator->trans('notifications.wrong_password'),
             $client->getResponse()->getContent()
         );
     }
@@ -188,15 +199,18 @@ class UserControllerTest extends WebTestCase
     public function testEditProfile()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
-        $userRepository = static::$container->get(UserRepository::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
+        $userRepository = static::getContainer()->get(UserRepository::class);
 
         $user = $userRepository->findOneByEmail('kaherecode@mail.com');
         $client->loginUser($user);
 
         $client->request('GET', '/profile/edit');
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', $translator->trans('Update your Profile'));
+        $this->assertSelectorTextContains(
+            'h1',
+            $translator->trans('title.update_my_profile')
+        );
 
         $client->submitForm(
             'editProfile',
@@ -215,7 +229,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            $translator->trans('Your profile have been successfully updated'),
+            $translator->trans('notifications.profile_updated'),
             $client->getResponse()->getContent()
         );
     }
@@ -223,7 +237,7 @@ class UserControllerTest extends WebTestCase
     public function testPasswordResetRequestWithNonExistingEmail()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $client->request('GET', '/password-reset/request');
         $this->assertResponseIsSuccessful();
@@ -234,7 +248,7 @@ class UserControllerTest extends WebTestCase
         );
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            $translator->trans('This email address is not registered'),
+            $translator->trans('notifications.not_registered_email'),
             $client->getResponse()->getContent()
         );
     }
@@ -242,7 +256,7 @@ class UserControllerTest extends WebTestCase
     public function testPasswordResetWithDifferentPasswordConfirmation()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $client->request('GET', '/password-reset/request');
 
@@ -251,11 +265,11 @@ class UserControllerTest extends WebTestCase
             ['email' => 'kaherecode@mail.com']
         );
 
-        $userRepository = static::$container->get(UserRepository::class);
+        $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('kaherecode@mail.com');
         $client->request(
             'GET',
-            '/reset-password/' .$user->getConfirmationToken()
+            '/reset-password/' . $user->getConfirmationToken()
         );
 
         $client->submitForm(
@@ -263,7 +277,7 @@ class UserControllerTest extends WebTestCase
             ['password' => '1234$ecreT', 'confirmPassword' => '1234$eceT']
         );
         $this->assertStringContainsString(
-            $translator->trans('Passwords are not the same'),
+            $translator->trans('notifications.different_password'),
             $client->getResponse()->getContent()
         );
     }
@@ -271,7 +285,7 @@ class UserControllerTest extends WebTestCase
     public function testPasswordResetWithNoSecurePassword()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $client->request('GET', '/password-reset/request');
 
@@ -280,11 +294,11 @@ class UserControllerTest extends WebTestCase
             ['email' => 'kaherecode@mail.com']
         );
 
-        $userRepository = static::$container->get(UserRepository::class);
+        $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('kaherecode@mail.com');
         $client->request(
             'GET',
-            '/reset-password/' .$user->getConfirmationToken()
+            '/reset-password/' . $user->getConfirmationToken()
         );
 
         $client->submitForm(
@@ -292,7 +306,7 @@ class UserControllerTest extends WebTestCase
             ['password' => '123', 'confirmPassword' => '123']
         );
         $this->assertStringContainsString(
-            $translator->trans('Password is not valid. Sould be 8 or more characters. Should contains at least 1 special chars, 1 digit and 1 uppercace letter.'),
+            $translator->trans('notifications.not_valid_password'),
             $client->getResponse()->getContent()
         );
     }
@@ -300,7 +314,7 @@ class UserControllerTest extends WebTestCase
     public function testPasswordReset()
     {
         $client = static::createClient();
-        $translator = static::$container->get(TranslatorInterface::class);
+        $translator = static::getContainer()->get(TranslatorInterface::class);
 
         $client->request('GET', '/password-reset/request');
         $this->assertResponseIsSuccessful();
@@ -311,18 +325,21 @@ class UserControllerTest extends WebTestCase
         );
         $this->assertResponseIsSuccessful();
         $this->assertStringContainsString(
-            $translator->trans('A mail have been sent to you, check it to update your password.'),
+            $translator->trans('notifications.check_email_for_password'),
             $client->getResponse()->getContent()
         );
 
-        $userRepository = static::$container->get(UserRepository::class);
+        $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('kaherecode@mail.com');
         $client->request(
             'GET',
-            '/reset-password/' .$user->getConfirmationToken()
+            '/reset-password/' . $user->getConfirmationToken()
         );
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', $translator->trans('Change my password'));
+        $this->assertSelectorTextContains(
+            'h1',
+            $translator->trans('title.change_password')
+        );
 
         $client->submitForm(
             'resetPassword',
@@ -330,10 +347,12 @@ class UserControllerTest extends WebTestCase
         );
         $this->assertResponseRedirects('/login');
 
-        $passwordEncoder = static::$container->get(
+        $passwordEncoder = static::getContainer()->get(
             'security.user_password_encoder.generic'
         );
         $user = $userRepository->findOneByEmail('kaherecode@mail.com');
-        $this->assertTrue($passwordEncoder->isPasswordValid($user, '1234$ecreT'));
+        $this->assertTrue(
+            $passwordEncoder->isPasswordValid($user, '1234$ecreT')
+        );
     }
 }

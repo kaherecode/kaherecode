@@ -4,3 +4,6 @@ twig:
     paths:
         'public/images': images
         'public/css': styles
+
+    globals:
+        RECAPTCHA_SITE_KEY: '%env(RECAPTCHA_SITE_KEY)%'

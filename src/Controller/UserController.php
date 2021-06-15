@@ -295,7 +295,7 @@ class UserController extends AbstractController
         curl_setopt(
             $ch,
             CURLOPT_POSTFIELDS,
-            ['secret' => $_ENV['RECAPTCHA_SECRET'], 'response' => $recaptcha]
+            ['secret' => $_ENV['RECAPTCHA_SECRET_KEY'], 'response' => $recaptcha]
         );
         $response = curl_exec($ch);
         curl_close($ch);

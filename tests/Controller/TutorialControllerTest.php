@@ -118,7 +118,7 @@ class TutorialControllerTest extends WebTestCase
             ->findOneBy(['title' => 'Javascript non published']);
 
         $crawler = $this->client->request(
-            "GET",
+            'GET',
             "/tutorials/{$tutorial->getUuid()}/delete"
         );
 
@@ -137,11 +137,9 @@ class TutorialControllerTest extends WebTestCase
         $this->client->loginUser($user);
 
         $crawler = $this->client->request(
-            "GET",
+            'GET',
             "/tutorials/{$tutorial->getUuid()}/delete"
         );
-
-        dd($this->client->getResponse()->getContent());
 
         $this->assertResponseRedirects('/login');
     }
