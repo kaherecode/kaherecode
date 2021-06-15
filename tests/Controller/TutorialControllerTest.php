@@ -133,7 +133,7 @@ class TutorialControllerTest extends WebTestCase
             ->findOneBy(['title' => 'Symfony and API Platform tutorial']);
         $user = $this->entityManager
             ->getRepository(User::class)
-            ->findOneByEmail('kaherecode@mail.com');
+            ->findOneBy(['email' => 'kaherecode@mail.com']);
 
         $this->client->loginUser($user);
 
