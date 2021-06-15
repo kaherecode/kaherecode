@@ -2,23 +2,28 @@
 
 namespace App\Tests\Controller;
 
-use App\Repository\UserRepository;
+use App\Entity\User;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityControllerTest extends WebTestCase
 {
+    private $client;
+
+    /** @var EntityManager */
+    private $entityManager;
+
+    public function setUp()
+    {
+        $this->client = static::createClient();
+        $this->entityManager = self::getContainer()
+            ->get('doctrine')->getManager();
+    }
+
     public function testLogin()
     {
-        $client = static::createClient();
-        $translator = static::getContainer()->get(TranslatorInterface::class);
-
-        $crawler = $client->request('GET', '/login');
-
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', $translator->trans('Log In'));
-
-        $client->submitForm(
+        $this->client->request('GET', '/login');
+        $this->client->submitForm(
             'login',
             ['email' => 'kaherecode@mail.com', 'password' => '123$ecreT']
         );
@@ -26,36 +31,23 @@ class SecurityControllerTest extends WebTestCase
         $this->assertResponseRedirects('/');
     }
 
+    /** @runInSeparateProcess */
     public function testLoginWithWrongCredentials()
     {
-        $client = static::createClient();
-        $translator = static::getContainer()->get(TranslatorInterface::class);
-
-        $client->catchExceptions(false);
-        $client->followRedirects();
-        $crawler = $client->request('GET', '/login');
-
-        $client->submitForm(
+        $this->client->request('GET', '/login');
+        $this->client->submitForm(
             'login',
             ['email' => 'kaherecode@mail.co', 'password' => '123$ecre']
         );
 
-        $this->assertStringContainsString(
-            $translator->trans('Email could not be found'),
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseRedirects('/login');
     }
 
+    /** @runInSeparateProcess */
     public function testLoginWithNotConfirmedAccount()
     {
-        $client = static::createClient();
-        $translator = static::getContainer()->get(TranslatorInterface::class);
-
-        $client->catchExceptions(false);
-        $client->followRedirects();
-
-        $crawler = $client->request('GET', '/register');
-        $client->submitForm(
+        $this->client->request('GET', '/register');
+        $this->client->submitForm(
             'signup',
             [
                 'user_registration[fullName]' => 'Orion',
@@ -65,28 +57,20 @@ class SecurityControllerTest extends WebTestCase
             ]
         );
 
-        $crawler = $client->request('GET', '/login');
-        $client->submitForm(
+        $this->client->request('GET', '/login');
+        $this->client->submitForm(
             'login',
             ['email' => 'orion@mail.com', 'password' => 'Ori@n_20']
         );
 
-        $this->assertStringContainsString(
-            $translator->trans('Please activate your account before you log in. Check your emails for confirmation.'),
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseRedirects('/login');
     }
 
+    /** @runInSeparateProcess */
     public function testLoginWithArchivedAccount()
     {
-        $client = static::createClient();
-        $translator = static::getContainer()->get(TranslatorInterface::class);
-
-        $client->catchExceptions(false);
-        $client->followRedirects();
-
-        $crawler = $client->request('GET', '/register');
-        $client->submitForm(
+        $this->client->request('GET', '/register');
+        $this->client->submitForm(
             'signup',
             [
                 'user_registration[fullName]' => 'Orion',
@@ -96,23 +80,20 @@ class SecurityControllerTest extends WebTestCase
             ]
         );
 
-        $userRepository = static::getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneByEmail('orion@mail.com');
+        $user = $this->entityManager
+            ->getRepository(User::class)
+            ->findOneBy(['email' => 'orion@mail.com']);
         $user->setEnabled(true);
         $user->setArchived(true);
 
-        $em = static::getContainer()->get('doctrine.orm.default_entity_manager');
-        $em->flush();
+        $this->entityManager->flush();
 
-        $crawler = $client->request('GET', '/login');
-        $client->submitForm(
+        $this->client->request('GET', '/login');
+        $this->client->submitForm(
             'login',
             ['email' => 'orion@mail.com', 'password' => 'Ori@n_20']
         );
 
-        $this->assertStringContainsString(
-            $translator->trans('Your account have been deactivated.'),
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseRedirects('/login');
     }
 }
