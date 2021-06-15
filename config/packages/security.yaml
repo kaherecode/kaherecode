@@ -25,6 +25,7 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 target: homepage
+            entry_point: App\Security\AuthenticationEntryPoint
 
             remember_me:
                 secret: '%kernel.secret%'

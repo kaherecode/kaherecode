@@ -137,7 +137,6 @@ class UserControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/profile');
-        $client->followRedirect();
 
         $this->assertResponseRedirects('/login');
     }
@@ -158,7 +157,6 @@ class UserControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/profile/edit');
-        $client->followRedirect();
 
         $this->assertResponseRedirects('/login');
     }
