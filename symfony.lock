@@ -388,6 +388,18 @@
     "symfony/intl": {
         "version": "v5.1.5"
     },
+    "symfony/lock": {
+        "version": "5.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.2",
+            "ref": "13350583a83fa636bf45a5fb62da3bdc73be52a1"
+        },
+        "files": [
+            "config/packages/lock.yaml"
+        ]
+    },
     "symfony/mailer": {
         "version": "4.3",
         "recipe": {
@@ -510,6 +522,9 @@
     },
     "symfony/property-info": {
         "version": "v5.1.5"
+    },
+    "symfony/rate-limiter": {
+        "version": "v5.3.0"
     },
     "symfony/redis-messenger": {
         "version": "v5.2.3"

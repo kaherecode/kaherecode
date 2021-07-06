@@ -27,6 +27,9 @@ security:
                 target: homepage
             entry_point: App\Security\AuthenticationEntryPoint
 
+            login_throttling:
+                max_attempts: 3
+
             remember_me:
                 secret: '%kernel.secret%'
 
