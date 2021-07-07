@@ -4,6 +4,17 @@
 	{{ tutorial.title }}
 {% endblock %}
 
+{% block meta %}
+	<meta property="og:type" content="article"/>
+	<meta name="twitter:creator" content="{{ tutorial.author.twitter ? '@' ~ tutorial.author.twitter : '@kaherecode' }}">
+	<meta property="og:image" content="{{ tutorial.pictureURL }}"/>
+	<meta name="description" content="{{ tutorial.description }}">
+	<meta property="og:description" content="{{ tutorial.description }}"/>
+	<meta property="og:url" content="{{ url(app.request.attributes.get("_route"), app.request.attributes.get("_route_params")) }}"/>
+	<meta property="og:title" content="{{ tutorial.title }}"/>
+{% endblock %}
+
+
 {% block stylesheets %}
 	{{ parent() }}
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/prism.css') }}">

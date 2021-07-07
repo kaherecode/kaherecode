@@ -10,6 +10,25 @@
 
 		<link rel="icon" href="{{ asset('images/favicon.ico') }}">
 
+		<meta name="author" content="kaherecode"/>
+		<meta name="owner" content="contact@kaherecode.com"/>
+		<meta name="subject" content="programmation"/>
+		<meta property="fb:app_id" content="{{ FACEBOOK_APP_ID }}"/>
+		<meta property="og:locale" content="fr_FR">
+		<meta property="og:site_name" content="Kaherecode">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@kaherecode">
+
+		{% block meta %}
+			<meta property="og:type" content="website"/>
+			<meta name="twitter:creator" content="@kaherecode">
+			<meta property="og:image" content="{{ app.request.getSchemeAndHttpHost ~ asset('images/kaherecode_banner.png') }}"/>
+			<meta name="description" content="{{ 'site.description'|trans }} {{ 'site.bio'|trans }}">
+			<meta property="og:description" content="{{ 'site.description'|trans }} {{ 'site.bio'|trans }}"/>
+			<meta property="og:url" content="{{ url(app.request.attributes.get("_route"), app.request.attributes.get("_route_params")) }}"/>
+			<meta property="og:title" content="{{ 'site.title'|trans }} | Kaherecode"/>
+		{% endblock %}
+
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}

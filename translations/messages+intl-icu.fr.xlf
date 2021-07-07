@@ -21,8 +21,8 @@
         <source>site.title</source>
         <target>Des tutoriels pratiques pour apprendre à coder</target>
       </trans-unit>
-      <trans-unit id="1N8ufWS" resname="side.description">
-        <source>side.description</source>
+      <trans-unit id="1N8ufWS" resname="site.description">
+        <source>site.description</source>
         <target>Apprends à programmer avec des tutoriels pratiques écrit pas des développeurs.</target>
       </trans-unit>
       <trans-unit id="ko9SwEu" resname="site.bio">

@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="fr" target-language="en" datatype="plaintext" original="file.ext">
     <header>
-      <tool tool-id="symfony" tool-name="Symfony"/>
+      <tool tool-id="symfony" tool-name="Symfony" />
     </header>
     <body>
       <trans-unit id="95j_VSN" resname="title.video_tutorials">
@@ -21,8 +21,8 @@
         <source>site.title</source>
         <target>Practical tutorials to learn to code</target>
       </trans-unit>
-      <trans-unit id="1N8ufWS" resname="side.description">
-        <source>side.description</source>
+      <trans-unit id="1N8ufWS" resname="site.description">
+        <source>site.description</source>
         <target>Learn to code with practical tutorials written by developers.</target>
       </trans-unit>
       <trans-unit id="ko9SwEu" resname="site.bio">
@@ -455,7 +455,9 @@
       </trans-unit>
       <trans-unit id="http_error.message">
         <source>http_error.message</source>
-        <target><![CDATA[An undefined error happened, let's get <a href="{url}" class="underline text-blue-500">back home</a> and try again!]]></target>
+        <target>
+          <![CDATA[An undefined error happened, let's get <a href="{url}" class="underline text-blue-500">back home</a> and try again!]]>
+        </target>
       </trans-unit>
       <trans-unit id="title.http_error_404">
         <source>title.http_error_404</source>
@@ -463,7 +465,9 @@
       </trans-unit>
       <trans-unit id="http_error_404.message">
         <source>http_error_404.message</source>
-        <target><![CDATA[The page you are looking for doesn't exist or has been moved, let's get <a href="{url}" class="underline text-blue-500">back home</a> and try again!]]></target>
+        <target>
+          <![CDATA[The page you are looking for doesn't exist or has been moved, let's get <a href="{url}" class="underline text-blue-500">back home</a> and try again!]]>
+        </target>
       </trans-unit>
       <trans-unit id="title.http_error_403">
         <source>title.http_error_403</source>
@@ -471,7 +475,9 @@
       </trans-unit>
       <trans-unit id="http_error_403.message">
         <source>http_error_403.message</source>
-        <target><![CDATA[Look, you are not good enough to visit this page, go <a href="{url}" class="underline text-blue-500">back home</a>!]]></target>
+        <target>
+          <![CDATA[Look, you are not good enough to visit this page, go <a href="{url}" class="underline text-blue-500">back home</a>!]]>
+        </target>
       </trans-unit>
 
       <!-- email closings -->
@@ -531,7 +537,9 @@
       </trans-unit>
       <trans-unit id="email.new_comment_support">
         <source>email.new_comment_support</source>
-        <target><![CDATA[A new comment have just been submitted by {fullName} - <a href="{url}">@{username}</a>.]]></target>
+        <target>
+          <![CDATA[A new comment have just been submitted by {fullName} - <a href="{url}">@{username}</a>.]]>
+        </target>
       </trans-unit>
       <trans-unit id="email.new_tutorial_title">
         <source>email.new_tutorial_title</source>
@@ -539,7 +547,9 @@
       </trans-unit>
       <trans-unit id="email.new_tutorial_support">
         <source>email.new_tutorial_support</source>
-        <target><![CDATA[A new tutorial with the title <strong>{title}</strong> have just been published by {fullName} - <a href="{url}">@{username}</a>.]]></target>
+        <target>
+          <![CDATA[A new tutorial with the title <strong>{title}</strong> have just been published by {fullName} - <a href="{url}">@{username}</a>.]]>
+        </target>
       </trans-unit>
       <trans-unit id="email.update_password_title">
         <source>email.update_password_title</source>
@@ -547,15 +557,21 @@
       </trans-unit>
       <trans-unit id="email.update_password">
         <source>email.update_password</source>
-        <target><![CDATA[<p>Click on the link below to create a new password for your account. This link expires in 24 hours.</p><p>If you did not asked for an update, just ignore this mail.</p>]]></target>
+        <target>
+          <![CDATA[<p>Click on the link below to create a new password for your account. This link expires in 24 hours.</p><p>If you did not asked for an update, just ignore this mail.</p>]]>
+        </target>
       </trans-unit>
       <trans-unit id="email.signup_title">
         <source>email.signup_title</source>
-        <target><![CDATA[Welcome to Kaherecode {fullName}!]]></target>
+        <target>
+          <![CDATA[Welcome to Kaherecode {fullName}!]]>
+        </target>
       </trans-unit>
       <trans-unit id="email.signup">
         <source>email.signup</source>
-        <target><![CDATA[<p>Welcome to Kaherecode, it is a real pleasure to have you with us! To finish your signup, click on the link below.</p>]]></target>
+        <target>
+          <![CDATA[<p>Welcome to Kaherecode, it is a real pleasure to have you with us! To finish your signup, click on the link below.</p>]]>
+        </target>
       </trans-unit>
     </body>
   </file>

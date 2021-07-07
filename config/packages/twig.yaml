@@ -7,3 +7,4 @@ twig:
 
     globals:
         RECAPTCHA_SITE_KEY: '%env(RECAPTCHA_SITE_KEY)%'
+        FACEBOOK_APP_ID: '%env(FACEBOOK_APP_ID)%'
