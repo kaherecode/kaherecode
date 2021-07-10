@@ -48,9 +48,9 @@
 				</div>
 
 				<a href="{{ path('tutorial_view', {'slug': tutorial.slug}) }}">
-					<h2 class="mt-3 font-bold text-lg tracking-wide dark:text-gray-300">
+					<h3 class="mt-3 font-bold text-lg tracking-wide dark:text-gray-300">
 						{{ tutorial.title|length > 50 ? tutorial.title|slice(0, 50) ~ '...' : tutorial.title }}
-					</h2>
+					</h3>
 				</a>
 
 				<div class="mt-3 flex items-center justify-between">
@@ -68,7 +68,8 @@
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
 						</svg>
 						<span class="text-sm ml-2 text-gray-700 dark:text-gray-400">
-							{{ tutorial.readTime }} min.
+							{{ tutorial.readTime }}
+							min.
 						</span>
 					</span>
 				</div>
