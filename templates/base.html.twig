@@ -22,7 +22,7 @@
 		{% block meta %}
 			<meta property="og:type" content="website"/>
 			<meta name="twitter:creator" content="@kaherecode">
-			<meta property="og:image" content="{{ app.request.getSchemeAndHttpHost ~ asset('images/kaherecode_banner.png') }}"/>
+			<meta property="og:image" content="{{ absolute_url('images/kaherecode_banner.png') }}"/>
 			<meta name="description" content="{{ 'site.description'|trans }} {{ 'site.bio'|trans }}">
 			<meta property="og:description" content="{{ 'site.description'|trans }} {{ 'site.bio'|trans }}"/>
 			<meta property="og:url" content="{{ url(app.request.attributes.get("_route"), app.request.attributes.get("_route_params")) }}"/>

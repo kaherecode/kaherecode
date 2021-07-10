@@ -6,6 +6,16 @@
 	{{ parent() }}
 {% endblock %}
 
+{% block meta %}
+	<meta property="og:type" content="article"/>
+	<meta name="twitter:creator" content="@kaherecode">
+	<meta property="og:image" content="{{ user.avatar is null ? absolute_url('images/avatar.png') : user.avatar }}"/>
+	<meta name="description" content="{{ user.bio }}">
+	<meta property="og:description" content="{{ user.bio }}"/>
+	<meta property="og:url" content="{{ url(app.request.attributes.get("_route"), app.request.attributes.get("_route_params")) }}"/>
+	<meta property="og:title" content="{{ user.fullName }} | Kaherecode"/>
+{% endblock %}
+
 {% block body %}
 	{% include 'includes/_show_user.html.twig' %}
 

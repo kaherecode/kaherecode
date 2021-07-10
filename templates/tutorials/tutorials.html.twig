@@ -7,6 +7,17 @@
 	{{ parent() }}
 {% endblock %}
 
+{% block meta %}
+	<meta property="og:type" content="website"/>
+	<meta name="twitter:creator" content="@kaherecode">
+	<meta property="og:image" content="{{ absolute_url('images/kaherecode_banner.png') }}"/>
+	<meta name="description" content="{{ 'site.description'|trans }} {{ 'site.bio'|trans }}">
+	<meta property="og:description" content="{{ 'site.description'|trans }} {{ 'site.bio'|trans }}"/>
+	<meta property="og:url" content="{{ url(app.request.attributes.get("_route"), app.request.attributes.get("_route_params")) }}"/>
+	<meta property="og:title" content="{{ videos is defined ? 'title.video_tutorials'|trans : 'title.tutorials_list'|trans }} {{ tag is defined ? '- ' ~ tag|upper : '' }} | Kaherecode"/>
+{% endblock %}
+
+
 {% block body %}
 	<div class="hero text-center py-20">
 		<div class="container">
@@ -15,8 +26,8 @@
 				{{ tag is defined ? ' - ' ~ tag|upper : '' }}
 			</h1>
 			<form class="mt-4" action="{{ path('kaherecode_search') }}">
-                <input type="search" name="q" class="rounded w-full p-3 outline-none bg-white" placeholder="{{ 'search'|trans }}..." style="max-width: 700px;">
-            </form>
+				<input type="search" name="q" class="rounded w-full p-3 outline-none bg-white" placeholder="{{ 'search'|trans }}..." style="max-width: 700px;">
+			</form>
 		</div>
 	</div>
 	<div class="container">
