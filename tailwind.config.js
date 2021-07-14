@@ -4,7 +4,10 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
-  purge: [],
+  purge: {
+    enabled: true,
+    content: ['./templates/**/*.html.twig', './templates/**/*.html'],
+  },
   theme: {
     extend: {
       colors: {
