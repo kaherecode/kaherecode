@@ -43,7 +43,7 @@
 						<span class="absolute z-10 right-0 bg-darkerGray text-gray-200 px-2 text-sm">video</span>
 					{% endif %}
 					<a href="{{ path('tutorial_view', {'slug': tutorial.slug}) }}" class="block w-full h-full relative">
-						<img src="{{ tutorial.pictureURL }}" alt="{{ tutorial.title }}" class="h-40 w-full object-cover" onerror="this.onerror=null;this.src='{{ asset('images/kaherecode_banner.png') }}';"/>
+						<img src="{{ tutorial.thumbnailURL }}" alt="{{ tutorial.title }}" class="h-40 w-full object-cover" onerror="this.onerror=null;this.src='{{ asset('images/kaherecode_banner.png') }}';"/>
 					</a>
 				</div>
 
