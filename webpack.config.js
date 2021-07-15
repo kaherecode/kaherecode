@@ -53,6 +53,14 @@ Encore
     config.corejs = 3
   })
 
+  .configureImageRule({
+    type: 'asset',
+  })
+
+  .configureFontRule({
+    type: 'asset',
+  })
+
   // enables Sass/SCSS support
   .enableSassLoader()
   .enablePostCssLoader()
