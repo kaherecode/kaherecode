@@ -14,6 +14,8 @@ use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
 use App\Service\FileUploaderInterface;
 use App\Model\Tutorial as TutorialModel;
+use App\Utils\Utils;
+
 use function Symfony\Component\String\u;
 use Symfony\Component\Form\FormInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -31,8 +33,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TutorialController extends AbstractController
 {
-    private const WORD_PER_MIN = 250;
-
     /**
      * @Route("/", name="homepage")
      */
@@ -258,6 +258,12 @@ class TutorialController extends AbstractController
             }
             $tutorial->setUpdatedAt(new \DateTime());
 
+            if ($tutorial->getIsPublished()) {
+                $tutorial->setReadTime(
+                    Utils::calculateReadTime($tutorial->getContent())
+                );
+            }
+
             $em->flush();
         }
 
@@ -297,10 +303,9 @@ class TutorialController extends AbstractController
             && $tutorial->getDescription() !== ''
             && count($tutorial->getTags()->toArray()) > 0
         ) {
-            // calculate read time
-            $wordCount = str_word_count(strip_tags($tutorial->getContent()));
-            $minutes = (int) ceil($wordCount / self::WORD_PER_MIN);
-            $tutorial->setReadTime($minutes);
+            $tutorial->setReadTime(
+                Utils::calculateReadTime($tutorial->getContent())
+            );
 
             $tutorial->setIsPublished(true);
             $tutorial->setPublishedAt(new \DateTime);
