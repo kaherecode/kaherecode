@@ -73,7 +73,7 @@
 			{% if is_granted('ROLE_USER') %}
 				<li class="ml-6">
 					<span class="toggle-item" data-target="loggedInMenu">
-						<img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" class="rounded-full w-12 h-12 object-cover cursor-pointer">
+						<img src="{{ app.user.avatar is null ? asset('images/avatar.png') : app.user.avatar }}" alt="{{ app.user.fullName }}" class="rounded-full w-12 h-12 object-cover cursor-pointer" onerror="this.onerror=null;this.src='{{ asset('images/avatar.png') }}';">
 					</span>
 				</li>
 			{% else %}
