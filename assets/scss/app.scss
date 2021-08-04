@@ -367,3 +367,9 @@ form {
   }
 }
 /** ./pagination */
+
+/** image caption */
+img + em {
+  @apply block text-sm text-center underline mt-2 not-italic text-gray-600 dark:text-gray-400;
+}
+/** ./image caption */
