@@ -42,7 +42,8 @@ class TutorialRepository extends ServiceEntityRepository
             ->setParameter('tags', array_values($tutorial->getTags()->toArray()))
             ->andWhere('t.id != :id')
             ->setParameter('id', $tutorial->getId())
-            ->andWhere('t.isPublished = true');
+            ->andWhere('t.isPublished = true')
+            ->orderBy('t.publishedAt', 'DESC');
 
         if ($limit) {
             $query->setMaxResults($limit);

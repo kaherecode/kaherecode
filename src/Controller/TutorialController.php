@@ -137,7 +137,7 @@ class TutorialController extends AbstractController
         $relatedTutorials = array_unique(
             array_merge(
                 $relatedTutorials,
-                $tutorialRepository->findRelatedTutorials($tutorial)
+                $tutorialRepository->findRelatedTutorials($tutorial, 7)
             ),
             SORT_REGULAR
         );
