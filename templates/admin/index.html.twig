@@ -128,7 +128,7 @@
 					<div class="p-3 overflow-auto" style="height: 500px">
 						{% for user in recentLogins %}
 							<div class="flex items-center py-3 border-b">
-								<img src="{{ user.avatar is null ? asset('images/avatar.png') : user.avatar }}" alt="{{ user.fullName }}" class="rounded-full w-12 h-12 object-cover">
+								<img src="{{ user.avatar is null ? asset('images/avatar.png') : user.avatar }}" alt="{{ user.fullName }}" class="rounded-full w-12 h-12 object-cover" onerror="this.onerror=null;this.src='{{ asset('images/avatar.png') }}';">
 								<div class="ml-3">
 									<a href="{{ path('show_user', {'username': user.username}) }}" class="font-bold" target="_blank">@{{ user.username }}</a>
 									<small class="block text-gray-400">Logged In at
