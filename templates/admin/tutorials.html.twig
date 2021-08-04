@@ -50,7 +50,7 @@
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
 												</svg>
 											</a>
-											<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}" class="inline-bloc" target="_blank">
+											<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}" class="inline-bloc" target="_blank" onclick="return confirm('{{ 'confirm.delete_tutorial'|trans }}')">
 												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-red-600">
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
 												</svg>
@@ -81,7 +81,6 @@
 								<span class="block text-gray-400 justify-self-end">
 									{{ tag.numberOfTutorials }}
 									tutorials</span>
-								{# <a href="">delete</a> #}
 							</div>
 						{% endfor %}
 					</div>
@@ -123,7 +122,7 @@
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
 												</svg>
 											</a>
-											<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}" class="inline-bloc" target="_blank">
+											<a href="{{ path('delete_tutorial', {'uuid': tutorial.uuid}) }}" class="inline-bloc" target="_blank" onclick="return confirm('{{ 'confirm.delete_tutorial'|trans }}')">
 												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-red-600">
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
 												</svg>
