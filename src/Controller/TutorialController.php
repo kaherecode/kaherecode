@@ -54,6 +54,14 @@ class TutorialController extends AbstractController
     }
 
     /**
+     * @Route("/writing-rules", name="writing_rules")
+     */
+    public function writingRules(): Response
+    {
+        return $this->render('tutorials/writing_rules.html.twig');
+    }
+
+    /**
      * @Route("/tutorials", name="tutorials")
      */
     public function tutorials(

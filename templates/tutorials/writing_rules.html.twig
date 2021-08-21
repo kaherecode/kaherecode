@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ videos is defined ? 'title.video_tutorials'|trans : 'title.tutorials_list'|trans }}
+	{{ tag is defined ? ' - ' ~ tag|upper : '' }}
+	|
+	{{ parent() }}
+{% endblock %}
+
+{% block meta %}
+	<meta property="og:type" content="website"/>
+	<meta name="twitter:creator" content="@kaherecode">
+	<meta property="og:image" content="{{ absolute_url('images/kaherecode_banner.png') }}"/>
+	<meta name="description" content="{{ 'site.description'|trans }} {{ 'site.bio'|trans }}">
+	<meta property="og:description" content="{{ 'site.description'|trans }} {{ 'site.bio'|trans }}"/>
+	<meta property="og:url" content="{{ url(app.request.attributes.get("_route"), app.request.attributes.get("_route_params")) }}"/>
+	<meta property="og:title" content="Écrire sur Kaherecode"/>
+{% endblock %}
+
+
+{% block body %}
+	<div class="hero text-center py-20">
+		<div class="container">
+			<h1 class="mt-4 font-bold text-3xl tracking-wide text-gray-900">
+				Écrire sur Kaherecode
+			</h1>
+		</div>
+	</div>
+
+	<article class="container bg-lightGray p-4 text-lg text-justify text-black leading-relaxed xl:px-20 dark:bg-gray-800 dark:text-gray-300">
+		<p>
+			Hey, salut!
+			<br>
+			Merci de l’intérêt que tu accordes à Kaherecode.
+		</p>
+		<p>
+			Notre objectif c'est de rassembler ici, sur cette plateforme des tutoriels de bonnes qualités pour la future génération de développeurs et nous sommes vraiment content de te compter parmi nous.
+			<br>
+			Si tu veux nous laisser un message, tu peux le faire à l'adresse
+			<a href="mailto:contact@kaherecode.com">contact@kaherecode.com</a>.
+		</p>
+		<p>
+			Si tu as des connaissances dans n'importe quel domaine de la programmation, toute la communauté te sera reconnaissant de les partager avec nous. Tu n'a pas besoin d’être expert ou d'avoir des années d’expériences, nous écrirons ensemble, et en partageant ta connaissance, tu apprends encore plus. Tu pourras même demander à des ami(e)s de relire ton article en leur envoyant le lien du
+			<code>preview</code>
+			avant que tu ne le publie.
+		</p>
+		<h2>Quel type de tutoriels voulons-nous?</h2>
+		<p>
+			L'objectif c'est de partager des tutoriels pratiques, où le lecteur va écrire du code, parce que la seule manière d'apprendre à coder c'est de
+			<code>CODER</code>.
+		</p>
+		<p>
+			<ul>
+				<li>Nous aimons les tutoriels pratique, par exemple "Comment créer un blog avec Flask"</li>
+				<li>Partage le code source avec nous. Dans le champ code source, mets y le lien vers le dépot public du projet</li>
+				<li>Utilise des démo. Dans le champ démo, mets des liens vers la démo (Codepen, JSBin,...)</li>
+			</ul>
+		</p>
+		<h2>Une règle</h2>
+		<p>
+			Les administrateurs de Kaherecode ont le droit de voir tes tutoriels, les modifier, les retirer de la vue public sur le site et aussi les effacer avant et après qu'ils soient publiés (seulement les administrateurs). Une fois le tutoriel publié, il ne pourra être supprimer que par un administrateur du site, si tu veux supprimer un article que tu as déjà publier, envoie-nous juste un mail à l'adresse
+			<a href="mailto:contact@kaherecode.com">contact@kaherecode.com</a>.
+		</p>
+		<h2>A savoir</h2>
+		<p>
+			Pour écrire un tutoriel,
+			<a href="{{ path('app_login') }}">connecte</a>
+			toi, rend toi sur ton
+			<a href="{{ path('profile') }}" target="_blank">profil</a>
+			et clique sur le bouton
+			<a href="{{ path('new_tutorial') }}" target="_blank">Nouveau Tutoriel</a>.
+			<br>
+			Tu peux créer des brouillons en appuyant sur le bouton
+			<code>Enregistrer</code>, le seul champ obligatoire c'est le champ
+			<code>Titre</code>.
+			<br>
+			Pour publier un article, tu dois obligatoirement renseigner les champs:
+			<code>Image</code>,
+			<code>Titre</code>,
+			<code>Contenu</code>,
+			<code>Description</code>
+			et
+			<code>Tags</code>. Il faut toujours enregistrer ton article avant de le publier.
+		</p>
+		<h3>Titre</h3>
+		<p>
+			Donne le titre de ton article, le titre doit refléter le contenu de l'article et inviter les visiteurs à cliquer dessus, c'est le point d’entrer pour tes visiteurs.
+		</p>
+		<h3>Image</h3>
+		<p>
+			Choisis une image rectangulaire qui colle bien à ton article, cette image peut être modifier par l'un des administrateurs de Kaherecode.
+		</p>
+		<h3>Contenu</h3>
+		<p>
+			C'est ici que le gros du travail va se passer, le contenu de ton article est ce qu'il y a de plus important. Utilise des images ou du code pour des démonstrations. Le champ de saisi prend du
+			<code>markdown</code>
+			et dans la partie à droite tu as le contenu comme le verra l'utilisateur.
+		</p>
+		<h3>Description</h3>
+		<p>
+			La description va nous permettre de bien référencer le tutoriel au près des moteurs de recherche. Fais un résumé en 200 caractères max de ton tutoriel.
+		</p>
+		<h3>Tags</h3>
+		<p>
+			De quels technologies parles-tu dans ton article, listes-les dans le champ Tags en les séparant d'une virgule.
+		</p>
+		<h3>Code Source</h3>
+		<p>
+			Mets un lien vers le code source de ton projet, cela va servir de base aux lecteurs.
+		</p>
+		<h3>Démo</h3>
+		<p>
+			Les lecteurs aiment voir ce qu'ils vont construire en live, cela les motives encore plus. Si possible, mets nous un lien vers quelque chose que l'on peut voir.
+		</p>
+		<h3>N'oublie pas</h3>
+		<p>
+			Il faut toujours enregistrer le tutoriel en cliquant sur le bouton
+			<code>Enregistrer</code>
+			avant de cliquer sur
+			<code>Publier</code>
+			ou
+			<code>Preview</code>.
+		</p>
+		<h3>Un problème? Des questions?</h3>
+		<p>
+			Nous sommes en constante évolution, nous essayons tout les jours d'améliorer la plateforme et pour cela nous avons besoin de ton retour. Un crash? Une amélioration? Une question? Une critique? nous prenons tout au
+			<a href="mailto:contact@kaherecode.com">contact@kaherecode.com</a>.
+		</p>
+		<p>
+			Merci beaucoup d'être là. T'es un(e) champion(ne).
+		</p>
+	</article>
+{% endblock %}
