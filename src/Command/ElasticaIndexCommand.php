@@ -48,7 +48,10 @@ class ElasticaIndexCommand extends Command
         $tutorialIndex = $indexBuilder->createIndex('tutorial');
         $indexer = $this->client->getIndexer();
 
-        $tutorials = $this->tutorialRepository->findBy(['isPublished' => true]);
+        $tutorials = $this->tutorialRepository->findBy(
+            ['isPublished' => true],
+            ['publishedAt' => 'DESC']
+        );
         foreach ($tutorials as $tutorial) {
             $indexer->scheduleIndex(
                 $tutorialIndex,
