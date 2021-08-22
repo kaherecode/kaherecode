@@ -479,6 +479,14 @@
           <![CDATA[Écoute, tu n'es pas aussi cool pour être ici, retourne à la <a href="{url}" class="underline text-blue-500">page d'accueil</a>!]]>
         </target>
       </trans-unit>
+      <trans-unit id="avatar_label">
+        <source>avatar_label</source>
+        <target>Clique ci-dessus pour choisir une photo de profil.</target>
+      </trans-unit>
+      <trans-unit id="confirm.archive_user">
+        <source>confirm.archive_user</source>
+        <target>Es-tu sûr de vouloir archiver cet utilisateur?</target>
+      </trans-unit>
 
       <!-- email closings -->
       <trans-unit id="email_closing.champion">
@@ -571,6 +579,26 @@
         <source>email.signup</source>
         <target>
           <![CDATA[<p>Bienvenue sur Kaherecode, c'est vraiment un plaisir de t'avoir avec nous! Pour terminer ton inscription, clique sur le lien ci-dessous.</p>]]>
+        </target>
+      </trans-unit>
+      <trans-unit id="email.user_archived_title">
+        <source>email.user_archived_title</source>
+        <target>Ton compte Kaherecode a été archiver</target>
+      </trans-unit>
+      <trans-unit id="email.user_archived">
+        <source>email.user_archived</source>
+        <target>
+          <![CDATA[Ça me peine de te le dire, mais ton compte sur Kaherecode viens d'être archiver. Ce choix peut venir de toi ou que quelqu'un a du faire une grosse erreur. Si tu penses que c'est une erreur, je te prie de m'envoyer tout de suite un mail a <a href="mailto:{mail}">{mail}</a>.</p> <p>Si aucune action n'est engager de ta part, ton compte sera définitivement supprimer dans 30 jours.</p> <p>Prends soin de toi {fullName}, <br>- Aliou de Kaherecode]]>
+        </target>
+      </trans-unit>
+      <trans-unit id="email.user_archived_support_title">
+        <source>email.user_archived_support_title</source>
+        <target>Un compte a été archiver</target>
+      </trans-unit>
+      <trans-unit id="email.user_archived_support_notification">
+        <source>email.user_archived_support_notification</source>
+        <target>
+          <![CDATA[<p>Le compte de <a href="{url}">{fullName}</a> vient d'être archivé.</p>]]>
         </target>
       </trans-unit>
     </body>

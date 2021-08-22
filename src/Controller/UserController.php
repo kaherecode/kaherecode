@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
@@ -282,6 +283,25 @@ class UserController extends AbstractController
         }
 
         return $this->render('users/reset_password.html.twig', ['user' => $user]);
+    }
+
+    /**
+     * @Route("/users/{username}/archive", name="archive_user")
+     */
+    public function archiveUser(User $user, Mailer $mailer): Response
+    {
+        $this->denyAccessUnlessGranted('edit', $user);
+
+        $user->setArchived(true);
+        $user->setEnabled(false);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        $mailer->sendUserArchivedMessage($user);
+        $mailer->sendUserArchivedMessageToSupport($user);
+
+        return $this->redirectToRoute('app_logout');
     }
 
     protected function captchaverify($recaptcha)

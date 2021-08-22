@@ -1,0 +1,8 @@
+{% extends 'emails/base.html.twig' %}
+
+{% block content %}
+	{{ 'email.user_archived_support_notification'|trans({
+    '%fullName%': user.fullName,
+    '%url%': url('show_user', {'username': user.username})
+  })|raw }}
+{% endblock %}

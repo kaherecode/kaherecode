@@ -152,4 +152,26 @@ class Mailer
 
         $this->mailer->send($email);
     }
+
+    public function sendUserArchivedMessage(User $user)
+    {
+        $email = (new TemplatedEmail())
+            ->to(new Address($user->getEmail(), $user->getFullName()))
+            ->subject($this->translator->trans("email.user_archived_title"))
+            ->htmlTemplate('emails/user_archived.html.twig')
+            ->context(['user' => $user, 'mail' => $_ENV['FROM_EMAIL']]);
+
+        $this->mailer->send($email);
+    }
+
+    public function sendUserArchivedMessageToSupport(User $user)
+    {
+        $email = (new NotificationEmail())
+            ->to($_ENV['FROM_EMAIL'])
+            ->subject($this->translator->trans('email.user_archived_support_title'))
+            ->htmlTemplate('emails/user_archived_support_notification.html.twig')
+            ->context(['user' => $user]);
+
+        $this->mailer->send($email);
+    }
 }

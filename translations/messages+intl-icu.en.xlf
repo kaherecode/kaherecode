@@ -479,6 +479,14 @@
           <![CDATA[Look, you are not good enough to visit this page, go <a href="{url}" class="underline text-blue-500">back home</a>!]]>
         </target>
       </trans-unit>
+      <trans-unit id="avatar_label">
+        <source>avatar_label</source>
+        <target>Click above to choose a new profile picture.</target>
+      </trans-unit>
+      <trans-unit id="confirm.archive_user">
+        <source>confirm.archive_user</source>
+        <target>Are you sure you want to archive this user?</target>
+      </trans-unit>
 
       <!-- email closings -->
       <trans-unit id="email_closing.champion">
@@ -571,6 +579,26 @@
         <source>email.signup</source>
         <target>
           <![CDATA[<p>Welcome to Kaherecode, it is a real pleasure to have you with us! To finish your signup, click on the link below.</p>]]>
+        </target>
+      </trans-unit>
+      <trans-unit id="email.user_archived_title">
+        <source>email.user_archived_title</source>
+        <target>Your Kaherecode account have been archived</target>
+      </trans-unit>
+      <trans-unit id="email.user_archived">
+        <source>email.user_archived</source>
+        <target>
+          <![CDATA[<p>It pains me to tell you, but your account on Kaherecode has just been archived. This choice may come from you or someone must have made a big mistake. If you think this is a mistake, please send me an email immediately at <a href="mailto:{mail}">{mail}</a>.</p> <p>If no action is taken on your part, your account will be permanently deleted in 30 days.</p> <p>Take care {fullName}, <br>- Aliou from Kaherecode</p>]]>
+        </target>
+      </trans-unit>
+      <trans-unit id="email.user_archived_support_title">
+        <source>email.user_archived_support_title</source>
+        <target>An account have been archived</target>
+      </trans-unit>
+      <trans-unit id="email.user_archived_support_notification">
+        <source>email.user_archived_support_notification</source>
+        <target>
+          <![CDATA[<p><a href="{url}">{fullName}</a> account have just been archived.</p>]]>
         </target>
       </trans-unit>
     </body>

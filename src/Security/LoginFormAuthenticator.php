@@ -159,15 +159,15 @@ class LoginFormAuthenticator extends AbstractAuthenticator
             );
         }
 
-        if (!$user->getEnabled()) {
-            throw new CustomUserMessageAuthenticationException(
-                'You should activate your account before you log in.'
-            );
-        }
-
         if ($user->getArchived()) {
             throw new CustomUserMessageAuthenticationException(
                 'Account is disabled.'
+            );
+        }
+
+        if (!$user->getEnabled()) {
+            throw new CustomUserMessageAuthenticationException(
+                'You should activate your account before you log in.'
             );
         }
 

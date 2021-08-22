@@ -1,0 +1,5 @@
+{% extends 'emails/base.html.twig' %}
+
+{% block content %}
+	{{ 'email.user_archived'|trans({'%fullName%': user.fullName, '%mail%': mail})|raw }}
+{% endblock %}
