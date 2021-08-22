@@ -230,7 +230,7 @@ form {
   input[type='text'],
   input[type='email'],
   input[type='password'] {
-    @apply border border-gray-300 rounded w-full p-3 outline-none bg-white;
+    @apply border border-gray-300 w-full p-3 outline-none bg-white;
 
     &:disabled {
       @apply opacity-50;
@@ -242,7 +242,7 @@ form {
   }
 
   textarea {
-    @apply border border-gray-300 rounded w-full p-3 outline-none bg-white resize-none;
+    @apply border border-gray-300 w-full p-3 outline-none bg-white resize-none;
 
     &:disabled {
       @apply opacity-50;
