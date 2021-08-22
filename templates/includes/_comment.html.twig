@@ -1,4 +1,4 @@
-<img src="{{ comment.author.avatar is null ? asset('images/avatar.png') : comment.author.avatar }}" alt="{{ comment.author.fullName }}" class="w-12 h-12 object-cover rounded-full">
+<img src="{{ comment.author.avatar is null ? asset('images/avatar.png') : comment.author.avatar }}" alt="{{ comment.author.fullName }}" class="w-12 h-12 object-cover rounded-full" onerror="this.onerror=null;this.src='{{ asset('images/avatar.png') }}';">
 <div class="ml-3 w-full" id="comments_{{ comment.id }}">
 	<span class="block text-gray-600">
 		<a href="{{ path('show_user', {'username': comment.author.username}) }}" class="font-bold text-gray-900 hover:underline dark:text-gray-300">
