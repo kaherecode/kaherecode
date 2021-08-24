@@ -134,10 +134,9 @@ article {
   }
 
   blockquote {
-    @apply text-gray-400;
-    padding: 0.1rem 0 0.1rem 2rem;
+    @apply text-gray-600 dark:text-gray-300;
+    padding: 0.1rem 0 0.1rem 1rem;
     border-left: 4px solid #d4b672;
-    font-size: 1.3rem;
 
     p {
       line-height: 2rem;
