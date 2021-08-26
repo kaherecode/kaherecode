@@ -20,10 +20,10 @@ use Symfony\Component\Serializer\Serializer;
 class GenerateSitemapXMLCommand extends Command
 {
     const FILENAME = 'sitemap.xml';
+    const BASE_SITEMAP_FILENAME = 'base_sitemap.xml';
 
     protected static $defaultName = 'app:generate-sitemap-xml';
-    protected static $defaultDescription = 'Generate the entire sitemap.xml
-        file or adds an URL to it';
+    protected static $defaultDescription = 'Generate the entire sitemap.xml file or adds an URL to it';
 
     protected $projectRootDir;
 
@@ -90,6 +90,35 @@ class GenerateSitemapXMLCommand extends Command
 
         if ($url) {
             $io->note(sprintf("Adding the URL <{$url}> to the sitemap.xml file"));
+
+            if (file_exists(
+                "{$this->projectRootDir}/" . self::FILENAME
+            )) {
+                $baseXml = file_get_contents(
+                    "{$this->projectRootDir}/" . self::FILENAME
+                );
+                $sUrl = new SitemapUrl();
+                $sUrl->setLoc($url);
+                $xmlUrl = $this->serializer->serialize(
+                    $sUrl,
+                    'xml',
+                    [
+                        'xml_root_node_name' => 'url',
+                        'xml_format_output' => true,
+                        'encoder_ignored_node_types' => [\XML_PI_NODE]
+                    ]
+                );
+
+                $xmlString = substr_replace(
+                    $baseXml,
+                    $xmlUrl,
+                    strpos($baseXml, '</urlset>'),
+                    0
+                );
+            } else {
+                $io->error("There is no sitemap.xml file, first generate one with app:generate-sitemap-xml");
+                return Command::FAILURE;
+            }
         } else {
             $xmlString = '';
             $sitemapUrls = [];
@@ -157,15 +186,30 @@ class GenerateSitemapXMLCommand extends Command
                 $xmlString .= " \n";
             }
 
-            // open the base sitemap file
-            // if exists adds the value of $xmlString before </urlset> closing tag
-            // else wrap the value of $xmlString in a <urlset></urlset> tag
-
-            file_put_contents(
-                "{$this->projectRootDir}/" . self::FILENAME,
-                $xmlString
-            );
+            if (file_exists(
+                "{$this->projectRootDir}/" . self::BASE_SITEMAP_FILENAME
+            )) {
+                $baseXml = file_get_contents(
+                    "{$this->projectRootDir}/" . self::BASE_SITEMAP_FILENAME
+                );
+                // adds the content of $xmlString before </urlset> closing tag
+                $xmlString = substr_replace(
+                    $baseXml,
+                    $xmlString,
+                    strpos($baseXml, '</urlset>'),
+                    0
+                );
+            } else {
+                $xmlString = "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"> \n" . $xmlString;
+                $xmlString .= "</urlset>";
+            }
         }
+
+        file_put_contents(
+            "{$this->projectRootDir}/" . self::FILENAME,
+            $xmlString
+        );
+
 
         $io->success('sitemap.xml file have been successfully (re)generated.');
 
