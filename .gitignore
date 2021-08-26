@@ -29,3 +29,4 @@ yarn-error.log
 ###< docker files ###
 
 .vscode/
+sitemap.xml
