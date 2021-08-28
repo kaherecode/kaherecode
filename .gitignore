@@ -29,5 +29,5 @@ yarn-error.log
 ###< docker files ###
 
 .vscode/
-sitemap.xml
+public/sitemap.xml
 base_sitemap.xml

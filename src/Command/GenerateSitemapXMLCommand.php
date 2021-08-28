@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Serializer;
 
 class GenerateSitemapXMLCommand extends Command
 {
-    const FILENAME = 'sitemap.xml';
+    const FILENAME = 'public/sitemap.xml';
     const BASE_SITEMAP_FILENAME = 'base_sitemap.xml';
 
     protected static $defaultName = 'app:generate-sitemap-xml';
