@@ -2,72 +2,26 @@
 
 namespace App\Command;
 
-use App\Model\SitemapUrl;
-use App\Repository\TagRepository;
-use App\Repository\TutorialRepository;
-use App\Repository\UserRepository;
+use App\Service\SitemapGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class GenerateSitemapXMLCommand extends Command
 {
-    const FILENAME = 'public/sitemap.xml';
-    const BASE_SITEMAP_FILENAME = 'base_sitemap.xml';
-
     protected static $defaultName = 'app:generate-sitemap-xml';
     protected static $defaultDescription = 'Generate the entire sitemap.xml file or adds an URL to it';
 
-    protected $projectRootDir;
-
     /**
-     * @var RouterInterface
+     * @var SitemapGenerator
      */
-    protected $router;
+    protected $sitemapGenerator;
 
-    /**
-     * @var Serializer
-     */
-    protected $serializer;
-
-    /**
-     * @var TagRepository
-     */
-    protected $tagRepository;
-
-    /**
-     * @var TutorialRepository
-     */
-    protected $tutorialRepository;
-
-    /**
-     * @var UserRepository
-     */
-    protected $userRepository;
-
-    public function __construct(
-        string $projectRootDir,
-        RouterInterface $router,
-        TagRepository $tagRepository,
-        TutorialRepository $tutorialRepository,
-        UserRepository $userRepository
-    ) {
-        $this->serializer = new Serializer(
-            [new ObjectNormalizer()],
-            [new XmlEncoder()]
-        );
-        $this->router = $router;
-        $this->tagRepository = $tagRepository;
-        $this->tutorialRepository = $tutorialRepository;
-        $this->userRepository = $userRepository;
-        $this->projectRootDir = $projectRootDir;
+    public function __construct(SitemapGenerator $sitemapGenerator)
+    {
+        $this->sitemapGenerator = $sitemapGenerator;
 
         parent::__construct();
     }
@@ -91,125 +45,15 @@ class GenerateSitemapXMLCommand extends Command
         if ($url) {
             $io->note(sprintf("Adding the URL <{$url}> to the sitemap.xml file"));
 
-            if (file_exists(
-                "{$this->projectRootDir}/" . self::FILENAME
-            )) {
-                $baseXml = file_get_contents(
-                    "{$this->projectRootDir}/" . self::FILENAME
-                );
-                $sUrl = new SitemapUrl();
-                $sUrl->setLoc($url);
-                $xmlUrl = $this->serializer->serialize(
-                    $sUrl,
-                    'xml',
-                    [
-                        'xml_root_node_name' => 'url',
-                        'xml_format_output' => true,
-                        'encoder_ignored_node_types' => [\XML_PI_NODE]
-                    ]
-                );
+            $res = $this->sitemapGenerator->addUrl($url);
 
-                $xmlString = substr_replace(
-                    $baseXml,
-                    $xmlUrl,
-                    strpos($baseXml, '</urlset>'),
-                    0
-                );
-            } else {
+            if (!$res) {
                 $io->error("There is no sitemap.xml file, first generate one with app:generate-sitemap-xml");
                 return Command::FAILURE;
             }
         } else {
-            $xmlString = '';
-            $sitemapUrls = [];
-
-            // adds tags links
-            $tags = $this->tagRepository->findAll();
-            foreach ($tags as $tag) {
-                $sUrl = new SitemapUrl();
-                $sUrl->setLoc(
-                    $this->router->generate(
-                        'tag_tutorials',
-                        ['label' => $tag->getLabel()],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    )
-                );
-
-                $sitemapUrls[] = $sUrl;
-            }
-
-            // adds tutorials links
-            $tutorials = $this->tutorialRepository->findBy(
-                ['isPublished' => true],
-                ['publishedAt' => 'DESC']
-            );
-            foreach ($tutorials as $tutorial) {
-                $sUrl = new SitemapUrl();
-                $sUrl->setLoc(
-                    $this->router->generate(
-                        'tutorial_view',
-                        ['slug' => $tutorial->getSlug()],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    )
-                );
-
-                $sitemapUrls[] = $sUrl;
-            }
-
-            // adds users links
-            $users = $this->userRepository->findBy(
-                ['enabled' => true, 'archived' => false]
-            );
-            foreach ($users as $user) {
-                $sUrl = new SitemapUrl();
-                $sUrl->setLoc(
-                    $this->router->generate(
-                        'show_user',
-                        ['username' => $user->getUsername()],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    )
-                );
-
-                $sitemapUrls[] = $sUrl;
-            }
-
-            foreach ($sitemapUrls as $value) {
-                $xmlString .= $this->serializer->serialize(
-                    $value,
-                    'xml',
-                    [
-                        'xml_root_node_name' => 'url',
-                        'xml_format_output' => true,
-                        'encoder_ignored_node_types' => [\XML_PI_NODE]
-                    ]
-                );
-                $xmlString .= " \n";
-            }
-
-            if (file_exists(
-                "{$this->projectRootDir}/" . self::BASE_SITEMAP_FILENAME
-            )) {
-                $baseXml = file_get_contents(
-                    "{$this->projectRootDir}/" . self::BASE_SITEMAP_FILENAME
-                );
-                // adds the content of $xmlString before </urlset> closing tag
-                $xmlString = substr_replace(
-                    $baseXml,
-                    $xmlString,
-                    strpos($baseXml, '</urlset>'),
-                    0
-                );
-            } else {
-                $xmlString = "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"> \n" . $xmlString;
-                $xmlString .= "</urlset>";
-            }
+            $this->sitemapGenerator->generateSitemap();
         }
-
-        file_put_contents(
-            "{$this->projectRootDir}/" . self::FILENAME,
-            $xmlString
-        );
-
 
         $io->success('sitemap.xml file have been successfully (re)generated.');
 
