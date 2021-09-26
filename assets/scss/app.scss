@@ -372,3 +372,15 @@ img + em {
   @apply block text-sm text-center underline mt-2 not-italic text-gray-600 dark:text-gray-400;
 }
 /** ./image caption */
+
+.comment-content {
+  a {
+    color: #3182ce;
+    text-decoration: underline;
+    overflow-wrap: break-word !important;
+
+    &:hover {
+      color: #d4b672;
+    }
+  }
+}
