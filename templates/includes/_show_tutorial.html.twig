@@ -51,7 +51,8 @@
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
 						</svg>
 						<span class="text-sm ml-2 text-gray-700">
-							{{ tutorial.readTime }} min.
+							{{ tutorial.readTime }}
+							min.
 						</span>
 					</span>
 					<span class="items-center mt-1 hidden sm:mt-0 sm:ml-5 sm:flex">
@@ -106,5 +107,5 @@
 </div>
 
 <article class="container bg-lightGray p-4 text-lg text-justify text-black leading-relaxed xl:px-20 dark:bg-gray-800 dark:text-gray-300">
-	{{ tutorial.content|raw }}
+	{{ tutorial.content|raw|sanitize_html }}
 </article>

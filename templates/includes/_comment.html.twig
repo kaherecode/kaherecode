@@ -20,7 +20,7 @@
 	</span>
 
 	<div class="mt-1 w-full dark:text-gray-300">
-		{{ comment.content|raw }}
+		{{ comment.content|raw|sanitize_html }}
 	</div>
 
 	{% if is_granted('ROLE_USER') %}

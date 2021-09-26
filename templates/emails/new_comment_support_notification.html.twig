@@ -1,20 +1,26 @@
 {% extends 'emails/base.html.twig' %}
 
 {% block content %}
-<p>
-    {{ 'email.new_comment_support'|trans({
+	<p>
+		{{ 'email.new_comment_support'|trans({
         '%fullName%': comment.author.fullName,
         '%url%': url('show_user', {'username': comment.author.username}),
         '%username%': comment.author.username
     })|raw }}
-</p>
+	</p>
 
-<p>
-    <strong>{{ 'tutorial'|trans }}</strong>: {{ comment.tutorial.title }} <br>
-    <strong>{{ 'extract'|trans }}</strong>: {{ (comment.content|striptags|slice(0, 100))|raw }} <br>
-    <strong>{{ 'submitted_at'|trans }}</strong>: {{ comment.createdAt|format_datetime() }} <br>
-</p>
-<p>
-    <a href="{{ url('tutorial_view', {'slug': comment.tutorial.slug}) }}#comments" class="btn">{{ 'action.take_a_look'|trans }}</a>
-</p>
+	<p>
+		<strong>{{ 'tutorial'|trans }}</strong>:
+		{{ comment.tutorial.title }}
+		<br>
+		<strong>{{ 'extract'|trans }}</strong>:
+		{{ (comment.content|striptags|slice(0, 100))|raw|sanitize_html }}
+		<br>
+		<strong>{{ 'submitted_at'|trans }}</strong>:
+		{{ comment.createdAt|format_datetime() }}
+		<br>
+	</p>
+	<p>
+		<a href="{{ url('tutorial_view', {'slug': comment.tutorial.slug}) }}#comments" class="btn">{{ 'action.take_a_look'|trans }}</a>
+	</p>
 {% endblock %}

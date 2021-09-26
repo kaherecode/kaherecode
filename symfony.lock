@@ -117,6 +117,9 @@
     "elasticsearch/elasticsearch": {
         "version": "v7.12.0"
     },
+    "erusev/parsedown": {
+        "version": "1.7.4"
+    },
     "ezimuel/guzzlestreams": {
         "version": "3.0.1"
     },
@@ -177,11 +180,14 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
     },
-    "league/html-to-markdown": {
-        "version": "4.10.0"
+    "league/uri-parser": {
+        "version": "1.4.1"
     },
     "lorenzo/pinky": {
         "version": "1.0.5"
+    },
+    "masterminds/html5": {
+        "version": "2.7.5"
     },
     "monolog/monolog": {
         "version": "2.1.1"
@@ -688,6 +694,21 @@
     "symfony/yaml": {
         "version": "v5.1.5"
     },
+    "tgalopin/html-sanitizer": {
+        "version": "1.4.0"
+    },
+    "tgalopin/html-sanitizer-bundle": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "95b935177db9abb65356fe19e57fe5abd908b5b8"
+        },
+        "files": [
+            "config/packages/html_sanitizer.yaml"
+        ]
+    },
     "tijsverkoyen/css-to-inline-styles": {
         "version": "2.2.3"
     },
@@ -702,6 +723,9 @@
     },
     "twig/intl-extra": {
         "version": "v3.1.1"
+    },
+    "twig/markdown-extra": {
+        "version": "v3.3.3"
     },
     "twig/twig": {
         "version": "v3.0.5"
