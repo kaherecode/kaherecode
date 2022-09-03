@@ -240,9 +240,6 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
-    "symfony/amqp-messenger": {
-        "version": "v5.2.3"
-    },
     "symfony/asset": {
         "version": "v5.1.5"
     },
@@ -296,9 +293,6 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.1.5"
-    },
-    "symfony/doctrine-messenger": {
-        "version": "v5.2.3"
     },
     "symfony/dom-crawler": {
         "version": "v5.1.5"
@@ -490,9 +484,6 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.18.1"
     },
-    "symfony/polyfill-php73": {
-        "version": "v1.18.1"
-    },
     "symfony/polyfill-php80": {
         "version": "v1.18.1"
     },
@@ -510,9 +501,6 @@
     },
     "symfony/rate-limiter": {
         "version": "v5.3.0"
-    },
-    "symfony/redis-messenger": {
-        "version": "v5.2.3"
     },
     "symfony/routing": {
         "version": "5.1",
@@ -544,9 +532,6 @@
         "version": "v5.1.5"
     },
     "symfony/security-csrf": {
-        "version": "v5.1.5"
-    },
-    "symfony/security-guard": {
         "version": "v5.1.5"
     },
     "symfony/security-http": {

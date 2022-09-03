@@ -73,7 +73,7 @@ class LoginFormAuthenticator extends AbstractAuthenticator
             && $request->isMethod('POST');
     }
 
-    public function authenticate(Request $request): PassportInterface
+    public function authenticate(Request $request): Passport
     {
         $credentials = $this->getCredentials($request);
         $user = $this->getUser($credentials);
