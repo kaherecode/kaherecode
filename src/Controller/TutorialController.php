@@ -8,15 +8,12 @@ use App\Service\Mailer;
 use App\Entity\Tutorial;
 use App\Form\CommentType;
 use App\Form\TutorialType;
-use Elastica\Query\MultiMatch;
-use JoliCode\Elastically\Client;
 use App\Repository\CommentRepository;
 use App\Repository\TutorialRepository;
 use App\Service\FileUploaderInterface;
 use App\Model\Tutorial as TutorialModel;
 use App\Utils\Utils;
 
-use function Symfony\Component\String\u;
 use Symfony\Component\Form\FormInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,9 +24,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use JoliCode\Elastically\Messenger\IndexationRequest;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use JoliCode\Elastically\Messenger\IndexationRequestHandler;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+use function Symfony\Component\String\u;
 
 class TutorialController extends AbstractController
 {
@@ -316,7 +314,7 @@ class TutorialController extends AbstractController
             );
 
             $tutorial->setIsPublished(true);
-            $tutorial->setPublishedAt(new \DateTime);
+            $tutorial->setPublishedAt(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
@@ -365,14 +363,6 @@ class TutorialController extends AbstractController
                 $uploader->delete($tutorial->getPictureURL());
             }
 
-            // remove this document from elasticsearch index
-            $bus->dispatch(
-                new IndexationRequest(
-                    TutorialModel::class,
-                    IndexationRequestHandler::OP_DELETE
-                )
-            );
-
             return $this->redirectToRoute('profile');
         } else {
             $this->addFlash(
@@ -397,7 +387,7 @@ class TutorialController extends AbstractController
 
         if (! $user) {
             $response->setStatusCode(JsonResponse::HTTP_FORBIDDEN);
-            $response->setData(['message' => 'You shoud be authenticated!']);
+            $response->setData(['message' => 'You should be authenticated!']);
 
             return $response;
         }
@@ -414,64 +404,6 @@ class TutorialController extends AbstractController
         $em->flush();
 
         return new JsonResponse();
-    }
-
-    /**
-     * @Route("/search", methods="GET", name="kaherecode_search")
-     */
-    public function search(Request $request, Client $client): Response
-    {
-        $query = u($request->query->get('q', ''))->trim();
-
-        $searchQuery = new MultiMatch();
-        $searchQuery->setFields([
-            'title^5',
-            'title.autocomplete',
-            'author',
-            'tags.label'
-        ]);
-        $searchQuery->setQuery($query);
-        $searchQuery->setType(MultiMatch::TYPE_MOST_FIELDS);
-
-        $tutorials = $client->getIndex('tutorial')->search($searchQuery);
-
-        $results = [];
-        foreach ($tutorials as $tutorial) {
-            $tutorial = $tutorial->getModel();
-
-            $results[] = [
-                'title' => htmlspecialchars(
-                    $tutorial->getTitle(),
-                    \ENT_COMPAT | \ENT_HTML5
-                ),
-                'url' => htmlspecialchars(
-                    $this->generateUrl(
-                        'tutorial_view',
-                        ['slug' => $tutorial->getSlug()],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    )
-                ),
-                'description' => htmlspecialchars(
-                    $tutorial->getDescription(),
-                    \ENT_COMPAT | \ENT_HTML5
-                ),
-                'publishedAt' => $tutorial->getPublishedAt()->format('d/m/Y'),
-                'author' => htmlspecialchars(
-                    $tutorial->getAuthor(),
-                    \ENT_COMPAT | \ENT_HTML5
-                ),
-            ];
-        }
-
-        // if the client did not ask for a JSON response
-        if (!in_array('application/json', $request->getAcceptableContentTypes())) {
-            return $this->render(
-                'tutorials/search.html.twig',
-                ['query' => $query, 'results' => $results]
-            );
-        }
-
-        return $this->json($results);
     }
 
     protected function buildTags(string $tagsString): array
