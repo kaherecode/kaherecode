@@ -20,9 +20,9 @@ class TutorialVoter extends Voter
         $this->security = $security;
     }
 
-    const EDIT = 'edit';
+    public const EDIT = 'edit';
 
-    protected function supports(string $attribute, $subject)
+    protected function supports(string $attribute, $subject): bool
     {
         if (!in_array($attribute, [self::EDIT])) {
             return false;
@@ -39,7 +39,7 @@ class TutorialVoter extends Voter
         string $attribute,
         $subject,
         TokenInterface $token
-    ) {
+    ): bool {
         $user = $token->getUser();
 
         if (!$user instanceof User) {

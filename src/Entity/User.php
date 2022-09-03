@@ -178,7 +178,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->bookmarks = new ArrayCollection();
     }
 
-    public function getUserIdentifier()
+    public function getUserIdentifier(): string
     {
         return $this->getEmail();
     }
