@@ -1,4 +1,4 @@
-FROM php:7.4-fpm as php
+FROM php:8.1-fpm as php
 
 RUN docker-php-ext-install pdo_mysql
 RUN pecl install apcu

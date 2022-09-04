@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  mysql:
+  db:
     image: mysql:8.0
     restart: on-failure
     command: ['--default-authentication-plugin=mysql_native_password']
@@ -11,12 +11,12 @@ services:
     volumes:
       - ./.docker/mysql:/var/lib/mysql
     ports:
-      - 3306:3306
+      - 3307:3306
     networks:
       - kaherecode
 
   adminer:
-    image: adminer
+    image: adminer:latest
     restart: on-failure
     ports:
       - 8080:8080
@@ -24,7 +24,7 @@ services:
       - kaherecode
 
   nginx:
-    image: nginx:1.19.8-alpine
+    image: nginx:1.23.1-alpine
     restart: on-failure
     volumes:
       - ./:/usr/src/app
