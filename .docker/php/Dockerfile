@@ -14,4 +14,4 @@ WORKDIR /usr/src/app
 COPY ./ /usr/src/app
 
 RUN PATH=$PATH:/usr/src/app/vendor/bin:bin
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

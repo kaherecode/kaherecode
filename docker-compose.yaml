@@ -1,66 +1,58 @@
 version: '3.8'
 
 services:
-  db:
-    image: mysql:8.0
-    restart: on-failure
-    command: ['--default-authentication-plugin=mysql_native_password']
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: kaherecode
-    volumes:
-      - ./.docker/mysql:/var/lib/mysql
-    ports:
-      - 3307:3306
-    networks:
-      - kaherecode
+    db:
+        image: mysql:8.0
+        restart: on-failure
+        command: ['--default-authentication-plugin=mysql_native_password']
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: kaherecode
+        volumes:
+        - ./.docker/mysql:/var/lib/mysql
+        ports:
+        - 3308:3306
+        networks:
+          - kaherecode
 
-  adminer:
-    image: adminer:latest
-    restart: on-failure
-    ports:
-      - 8080:8080
-    networks:
-      - kaherecode
+    nginx:
+        image: nginx:1.23.1-alpine
+        restart: on-failure
+        volumes:
+            - ./:/usr/src/app
+            - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - 8000:80
+        depends_on:
+            - php
+        networks:
+            - kaherecode
 
-  nginx:
-    image: nginx:1.23.1-alpine
-    restart: on-failure
-    volumes:
-      - ./:/usr/src/app
-      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - 8000:80
-    depends_on:
-      - php
-    networks:
-      - kaherecode
+    php:
+        build:
+            context: .
+            dockerfile: ./.docker/php/Dockerfile
+        volumes:
+            - ./:/usr/src/app
+        restart: on-failure
+        env_file:
+            - .env.local
+        user: 1000:1000
+        networks:
+            - kaherecode
 
-  php:
-    build:
-      context: .
-      dockerfile: ./.docker/php/Dockerfile
-    volumes:
-      - ./:/usr/src/app
-    restart: on-failure
-    env_file:
-      - .env.local
-    user: 1000:1000
-    networks:
-      - kaherecode
-
-  node:
-    build:
-      context: .
-      dockerfile: ./.docker/node/Dockerfile
-    command: yarn encore dev --watch
-    working_dir: /usr/src/app
-    volumes:
-      - ./:/usr/src/app
-      - /usr/src/app/node_modules/
-    restart: on-failure
-    networks:
-      - kaherecode
+    node:
+        build:
+            context: .
+            dockerfile: ./.docker/node/Dockerfile
+        command: yarn encore dev --watch
+        working_dir: /usr/src/app
+        volumes:
+            - ./:/usr/src/app
+            - /usr/src/app/node_modules/
+        restart: on-failure
+        networks:
+            - kaherecode
 
 networks:
-  kaherecode:
+    kaherecode:
