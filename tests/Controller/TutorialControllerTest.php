@@ -22,7 +22,7 @@ class TutorialControllerTest extends WebTestCase
      */
     private $entityManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = static::createClient();
 
@@ -31,7 +31,7 @@ class TutorialControllerTest extends WebTestCase
             ->get('doctrine')->getManager();
     }
 
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->client->request('GET', '/');
 
@@ -47,7 +47,7 @@ class TutorialControllerTest extends WebTestCase
         );
     }
 
-    public function testTutorials()
+    public function testTutorials(): void
     {
         $this->client->request('GET', '/tutorials');
 
@@ -66,7 +66,7 @@ class TutorialControllerTest extends WebTestCase
         );
     }
 
-    public function testTutorialsByTag()
+    public function testTutorialsByTag(): void
     {
         $this->client->request('GET', '/tag/php');
 
@@ -85,7 +85,7 @@ class TutorialControllerTest extends WebTestCase
         );
     }
 
-    public function testShow()
+    public function testShow(): void
     {
         $tutorial = $this->entityManager
             ->getRepository(Tutorial::class)
@@ -112,7 +112,7 @@ class TutorialControllerTest extends WebTestCase
         );
     }
 
-    public function testDeleteTutorialWithNoLogin()
+    public function testDeleteTutorialWithNoLogin(): void
     {
         $tutorial = $this->entityManager
             ->getRepository(Tutorial::class)
@@ -126,7 +126,7 @@ class TutorialControllerTest extends WebTestCase
         $this->assertResponseRedirects('/login');
     }
 
-    public function testDeletePublishedTutorialByRoleUser()
+    public function testDeletePublishedTutorialByRoleUser(): void
     {
         $tutorial = $this->entityManager
             ->getRepository(Tutorial::class)

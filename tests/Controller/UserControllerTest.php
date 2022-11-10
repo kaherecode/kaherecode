@@ -22,7 +22,7 @@ class UserControllerTest extends WebTestCase
     /** @var UserPasswordHasherInterface */
     private $passwordEncoder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = static::createClient();
 
@@ -33,7 +33,7 @@ class UserControllerTest extends WebTestCase
             ->get('doctrine')->getManager();
     }
 
-    public function testRegister()
+    public function testRegister(): void
     {
         $this->client->request('GET', '/register');
         $this->client->submitForm(
@@ -54,7 +54,7 @@ class UserControllerTest extends WebTestCase
         );
     }
 
-    public function testUserAccountConfirmation()
+    public function testUserAccountConfirmation(): void
     {
         $this->client->request('GET', '/register');
         $this->client->submitForm(
@@ -86,7 +86,7 @@ class UserControllerTest extends WebTestCase
         );
     }
 
-    public function testRegisterDuplicateEmail()
+    public function testRegisterDuplicateEmail(): void
     {
         $this->client->request('GET', '/register');
         $this->client->submitForm(
@@ -117,7 +117,7 @@ class UserControllerTest extends WebTestCase
         );
     }
 
-    public function testRegisterDuplicateUsername()
+    public function testRegisterDuplicateUsername(): void
     {
         $this->client->request('GET', '/register');
         $this->client->submitForm(
@@ -148,14 +148,14 @@ class UserControllerTest extends WebTestCase
         );
     }
 
-    public function testProfileWithNoLogin()
+    public function testProfileWithNoLogin(): void
     {
         $this->client->request('GET', '/profile');
 
         $this->assertResponseRedirects('/login');
     }
 
-    public function testProfile()
+    public function testProfile(): void
     {
         $user = $this->entityManager
             ->getRepository(User::class)
@@ -167,14 +167,14 @@ class UserControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Mamadou Aliou Diallo');
     }
 
-    public function testEditProfileWithNoLogin()
+    public function testEditProfileWithNoLogin(): void
     {
         $this->client->request('GET', '/profile/edit');
 
         $this->assertResponseRedirects('/login');
     }
 
-    public function testEditProfileWithWrongPassword()
+    public function testEditProfileWithWrongPassword(): void
     {
         $user = $this->entityManager
             ->getRepository(User::class)
@@ -205,7 +205,7 @@ class UserControllerTest extends WebTestCase
         );
     }
 
-    public function testEditProfile()
+    public function testEditProfile(): void
     {
         $user = $this->entityManager
             ->getRepository(User::class)
@@ -241,7 +241,7 @@ class UserControllerTest extends WebTestCase
         );
     }
 
-    public function testPasswordResetRequestWithNonExistingEmail()
+    public function testPasswordResetRequestWithNonExistingEmail(): void
     {
         $this->client->request('GET', '/password-reset/request');
         $this->assertResponseIsSuccessful();
@@ -257,7 +257,7 @@ class UserControllerTest extends WebTestCase
         );
     }
 
-    public function testPasswordResetWithDifferentPasswordConfirmation()
+    public function testPasswordResetWithDifferentPasswordConfirmation(): void
     {
         $this->client->request('GET', '/password-reset/request');
 
@@ -284,7 +284,7 @@ class UserControllerTest extends WebTestCase
         );
     }
 
-    public function testPasswordResetWithNoSecurePassword()
+    public function testPasswordResetWithNoSecurePassword(): void
     {
         $this->client->request('GET', '/password-reset/request');
 
@@ -311,7 +311,7 @@ class UserControllerTest extends WebTestCase
         );
     }
 
-    public function testPasswordReset()
+    public function testPasswordReset(): void
     {
         $this->client->request('GET', '/password-reset/request');
         $this->assertResponseIsSuccessful();

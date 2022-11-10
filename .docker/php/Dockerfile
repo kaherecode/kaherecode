@@ -4,10 +4,10 @@ RUN docker-php-ext-install pdo_mysql
 RUN pecl install apcu
 RUN apt-get update && \
   apt-get install -y \
-  libzip-dev libxslt-dev
+  libzip-dev libxslt-dev zip unzip
 
 RUN docker-php-ext-install zip xsl intl
-RUN docker-php-ext-enable apcu
+RUN docker-php-ext-enable apcu opcache
 
 WORKDIR /usr/src/app
 

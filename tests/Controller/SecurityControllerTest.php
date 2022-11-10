@@ -13,14 +13,14 @@ class SecurityControllerTest extends WebTestCase
     /** @var EntityManager */
     private $entityManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = static::createClient();
         $this->entityManager = self::getContainer()
             ->get('doctrine')->getManager();
     }
 
-    public function testLogin()
+    public function testLogin(): void
     {
         $this->client->request('GET', '/login');
         $this->client->submitForm(
@@ -32,7 +32,7 @@ class SecurityControllerTest extends WebTestCase
     }
 
     /** @runInSeparateProcess */
-    public function testLoginWithWrongCredentials()
+    public function testLoginWithWrongCredentials(): void
     {
         $this->client->request('GET', '/login');
         $this->client->submitForm(
@@ -44,7 +44,7 @@ class SecurityControllerTest extends WebTestCase
     }
 
     /** @runInSeparateProcess */
-    public function testLoginWithNotConfirmedAccount()
+    public function testLoginWithNotConfirmedAccount(): void
     {
         $this->client->request('GET', '/register');
         $this->client->submitForm(
@@ -67,7 +67,7 @@ class SecurityControllerTest extends WebTestCase
     }
 
     /** @runInSeparateProcess */
-    public function testLoginWithArchivedAccount()
+    public function testLoginWithArchivedAccount(): void
     {
         $this->client->request('GET', '/register');
         $this->client->submitForm(
